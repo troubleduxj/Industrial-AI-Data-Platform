@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Page</title>
+</head>
+<body>
+    <h1>Debug Page</h1>
+    <p>如果你能看到这个页面，说明前端服务正常运行。</p>
+    <p>时间: <span id="time"></span></p>
+    
+    <script>
+        document.getElementById('time').textContent = new Date().toLocaleString();
+        console.log('Debug page loaded successfully');
+        
+        // 测试访问主应用
+        setTimeout(() => {
+            console.log('Attempting to access main app...');
+            fetch('/')
+                .then(response => {
+                    console.log('Main app response status:', response.status);
+                    return response.text();
+                })
+                .then(html => {
+                    console.log('Main app HTML length:', html.length);
+                    console.log('HTML preview:', html.substring(0, 200));
+                })
+                .catch(error => {
+                    console.error('Error accessing main app:', error);
+                });
+        }, 1000);
+    </script>
+</body>
+</html>

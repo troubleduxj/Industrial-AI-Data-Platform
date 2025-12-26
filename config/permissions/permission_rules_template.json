@@ -1,0 +1,90 @@
+{
+  "rules": [
+    {
+      "rule_id": "superuser_full_access",
+      "name": "超级用户全权限",
+      "description": "超级用户拥有所有API的访问权限",
+      "api_patterns": ["*"],
+      "conditions": {
+        "user_type": "01"
+      },
+      "priority": 1000,
+      "enabled": true,
+      "created_at": "2024-12-19T12:00:00",
+      "updated_at": "2024-12-19T12:00:00"
+    },
+    {
+      "rule_id": "admin_management_access",
+      "name": "管理员管理权限",
+      "description": "管理员可以访问用户和角色管理相关的API",
+      "api_patterns": [
+        "GET /api/v2/users*",
+        "POST /api/v2/users*",
+        "PUT /api/v2/users*",
+        "GET /api/v2/roles*",
+        "POST /api/v2/roles*",
+        "PUT /api/v2/roles*"
+      ],
+      "conditions": {
+        "role_key": "admin"
+      },
+      "priority": 800,
+      "enabled": true,
+      "created_at": "2024-12-19T12:00:00",
+      "updated_at": "2024-12-19T12:00:00"
+    },
+    {
+      "rule_id": "user_readonly_access",
+      "name": "用户只读权限",
+      "description": "普通用户只能访问GET类型的API",
+      "api_patterns": [
+        "GET /api/v2/users*",
+        "GET /api/v2/devices*",
+        "GET /api/v2/reports*"
+      ],
+      "conditions": {
+        "role_key": "user"
+      },
+      "priority": 100,
+      "enabled": true,
+      "created_at": "2024-12-19T12:00:00",
+      "updated_at": "2024-12-19T12:00:00"
+    },
+    {
+      "rule_id": "device_manager_access",
+      "name": "设备管理员权限",
+      "description": "设备管理员可以访问设备相关的所有API",
+      "api_patterns": [
+        "GET /api/v2/devices*",
+        "POST /api/v2/devices*",
+        "PUT /api/v2/devices*",
+        "DELETE /api/v2/devices*"
+      ],
+      "conditions": {
+        "role_key": "device_manager"
+      },
+      "priority": 600,
+      "enabled": true,
+      "created_at": "2024-12-19T12:00:00",
+      "updated_at": "2024-12-19T12:00:00"
+    },
+    {
+      "rule_id": "batch_operation_restriction",
+      "name": "批量操作限制",
+      "description": "批量操作需要特殊权限",
+      "api_patterns": [
+        "POST /api/v2/*/batch-*",
+        "DELETE /api/v2/*/batch-*"
+      ],
+      "conditions": {
+        "role_key": ["admin", "super_admin"],
+        "special_permission": "batch_operation"
+      },
+      "priority": 900,
+      "enabled": true,
+      "created_at": "2024-12-19T12:00:00",
+      "updated_at": "2024-12-19T12:00:00"
+    }
+  ],
+  "last_updated": "2024-12-19T12:00:00"
+}

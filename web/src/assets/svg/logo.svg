@@ -1,0 +1,28 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="faviconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--primary-color, #F4511E);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:var(--primary-color-dark, #E64A19);stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 主背景框架 -->
+  <rect x="0" y="0" width="200" height="200" rx="20" fill="url(#faviconGrad)" stroke="none"/>
+  
+  <!-- 网络节点 -->
+  <circle cx="60" cy="60" r="15" fill="white" opacity="0.9"/>
+  <circle cx="140" cy="60" r="15" fill="white" opacity="0.9"/>
+  <circle cx="100" cy="100" r="20" fill="white" opacity="0.9"/>
+  <circle cx="60" cy="140" r="15" fill="white" opacity="0.9"/>
+  <circle cx="140" cy="140" r="15" fill="white" opacity="0.9"/>
+  
+  <!-- 网络连接线 -->
+  <path d="M60 60 L100 100 L140 60" stroke="white" stroke-width="3" fill="none" opacity="0.8"/>
+  <path d="M60 140 L100 100 L140 140" stroke="white" stroke-width="3" fill="none" opacity="0.8"/>
+  <path d="M60 60 L60 140" stroke="white" stroke-width="2" fill="none" opacity="0.6"/>
+  <path d="M140 60 L140 140" stroke="white" stroke-width="2" fill="none" opacity="0.6"/>
+  
+  <!-- 底部标识 -->
+  <rect x="90" y="170" width="20" height="8" fill="white" opacity="0.7"/>
+  <text x="100" y="195" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="8" opacity="0.8">MONITOR</text>
+</svg>

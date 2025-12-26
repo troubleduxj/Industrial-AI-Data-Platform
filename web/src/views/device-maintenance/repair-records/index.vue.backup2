@@ -1,0 +1,2227 @@
+<template>
+  <CommonPage show-footer title="维修记录管理" class="repair-records-page">
+    <template #action>
+      <div class="flex items-center justify-between w-full">
+        <!-- 左侧：视图切换 -->
+        <div class="flex items-center gap-2">
+          <ViewToggle
+            v-model="viewMode"
+            :options="viewOptions"
+            size="small"
+            :show-label="false"
+            :icon-size="16"
+            align="left"
+          />
+        </div>
+
+        <!-- 右侧：操作按钮 -->
+         <div class="flex items-center gap-2">
+           <!-- 列显示控制 -->
+           <ColumnSelector
+             v-model="columnVisibility"
+             :columns="baseColumns"
+           />
+           <NButton @click="handleExport">
+        <TheIcon icon="material-symbols:download" :size="16" class="mr-5" />导出
+      </NButton>
+      <NButton @click="handleImport">
+        <TheIcon icon="material-symbols:upload" :size="16" class="mr-5" />导入
+      </NButton>
+      <NButton type="primary" @click="handleAdd">
+        <TheIcon icon="material-symbols:add" :size="16" class="mr-5" />新建维修记录
+      </NButton>
+        </div>
+      </div>
+    </template>
+
+    <!-- 共用搜索栏 -->
+    <div class="mb-4">
+      <NCard class="mb-15" rounded-10>
+        <div flex flex-wrap items-center gap-15>
+          <QueryBarItem label="选择设备" :label-width="70">
+            <DeviceSelector
+              v-model="queryItems.device_id"
+              placeholder="请选择设备"
+              clearable
+              style="width: 200px"
+              @device-change="handleDeviceChange"
+            />
+          </QueryBarItem>
+          <QueryBarItem label="焊机编号" :label-width="70">
+            <NInput
+              v-model:value="queryItems.device_code"
+              type="text"
+              placeholder="请输入焊机编号"
+              clearable
+              style="width: 200px"
+            />
+          </QueryBarItem>
+          <QueryBarItem label="类别" :label-width="70">
+            <NSelect
+              v-model:value="queryItems.category"
+              :options="categoryOptions"
+              placeholder="请选择类别"
+              clearable
+              style="width: 200px"
+            />
+          </QueryBarItem>
+          <QueryBarItem label="申请人" :label-width="70">
+            <NInput
+              v-model:value="queryItems.applicant"
+              placeholder="请输入申请人"
+              clearable
+              style="width: 200px"
+            />
+          </QueryBarItem>
+          <QueryBarItem label="报修日期" :label-width="70">
+            <NDatePicker
+              v-model:value="queryItems.report_date_range"
+              type="daterange"
+              placeholder="请选择报修日期范围"
+              clearable
+              style="width: 240px"
+            />
+          </QueryBarItem>
+          <div class="ml-20 flex items-center gap-10">
+            <NButton type="primary" @click="handleSearch">
+              <TheIcon icon="material-symbols:search" :size="16" class="mr-5" />查询
+            </NButton>
+            <NButton @click="handleReset">
+              <TheIcon icon="material-symbols:refresh" :size="16" class="mr-5" />重置
+            </NButton>
+            <NButton @click="toggleAdvancedSearch" text>
+              <TheIcon 
+                :icon="showAdvancedSearch ? 'material-symbols:expand-less' : 'material-symbols:expand-more'" 
+                :size="16" 
+                class="mr-1" 
+              />
+              {{ showAdvancedSearch ? '收起' : '高级搜索' }}
+            </NButton>
+          </div>
+        </div>
+      </NCard>
+      
+      <!-- 高级搜索区域 -->
+      <NCollapse v-model:expanded-names="advancedSearchExpanded" class="mt-4">
+        <NCollapseItem name="advanced" title="高级搜索选项">
+          <NCard>
+            <div class="flex flex-wrap items-center gap-4">
+              <QueryBarItem label="型号">
+                <NInput
+                  v-model:value="advancedSearchForm.device_model"
+                  placeholder="请输入设备型号"
+                  clearable
+                  style="width: 200px"
+                />
+              </QueryBarItem>
+              <QueryBarItem label="公司">
+                <NInput
+                  v-model:value="advancedSearchForm.company"
+                  placeholder="请输入公司名称"
+                  clearable
+                  style="width: 200px"
+                />
+              </QueryBarItem>
+              <QueryBarItem label="部门">
+                <NInput
+                  v-model:value="advancedSearchForm.applicant_dept"
+                  placeholder="请输入部门"
+                  clearable
+                  style="width: 200px"
+                />
+              </QueryBarItem>
+              <QueryBarItem label="车间">
+                <NInput
+                  v-model:value="advancedSearchForm.applicant_workshop"
+                  placeholder="请输入车间"
+                  clearable
+                  style="width: 200px"
+                />
+              </QueryBarItem>
+              <QueryBarItem label="施工单位">
+                <NInput
+                  v-model:value="advancedSearchForm.construction_unit"
+                  placeholder="请输入施工单位"
+                  clearable
+                  style="width: 200px"
+                />
+              </QueryBarItem>
+              <QueryBarItem label="故障原因">
+                <NSelect
+                  v-model:value="advancedSearchForm.fault_reason"
+                  :options="faultReasonOptions"
+                  placeholder="请选择故障原因"
+                  clearable
+                  style="width: 200px"
+                />
+              </QueryBarItem>
+              <QueryBarItem label="损坏类别">
+                <NSelect
+                  v-model:value="advancedSearchForm.damage_category"
+                  :options="damageCategoryOptions"
+                  placeholder="请选择损坏类别"
+                  clearable
+                  style="width: 200px"
+                />
+              </QueryBarItem>
+              <QueryBarItem label="维修人">
+                <NInput 
+                  v-model:value="advancedSearchForm.repairer" 
+                  placeholder="请输入维修人" 
+                  clearable 
+                  style="width: 200px"
+                />
+              </QueryBarItem>
+            </div>
+          </NCard>
+        </NCollapseItem>
+      </NCollapse>
+    </div>
+
+    <!-- 表格视图 -->    <div v-if="viewMode === 'table'">      <NDataTable        :columns="columns"        :data="tableData"        :loading="loading"        :pagination="{          page: pagination.page,          pageSize: pagination.pageSize,          itemCount: tableData.length,          showSizePicker: true,          pageSizes: [10, 20, 50, 100],          showQuickJumper: true,          prefix: (info) => `共 ${info.itemCount} 条`,          onUpdatePage: handlePageChange,          onUpdatePageSize: handlePageSizeChange        }"        :row-key="(row) => row.id"        :checked-row-keys="selectedRowKeys"        @update:checked-row-keys="handleTableSelection"        :scroll-x="1400"        :max-height="600"        virtual-scroll      />    </div>
+
+    <!-- 卡片视图 -->
+    <div v-else class="card-container">
+      <!-- 卡片网格 -->
+      <div class="repair-cards-grid">
+        <NCard
+          v-for="record in cardData"
+          :key="record.id"
+          class="repair-record-card"
+          :class="getRepairCardClass(record.repair_status)"
+          hoverable
+        >
+          <!-- 状态指示器 -->
+          <div class="status-indicator" :class="getStatusIndicatorClass(record.repair_status)"></div>
+          
+          <!-- 卡片头部 -->
+          <div class="card-header">
+            <div class="device-info">
+              <div class="device-title">
+                <TheIcon icon="material-symbols:precision-manufacturing" :size="20" class="device-icon" />
+                <h3 class="device-name">{{ record.device?.device_code || record.device_code || '设备编号' }}</h3>
+              </div>
+              <p class="device-subtitle">{{ record.device?.device_name || '设备名称' }}</p>
+            </div>
+            <div class="status-badge">
+              <NTag 
+                :type="getStatusType(record.repair_status)" 
+                size="medium"
+                :bordered="false"
+              >
+                <template #icon>
+                  <TheIcon :icon="getStatusIcon(record.repair_status)" :size="14" />
+                </template>
+                {{ getStatusText(record.repair_status) }}
+              </NTag>
+            </div>
+          </div>
+          
+          <!-- 卡片内容 -->
+          <div class="card-content">
+            <!-- 申请信息 -->
+            <div class="info-section applicant-info">
+              <div class="section-header">
+                <TheIcon icon="material-symbols:person-outline" :size="16" class="section-icon" />
+                <span class="section-title">申请信息</span>
+              </div>
+              <div class="info-grid">
+                <div class="info-item">
+                  <span class="info-label">申请人</span>
+                  <span class="info-value">{{ record.applicant || '-' }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">部门</span>
+                  <span class="info-value">{{ record.applicant_dept || '-' }}</span>
+                </div>
+                <div class="info-item full-width">
+                  <span class="info-label">报修日期</span>
+                  <span class="info-value">{{ record.repair_date || '-' }}</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 故障信息 -->
+            <div class="info-section fault-info">
+              <div class="section-header">
+                <TheIcon icon="material-symbols:error-outline" :size="16" class="section-icon" />
+                <span class="section-title">故障信息</span>
+              </div>
+              <div class="fault-content">
+                <div class="fault-item">
+                  <span class="fault-label">故障原因</span>
+                  <p class="fault-text">{{ record.fault_reason || '-' }}</p>
+                </div>
+                <div class="fault-item">
+                  <span class="fault-label">故障描述</span>
+                  <p class="fault-text line-clamp-2">{{ record.fault_content || '-' }}</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 维修信息 -->
+            <div class="info-section repair-info">
+              <div class="section-header">
+                <TheIcon icon="material-symbols:build-outline" :size="16" class="section-icon" />
+                <span class="section-title">维修信息</span>
+              </div>
+              <div class="repair-details">
+                <div class="repair-item">
+                  <TheIcon icon="material-symbols:engineering" :size="14" class="repair-icon" />
+                  <span class="repair-label">维修人员</span>
+                  <span class="repair-value">{{ record.repairer || '-' }}</span>
+                </div>
+                <div v-if="record.repair_completion_date" class="repair-item">
+                  <TheIcon icon="material-symbols:event-available" :size="14" class="repair-icon" />
+                  <span class="repair-label">完成日期</span>
+                  <span class="repair-value">{{ record.repair_completion_date }}</span>
+                </div>
+                <div v-if="record.repair_cost" class="repair-item cost-item">
+                  <TheIcon icon="material-symbols:payments" :size="14" class="repair-icon" />
+                  <span class="repair-label">维修费用</span>
+                  <span class="repair-value cost-value">¥{{ record.repair_cost }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 卡片操作 -->
+          <div class="card-actions">
+            <NButton 
+              size="small" 
+              quaternary
+              class="action-btn"
+              @click="handleView(record)"
+            >
+              <TheIcon icon="material-symbols:visibility" :size="14" class="mr-1" />
+              查看
+            </NButton>
+            <NButton 
+              size="small" 
+              type="primary"
+              quaternary
+              class="action-btn"
+              @click="handleEdit(record)"
+            >
+              <TheIcon icon="material-symbols:edit" :size="14" class="mr-1" />
+              编辑
+            </NButton>
+            <NButton 
+              size="small" 
+              type="error"
+              quaternary
+              class="action-btn"
+              @click="handleDelete(record)"
+            >
+              <TheIcon icon="material-symbols:delete" :size="14" class="mr-1" />
+              删除
+            </NButton>
+          </div>
+        </NCard>
+      </div>
+    </div>
+
+     <!-- 新增/编辑弹窗 -->
+    <CrudModal
+      v-model:visible="modalVisible"
+      :title="modalTitle"
+      :loading="modalLoading"
+      :show-footer="true"
+      @save="handleSave"
+    >
+      <NForm
+        ref="modalFormRef"
+        label-placement="left"
+        label-align="left"
+        :label-width="120"
+        :model="modalForm"
+        :rules="modalRules"
+      >
+        <!-- 基础信息区域 -->
+        <div class="form-section">
+          <h4 class="section-title">基础信息</h4>
+          <div class="form-grid">
+            <NFormItem label="报修日期" path="repair_date">
+              <NDatePicker
+                v-model:value="modalForm.repair_date"
+                type="date"
+                placeholder="请选择报修日期"
+                style="width: 100%"
+              />
+            </NFormItem>
+            <NFormItem label="类别" path="category">
+              <NInput
+                v-model:value="modalForm.category"
+                placeholder="请输入类别"
+              />
+            </NFormItem>
+            <NFormItem label="焊机编号" path="device_number">
+              <NInput
+                v-model:value="modalForm.device_number"
+                placeholder="请输入焊机编号"
+              />
+            </NFormItem>
+            <NFormItem label="品牌" path="brand">
+              <NInput
+                v-model:value="modalForm.brand"
+                placeholder="请输入品牌"
+              />
+            </NFormItem>
+            <NFormItem label="型号" path="model">
+              <NInput
+                v-model:value="modalForm.model"
+                placeholder="请输入型号"
+              />
+            </NFormItem>
+            <NFormItem label="设备名称" path="device_name">
+              <NInput
+                v-model:value="modalForm.device_name"
+                placeholder="请输入设备名称"
+              />
+            </NFormItem>
+          </div>
+        </div>
+
+        <!-- 公司信息区域 -->
+        <div class="form-section">
+          <h4 class="section-title">公司信息</h4>
+          <div class="form-grid">
+            <NFormItem label="所属公司" path="company">
+              <NInput
+                v-model:value="modalForm.company"
+                placeholder="请输入所属公司"
+              />
+            </NFormItem>
+            <NFormItem label="制造商" path="manufacturer">
+              <NInput
+                v-model:value="modalForm.manufacturer"
+                placeholder="请输入制造商"
+              />
+            </NFormItem>
+            <NFormItem label="安装位置" path="installation_location">
+              <NInput
+                v-model:value="modalForm.installation_location"
+                placeholder="请输入安装位置"
+              />
+            </NFormItem>
+            <NFormItem label="申请部门" path="application_department">
+              <NInput
+                v-model:value="modalForm.application_department"
+                placeholder="请输入申请部门"
+              />
+            </NFormItem>
+            <NFormItem label="申请人" path="applicant">
+              <NInput
+                v-model:value="modalForm.applicant"
+                placeholder="请输入申请人"
+              />
+            </NFormItem>
+          </div>
+        </div>
+
+        <!-- 故障信息区域 -->
+        <div class="form-section">
+          <h4 class="section-title">故障信息</h4>
+          <div class="form-grid">
+            <NFormItem label="故障原因" path="fault_reason">
+              <NInput
+                v-model:value="modalForm.fault_reason"
+                placeholder="请输入故障原因"
+              />
+            </NFormItem>
+            <NFormItem label="故障内容" path="fault_content" class="full-width">
+              <NInput
+                v-model:value="modalForm.fault_content"
+                type="textarea"
+                :rows="3"
+                placeholder="请详细描述故障内容"
+              />
+            </NFormItem>
+          </div>
+        </div>
+
+        <!-- 维修信息区域 -->
+        <div class="form-section">
+          <h4 class="section-title">维修信息</h4>
+          <div class="form-grid">
+            <NFormItem label="维修人员" path="repair_person">
+              <NInput
+                v-model:value="modalForm.repair_person"
+                placeholder="请输入维修人员"
+              />
+            </NFormItem>
+            <NFormItem label="维修完成日期" path="repair_completion_date">
+              <NDatePicker
+                v-model:value="modalForm.repair_completion_date"
+                type="date"
+                placeholder="请选择维修完成日期"
+                style="width: 100%"
+              />
+            </NFormItem>
+            <NFormItem label="维修费用" path="repair_cost">
+              <NInputNumber
+                v-model:value="modalForm.repair_cost"
+                placeholder="请输入维修费用"
+                :precision="2"
+                :min="0"
+                style="width: 100%"
+              >
+                <template #suffix>元</template>
+              </NInputNumber>
+            </NFormItem>
+            <NFormItem label="使用备件" path="spare_parts_used">
+              <NInput
+                v-model:value="modalForm.spare_parts_used"
+                placeholder="请输入使用的备件"
+              />
+            </NFormItem>
+            <NFormItem label="维修类型" path="maintenance_type">
+              <NSelect
+                v-model:value="modalForm.maintenance_type"
+                placeholder="请选择维修类型"
+                :options="maintenanceTypeOptions"
+              />
+            </NFormItem>
+            <NFormItem label="停机时间(小时)" path="downtime_hours">
+              <NInputNumber
+                v-model:value="modalForm.downtime_hours"
+                placeholder="请输入停机时间"
+                :precision="1"
+                :min="0"
+                style="width: 100%"
+              >
+                <template #suffix>小时</template>
+              </NInputNumber>
+            </NFormItem>
+            <NFormItem label="保修状态" path="warranty_status">
+              <NSelect
+                v-model:value="modalForm.warranty_status"
+                placeholder="请选择保修状态"
+                :options="warrantyStatusOptions"
+              />
+            </NFormItem>
+            <NFormItem label="维修状态" path="status">
+              <NSelect
+                v-model:value="modalForm.status"
+                placeholder="请选择状态"
+                :options="statusOptions"
+              />
+            </NFormItem>
+            <NFormItem label="维修备注" path="repair_notes" class="full-width">
+              <NInput
+                v-model:value="modalForm.repair_notes"
+                type="textarea"
+                :rows="3"
+                placeholder="请输入维修备注"
+              />
+            </NFormItem>
+          </div>
+        </div>
+      </NForm>
+    </CrudModal>
+  </CommonPage>
+</template>
+
+<script setup>
+import { ref, reactive, computed, onMounted, h, watch } from 'vue'
+import { NButton, NInput, NSelect, NDatePicker, NInputNumber, NCard, NTag, NForm, NFormItem, NCollapse, NCollapseItem, useMessage } from 'naive-ui'
+import { useRoute } from 'vue-router'
+import CommonPage from '@/components/page/CommonPage.vue'
+import CrudTable from '@/components/table/CrudTable.vue'
+import CrudModal from '@/components/table/CrudModal.vue'
+import QueryBarItem from '@/components/page/QueryBarItem.vue'
+import DeviceSelector from '@/components/device/DeviceSelector.vue'
+import ViewToggle from '@/components/common/ViewToggle.vue'
+import TheIcon from '@/components/icon/TheIcon.vue'
+import ColumnSelector from './components/ColumnSelector.vue'
+import deviceMaintenanceApi from '@/api/device-maintenance'
+import { systemV2Api } from '@/api/system-v2'
+
+// 路由和消息
+const route = useRoute()
+const message = useMessage()
+
+// 数据状态
+const tableData = ref([])
+const cardData = ref([])
+const loading = ref(false)
+const refreshing = ref(false)
+const exporting = ref(false)
+const importing = ref(false)
+const selectedRowKeys = ref([])
+
+// 模态框状态
+const modalVisible = ref(false)
+const modalLoading = ref(false)
+const modalTitle = ref('')
+const modalAction = ref('')
+const $table = ref(null)
+const modalFormRef = ref(null)
+
+// 显示模式
+const viewMode = ref('table')
+const showDeviceFilter = ref(true)
+
+// 列显示控制
+const columnVisibility = ref({})
+
+// 视图切换选项
+const viewOptions = [
+  {
+    value: 'table',
+    label: '表格',
+    icon: 'material-symbols:table-chart',
+  },
+  {
+    value: 'card',
+    label: '卡片',
+    icon: 'material-symbols:grid-view',
+  },
+]
+
+// 查询参数
+const queryItems = reactive({
+  device_code: '',
+  category: '',
+  applicant: '',
+  report_date_range: null
+})
+
+const extraParams = computed(() => ({
+  ...queryParams.value
+}))
+const queryParams = ref({})
+
+// 表格数据和加载状态已在上面声明
+
+// 设备过滤信息
+const deviceFilter = ref({
+  device_id: null,
+  device_name: '',
+  device_code: ''
+})
+
+// 表单初始化内容
+const initForm = {
+  serial_number: '', // 序号
+  repair_date: '', // 报修日期
+  category: '', // 类别
+  device_number: '', // 焊机编号
+  brand: '', // 品牌
+  model: '', // 型号
+  device_name: '', // 设备名称
+  company: '', // 所属公司
+  manufacturer: '', // 制造商
+  installation_location: '', // 安装位置
+  application_department: '', // 申请部门
+  applicant: '', // 申请人
+  fault_reason: '', // 故障原因
+  fault_content: '', // 故障内容
+  repair_person: '', // 维修人员
+  repair_completion_date: '', // 维修完成日期
+  repair_cost: '', // 维修费用
+  spare_parts_used: '', // 使用备件
+  repair_notes: '', // 维修备注
+  maintenance_type: '', // 维修类型
+  downtime_hours: '', // 停机时间(小时)
+  warranty_status: '', // 保修状态
+  status: 'pending' // 状态
+}
+
+// 分页配置
+const pagination = ref({
+  page: 1,
+  pageSize: 20,
+  itemCount: 0,
+  showSizePicker: true,
+  pageSizes: [20, 24, 48, 96],
+  showQuickJumper: true,
+  prefix: ({ itemCount }) => `共 ${itemCount} 条`,
+  suffix: ({ startIndex, endIndex }) => `显示 ${startIndex}-${endIndex} 条`,
+})
+
+// 表格列配置
+const baseColumns = [
+  {
+    type: 'selection',
+    width: 50,
+    key: 'selection',
+    fixed: true,
+    defaultVisible: true
+  },
+  {
+    title: '序号',
+    key: 'serial_number',
+    width: 80,
+    render: (row, index) => index + 1,
+    defaultVisible: true
+  },
+  {
+    title: '报修日期',
+    key: 'repair_date',
+    width: 120,
+    defaultVisible: true
+  },
+  {
+    title: '类别',
+    key: 'category',
+    width: 100,
+    defaultVisible: true
+  },
+  {
+    title: '焊机编号',
+    key: 'device_number',
+    width: 120,
+    defaultVisible: true
+  },
+  {
+    title: '品牌',
+    key: 'brand',
+    width: 100,
+    defaultVisible: false
+  },
+  {
+    title: '型号',
+    key: 'model',
+    width: 120,
+    defaultVisible: false
+  },
+  {
+    title: '设备名称',
+    key: 'device_name',
+    width: 150,
+    render: (row) => row.device?.device_name || row.device_name || '-',
+    defaultVisible: true
+  },
+  {
+    title: '所属公司',
+    key: 'company',
+    width: 120,
+    render: (row) => {
+      const companyCode = row.device?.company || row.company
+      const option = companyOptions.value.find(opt => opt.value === companyCode)
+      return option ? option.label : companyCode || '未知公司'
+    },
+    defaultVisible: true
+  },
+  {
+    title: '制造商',
+    key: 'manufacturer',
+    width: 120,
+    render: (row) => row.device?.manufacturer || '-',
+    defaultVisible: false
+  },
+  {
+    title: '安装位置',
+    key: 'installation_location',
+    width: 150,
+    ellipsis: {
+      tooltip: true
+    },
+    render: (row) => row.device?.install_location || '-',
+    defaultVisible: false
+  },
+  {
+    title: '申请部门',
+    key: 'application_department',
+    width: 100,
+    defaultVisible: true
+  },
+  {
+    title: '申请人',
+    key: 'applicant',
+    width: 80,
+    defaultVisible: true
+  },
+  {
+    title: '故障原因',
+    key: 'fault_reason',
+    width: 100,
+    defaultVisible: true
+  },
+  {
+    title: '故障内容',
+    key: 'fault_content',
+    width: 150,
+    ellipsis: {
+      tooltip: true
+    },
+    defaultVisible: true
+  },
+  {
+    title: '维修人员',
+    key: 'repair_person',
+    width: 80,
+    defaultVisible: true
+  },
+  {
+    title: '维修完成日期',
+    key: 'repair_completion_date',
+    width: 130,
+    render: (row) => row.repair_completion_date ? new Date(row.repair_completion_date).toLocaleDateString() : '-',
+    defaultVisible: true
+  },
+  {
+    title: '维修费用',
+    key: 'repair_cost',
+    width: 100,
+    defaultVisible: false
+  },
+  {
+    title: '使用备件',
+    key: 'spare_parts_used',
+    width: 150,
+    ellipsis: {
+      tooltip: true
+    },
+    defaultVisible: false
+  },
+  {
+    title: '维修备注',
+    key: 'repair_notes',
+    width: 200,
+    ellipsis: {
+      tooltip: true
+    },
+    defaultVisible: false
+  },
+  {
+    title: '维修类型',
+    key: 'maintenance_type',
+    width: 100,
+    defaultVisible: false
+  },
+  {
+    title: '停机时间(小时)',
+    key: 'downtime_hours',
+    width: 120,
+    defaultVisible: false
+  },
+  {
+    title: '保修状态',
+    key: 'warranty_status',
+    width: 100,
+    defaultVisible: false
+  },
+  {
+    title: '状态',
+    key: 'repair_status',
+    width: 100,
+    render: (row) => {
+      const type = getStatusType(row.repair_status)
+      return h(NTag, { type }, { default: () => getStatusText(row.repair_status) })
+    },
+    defaultVisible: true
+  },
+  {    title: '操作',    key: 'actions',    width: 200,    align: 'center',    fixed: 'right',    defaultVisible: true,    render: (row) => {      return [        h(NButton, {          size: 'small',          style: 'margin-right: 6px;',          onClick: () => handleView(row)        }, { default: () => '查看' }),        h(NButton, {          size: 'small',          type: 'primary',          style: 'margin-right: 6px;',          onClick: () => handleEdit(row)        }, { default: () => '编辑' }),        h(NButton, {          size: 'small',          type: 'error',          onClick: () => handleDelete(row)        }, { default: () => '删除' })      ]    }  }
+]
+
+// 动态列配置（基于可见性过滤）
+const columns = computed(() => {
+  return baseColumns.filter(column => {
+    // 如果没有设置可见性，使用默认值
+    if (columnVisibility.value[column.key] === undefined) {
+      return column.defaultVisible !== false
+    }
+    // 使用用户设置的可见性
+    return columnVisibility.value[column.key] === true
+  })
+})
+
+// 状态选项
+const statusOptions = [
+  { label: '待维修', value: 'pending' },
+  { label: '维修中', value: 'repairing' },
+  { label: '已完成', value: 'completed' },
+  { label: '已取消', value: 'cancelled' }
+]
+
+// 维修类型选项
+const maintenanceTypeOptions = [
+  { label: '故障维修', value: 'fault_repair' },
+  { label: '预防性维护', value: 'preventive_maintenance' },
+  { label: '定期保养', value: 'regular_maintenance' },
+  { label: '紧急维修', value: 'emergency_repair' },
+  { label: '升级改造', value: 'upgrade' }
+]
+
+// 保修状态选项
+const warrantyStatusOptions = [
+  { label: '保修期内', value: 'in_warranty' },
+  { label: '保修期外', value: 'out_of_warranty' },
+  { label: '延保期内', value: 'extended_warranty' },
+  { label: '免费维修', value: 'free_repair' }
+]
+
+// 故障原因选项
+const faultReasonOptions = [
+  { label: '操作不当', value: '操作不当' },
+  { label: '老化磨损', value: '老化磨损' },
+  { label: '意外损坏', value: '意外损坏' },
+  { label: '其他', value: '其他' }
+]
+
+// 损坏类别选项
+const damageCategoryOptions = [
+  { label: '正常损坏', value: '正常损坏' },
+  { label: '非正常损坏', value: '非正常损坏' }
+]
+
+// 高级搜索状态
+const showAdvancedSearch = ref(false)
+const advancedSearchExpanded = ref([])
+
+// 高级搜索表单
+const advancedSearchForm = ref({
+  device_model: '',
+  company: '',
+  applicant_dept: '',
+  applicant_workshop: '',
+  construction_unit: '',
+  fault_reason: '',
+  damage_category: '',
+  repairer: ''
+})
+
+// 设备选项
+const deviceOptions = ref([])
+
+// 类别选项
+const categoryOptions = ref([])
+
+// 公司选项
+const companyOptions = ref([])
+
+// 表单数据
+const modalForm = reactive({ ...initForm })
+
+// 表单验证规则
+const modalRules = {
+  repair_date: {
+    required: true,
+    message: '请选择报修日期',
+    trigger: 'change'
+  },
+  category: {
+    required: true,
+    message: '请输入类别',
+    trigger: 'blur'
+  },
+  device_number: {
+    required: true,
+    message: '请输入焊机编号',
+    trigger: 'blur'
+  },
+  brand: {
+    required: true,
+    message: '请输入品牌',
+    trigger: 'blur'
+  },
+  model: {
+    required: true,
+    message: '请输入型号',
+    trigger: 'blur'
+  },
+  device_name: {
+    required: true,
+    message: '请输入设备名称',
+    trigger: 'blur'
+  },
+  company: {
+    required: true,
+    message: '请输入所属公司',
+    trigger: 'blur'
+  },
+  applicant: {
+    required: true,
+    message: '请输入申请人',
+    trigger: 'blur'
+  },
+  fault_reason: {
+    required: true,
+    message: '请输入故障原因',
+    trigger: 'blur'
+  },
+  fault_content: {
+    required: true,
+    message: '请输入故障内容',
+    trigger: 'blur'
+  },
+  repair_person: {
+    required: true,
+    message: '请输入维修人员',
+    trigger: 'blur'
+  }
+}
+
+// 方法
+const getStatusType = (status) => {
+  const typeMap = {
+    pending: 'warning',
+    in_progress: 'info',
+    completed: 'success',
+    cancelled: 'error'
+  }
+  return typeMap[status] || 'default'
+}
+
+const getStatusText = (status) => {
+  const textMap = {
+    pending: '待维修',
+    in_progress: '维修中',
+    completed: '已完成',
+    cancelled: '已取消'
+  }
+  return textMap[status] || status
+}
+
+// 获取状态图标
+    const getStatusIcon = (status) => {
+      const iconMap = {
+        '待维修': 'material-symbols:schedule',
+        '维修中': 'material-symbols:build',
+        '已完成': 'material-symbols:check-circle',
+        '已取消': 'material-symbols:cancel'
+      }
+      return iconMap[status] || 'material-symbols:help'
+    }
+    
+    // 获取卡片样式类
+    const getRepairCardClass = (status) => {
+      const classMap = {
+        '待维修': 'status-pending',
+        '维修中': 'status-processing',
+        '已完成': 'status-completed',
+        '已取消': 'status-cancelled'
+      }
+      return classMap[status] || 'status-default'
+    }
+    
+    // 获取状态指示器样式类
+    const getStatusIndicatorClass = (status) => {
+      const classMap = {
+        '待维修': 'indicator-pending',
+        '维修中': 'indicator-processing',
+        '已完成': 'indicator-completed',
+        '已取消': 'indicator-cancelled'
+      }
+      return classMap[status] || 'indicator-default'
+    }
+
+// 重复的函数定义已移除，使用整合后的业务逻辑函数
+
+const handleTableSelection = (keys) => {
+  selectedRowKeys.value = keys
+}
+
+const handleDeviceChange = (deviceId) => {
+    queryParams.device_id = deviceId
+  }
+
+  // 导入功能
+  const handleImport = () => {
+    console.log('导入功能')
+    message.info('导入功能开发中')
+  }
+
+  // 兼容性函数 - 为表格组件提供数据获取接口
+  const getRepairRecords = async (params = {}) => {
+    try {
+      const requestParams = {
+        page: params.page || pagination.value.page,
+        page_size: params.pageSize || pagination.value.pageSize,
+        ...queryParams,
+        ...params
+      }
+      
+      const response = await deviceMaintenanceApi.getRepairRecords(requestParams)
+      
+      if (response.code === 200) {
+        return {
+          data: response.data.records || [],
+          total: response.data.pagination?.total || 0
+        }
+      } else {
+        throw new Error(response.message || '获取数据失败')
+      }
+    } catch (error) {
+      console.error('获取维修记录失败:', error)
+      message.error('获取维修记录失败，使用模拟数据')
+      // 返回模拟数据给表格
+      return {
+        data: mockRepairRecords,
+        total: mockRepairRecords.length
+      }
+    }
+   }
+
+// 加载表格数据
+const loadTableData = async () => {
+  loading.value = true
+  try {
+    const result = await getRepairRecords({
+      page: pagination.page,
+      pageSize: pagination.pageSize,
+      ...queryParams.value
+    })
+    tableData.value = result.data
+    cardData.value = result.data  // 同时更新卡片数据
+    pagination.itemCount = result.total
+  } catch (error) {
+    console.error('加载表格数据失败:', error)
+    message.error('加载数据失败')
+  } finally {
+    loading.value = false
+  }
+}
+
+// 监听视图模式变化
+watch(viewMode, (newMode) => {
+  // 视图模式变化时不需要重新加载数据，因为tableData和cardData使用相同的数据源
+})
+
+// 加载焊机设备类别选项（从数据字典获取）
+const loadDeviceTypes = async () => {
+  try {
+    const response = await systemV2Api.getDictDataByType('welding_machine_category', { is_enabled: true })
+    if (response && response.data && response.data.data) {
+      categoryOptions.value = response.data.data.map(item => ({
+        label: item.data_label,
+        value: item.data_value
+      }))
+    }
+  } catch (error) {
+    console.warn('加载焊机设备类别失败，使用默认选项:', error)
+    // 如果字典数据不存在，使用默认选项
+    categoryOptions.value = [
+      { label: '焊机', value: 'welding' },
+      { label: '二氧化碳保护焊机', value: 'co2_welding_machine' },
+      { label: '氩弧焊机', value: 'tig_welding_machine' },
+      { label: '电焊机', value: 'arc_welding_machine' },
+      { label: '其他焊机', value: 'other_welding' }
+    ]
+  }
+}
+
+// 加载公司选项（从数据字典获取）
+const loadCompanyOptions = async () => {
+  try {
+    const response = await systemV2Api.getDictDataByType('company', { is_enabled: true })
+    if (response && response.data && response.data.data) {
+      companyOptions.value = response.data.data.map(item => ({
+        label: item.data_label,
+        value: item.data_value
+      }))
+    }
+  } catch (error) {
+    console.warn('加载公司选项失败，使用默认选项:', error)
+    // 如果字典数据不存在，使用默认选项
+    companyOptions.value = [
+      { label: '恒力造船（大连）有限公司', value: 'hengli_shipbuilding' },
+      { label: '前骏', value: 'qianjun' },
+      { label: '鑫合', value: 'xinhe' },
+      { label: '通扬', value: 'tongyang' },
+      { label: '船营', value: 'chuanying' },
+      { label: '其他公司', value: 'other' }
+    ]
+  }
+}
+
+/**
+ * 获取维修记录数据
+ * @param {Object} params - 查询参数
+ * @param {boolean} showLoading - 是否显示加载状态
+ */
+const getRecords = async (params = {}, showLoading = true) => {
+  try {
+    if (showLoading) {
+      loading.value = true
+    }
+
+    // 应用设备过滤器
+    const finalParams = {
+      ...params,
+      ...queryParams.value,
+      page: pagination.value.page,
+      page_size: pagination.value.pageSize
+    }
+
+    // 如果有设备过滤，添加设备相关参数
+    if (deviceFilter.value.device_id) {
+      finalParams.device_id = deviceFilter.value.device_id
+    }
+    if (deviceFilter.value.device_code) {
+      finalParams.device_code = deviceFilter.value.device_code
+    }
+
+    let response
+    try {
+      // 暂时直接使用模拟数据，避免API调用失败
+      console.log('使用模拟数据进行展示')
+      response = generateMockData(finalParams)
+      
+      // 如果需要调用真实API，取消下面的注释
+      // response = await deviceMaintenanceApi.getRepairRecords(finalParams)
+    } catch (error) {
+      console.warn('API请求失败，使用模拟数据:', error)
+      // 生成模拟数据作为降级方案
+      response = generateMockData(finalParams)
+    }
+
+    if (response && response.data) {
+      tableData.value = response.data.data || []
+      cardData.value = response.data.data || []
+      pagination.value.itemCount = response.data.total || 0
+    }
+  } catch (error) {
+    console.error('获取维修记录失败:', error)
+    message.error('获取维修记录失败')
+  } finally {
+    if (showLoading) {
+      loading.value = false
+    }
+  }
+}
+
+/**
+ * 生成模拟数据
+ */
+const generateMockData = (params) => {
+  const mockData = [
+    {
+      id: 1,
+      device_id: 1,
+      device_code: 'B001-00826',
+      device_type: 'welding',
+      repair_date: '2025-01-01',
+      repair_code: 'RP20250101001',
+      repair_status: 'completed',
+      priority: 'normal',
+      applicant: '胡春光',
+      applicant_phone: '15567113573',
+      applicant_dept: '加工一部',
+      applicant_workshop: '组立车间',
+      construction_unit: '前骏',
+      is_fault: true,
+      fault_reason: '操作不当',
+      damage_category: '非正常损坏',
+      fault_content: '无电流',
+      fault_location: '综合线',
+      repair_content: '综合线维修',
+      parts_name: '',
+      repairer: '刘德超',
+      repair_start_time: '2025-01-01 08:00:00',
+      repair_completion_date: '2025-01-01 16:00:00',
+      repair_cost: 800.00,
+      device_specific_data: {
+        device_brand: '松下',
+        device_model: 'YD-500ER2',
+        device_spec: '7P',
+        company: '恒力造船（大连）有限公司'
+      },
+      remarks: ''
+    },
+    {
+      id: 2,
+      device_id: 2,
+      device_code: 'B001-00828',
+      device_type: 'welding',
+      repair_date: '2025-01-01',
+      repair_code: 'RP20250101002',
+      repair_status: 'completed',
+      priority: 'normal',
+      applicant: '胡春光',
+      applicant_phone: '15567113573',
+      applicant_dept: '加工一部',
+      applicant_workshop: '组立车间',
+      construction_unit: '前骏',
+      is_fault: true,
+      fault_reason: '操作不当',
+      damage_category: '非正常损坏',
+      fault_content: '无电流，无电压',
+      fault_location: '焊枪',
+      repair_content: '焊枪维修',
+      parts_name: '',
+      repairer: '韩国龙',
+      repair_start_time: '2025-01-01 09:00:00',
+      repair_completion_date: '2025-01-01 17:00:00',
+      repair_cost: 600.00,
+      device_specific_data: {
+        device_brand: '松下',
+        device_model: 'YD-500ER2',
+        device_spec: '7P',
+        company: '恒力造船（大连）有限公司'
+      },
+      remarks: ''
+    },
+    {
+      id: 3,
+      device_id: 3,
+      device_code: 'B001-00838',
+      device_type: 'welding',
+      repair_date: '2025-01-02',
+      repair_code: 'RP20250102001',
+      repair_status: 'in_progress',
+      priority: 'normal',
+      applicant: '胡春光',
+      applicant_phone: '15567113573',
+      applicant_dept: '加工一部',
+      applicant_workshop: '组立车间',
+      construction_unit: '前骏',
+      is_fault: true,
+      fault_reason: '操作不当',
+      damage_category: '非正常损坏',
+      fault_content: '无电流',
+      fault_location: '综合线',
+      repair_content: '综合线维修',
+      parts_name: '',
+      repairer: '刘德超',
+      repair_start_time: '2025-01-02 08:30:00',
+      repair_completion_date: '',
+      repair_cost: 0,
+      device_specific_data: {
+        device_brand: '松下',
+        device_model: 'YD-500ER2',
+        device_spec: '7P',
+        company: '恒力造船（大连）有限公司'
+      },
+      remarks: ''
+    },
+    {
+      id: 4,
+      device_id: 4,
+      device_code: 'B001-00881',
+      device_type: 'welding',
+      repair_date: '2025-01-02',
+      repair_code: 'RP20250102002',
+      repair_status: 'in_progress',
+      priority: 'normal',
+      applicant: '秦久成',
+      applicant_phone: '19526533780',
+      applicant_dept: '加工一部',
+      applicant_workshop: '组立车间',
+      construction_unit: '鑫合',
+      is_fault: true,
+      fault_reason: '操作不当',
+      damage_category: '非正常损坏',
+      fault_content: '无电流',
+      fault_location: '综合线',
+      repair_content: '综合线维修',
+      parts_name: '',
+      repairer: '韩国龙',
+      repair_start_time: '2025-01-02 10:00:00',
+      repair_completion_date: '',
+      repair_cost: 0,
+      device_specific_data: {
+        device_brand: '松下',
+        device_model: 'YD-500ER2',
+        device_spec: '7P',
+        company: '恒力造船（大连）有限公司'
+      },
+      remarks: ''
+    },
+    {
+      id: 5,
+      device_id: 5,
+      device_code: 'B001-00887',
+      device_type: 'welding',
+      repair_date: '2025-01-03',
+      repair_code: 'RP20250103001',
+      repair_status: 'pending',
+      priority: 'normal',
+      applicant: '姜久成',
+      applicant_phone: '19526533780',
+      applicant_dept: '加工一部',
+      applicant_workshop: '组立车间',
+      construction_unit: '鑫合',
+      is_fault: true,
+      fault_reason: '操作不当',
+      damage_category: '非正常损坏',
+      fault_content: '电流不可调',
+      fault_location: '送丝机',
+      repair_content: '送丝机维修',
+      parts_name: '送丝轮',
+      repairer: '刘德超',
+      repair_start_time: '',
+      repair_completion_date: '',
+      repair_cost: 0,
+      device_specific_data: {
+        device_brand: '松下',
+        device_model: 'YD-500ER2',
+        device_spec: '7P',
+        company: '恒力造船（大连）有限公司'
+      },
+      remarks: ''
+    },
+    {
+      id: 6,
+      device_id: 6,
+      device_code: 'B001-00908',
+      device_type: 'welding',
+      repair_date: '2025-01-03',
+      repair_code: 'RP20250103002',
+      repair_status: 'pending',
+      priority: 'normal',
+      applicant: '姜久成',
+      applicant_phone: '19526533780',
+      applicant_dept: '加工一部',
+      applicant_workshop: '组立车间',
+      construction_unit: '鑫合',
+      is_fault: true,
+      fault_reason: '操作不当',
+      damage_category: '非正常损坏',
+      fault_content: '电流不可调',
+      fault_location: '送丝机',
+      repair_content: '送丝机维修',
+      parts_name: '送丝轮',
+      repairer: '刘德超',
+      repair_start_time: '',
+      repair_completion_date: '',
+      repair_cost: 0,
+      device_specific_data: {
+        device_brand: '松下',
+        device_model: 'YD-500ER2',
+        device_spec: '7P',
+        company: '恒力造船（大连）有限公司'
+      },
+      remarks: ''
+    },
+    {
+      id: 7,
+      device_id: 7,
+      device_code: 'B001-00965',
+      device_type: 'welding',
+      repair_date: '2025-01-04',
+      repair_code: 'RP20250104001',
+      repair_status: 'pending',
+      priority: 'high',
+      applicant: '姜久成',
+      applicant_phone: '19526533780',
+      applicant_dept: '加工一部',
+      applicant_workshop: '组立车间',
+      construction_unit: '鑫合',
+      is_fault: true,
+      fault_reason: '操作不当',
+      damage_category: '非正常损坏',
+      fault_content: '电流不可调',
+      fault_location: '送丝机',
+      repair_content: '送丝机维修',
+      parts_name: '控制板',
+      repairer: '刘德超',
+      repair_start_time: '',
+      repair_completion_date: '',
+      repair_cost: 0,
+      device_specific_data: {
+        device_brand: '松下',
+        device_model: 'YD-500ER2',
+        device_spec: '7P',
+        company: '恒力造船（大连）有限公司'
+      },
+      remarks: '紧急维修'
+    },
+    {
+      id: 8,
+      device_id: 8,
+      device_code: 'B001-00969',
+      device_type: 'welding',
+      repair_date: '2025-01-04',
+      repair_code: 'RP20250104002',
+      repair_status: 'cancelled',
+      priority: 'normal',
+      applicant: '林森',
+      applicant_phone: '13342203861',
+      applicant_dept: '加工一部',
+      applicant_workshop: '组立车间',
+      construction_unit: '船营',
+      is_fault: true,
+      fault_reason: '操作不当',
+      damage_category: '非正常损坏',
+      fault_content: '无电流',
+      fault_location: '综合线',
+      repair_content: '综合线维修',
+      parts_name: '',
+      repairer: '韩国龙',
+      repair_start_time: '',
+      repair_completion_date: '',
+      repair_cost: 0,
+      device_specific_data: {
+        device_brand: '松下',
+        device_model: 'YD-500ER2',
+        device_spec: '7P',
+        company: '恒力造船（大连）有限公司'
+      },
+      remarks: ''
+    },
+    {
+      id: 9,
+      device_id: 9,
+      device_code: 'C001-00502',
+      device_type: 'welding',
+      repair_date: '2025-01-05',
+      repair_code: 'RP20250105001',
+      repair_status: 'completed',
+      priority: 'normal',
+      applicant: '刘庆贺',
+      applicant_phone: '15304046261',
+      applicant_dept: '分段一部',
+      applicant_workshop: '平组车间',
+      construction_unit: '通扬',
+      is_fault: true,
+      fault_reason: '老化磨损',
+      damage_category: '正常损坏',
+      fault_content: '无电压',
+      fault_location: '综合线',
+      repair_content: '综合线维修',
+      parts_name: '导电嘴',
+      repairer: '夏崇博',
+      repair_start_time: '2025-01-05 08:00:00',
+      repair_completion_date: '2025-01-05 15:00:00',
+      repair_cost: 450.00,
+      device_specific_data: {
+        device_brand: '松下',
+        device_model: 'YD-500ER2',
+        device_spec: '7P',
+        company: '恒力造船（大连）有限公司'
+      },
+      remarks: ''
+    },
+    {
+      id: 10,
+      device_id: 10,
+      device_code: 'C001-00507',
+      device_type: 'welding',
+      repair_date: '2025-01-05',
+      repair_code: 'RP20250105002',
+      repair_status: 'completed',
+      priority: 'normal',
+      applicant: '刘庆贺',
+      applicant_phone: '15304046261',
+      applicant_dept: '分段一部',
+      applicant_workshop: '平组车间',
+      construction_unit: '通扬',
+      is_fault: true,
+      fault_reason: '老化磨损',
+      damage_category: '正常损坏',
+      fault_content: '无电流，无电压',
+      fault_location: '焊枪',
+      repair_content: '焊枪维修',
+      parts_name: '',
+      repairer: '夏崇博',
+      repair_start_time: '2025-01-05 09:00:00',
+      repair_completion_date: '2025-01-05 16:30:00',
+      repair_cost: 750.00,
+      device_specific_data: {
+        device_brand: '松下',
+        device_model: 'YD-500ER2',
+        device_spec: '7P',
+        company: '恒力造船（大连）有限公司'
+      },
+      remarks: ''
+    }
+  ]
+
+  return {
+    data: {
+      data: mockData,
+      total: mockData.length,
+      page: params.page || 1,
+      page_size: params.page_size || 20
+    }
+  }
+}
+
+/**
+ * 处理添加维修记录
+ */
+const handleAdd = () => {
+  modalAction.value = 'add'
+  modalTitle.value = '新建维修记录'
+  modalVisible.value = true
+}
+
+/**
+ * 处理编辑维修记录
+ */
+const handleEdit = (row) => {
+  modalAction.value = 'edit'
+  modalTitle.value = '编辑维修记录'
+  modalVisible.value = true
+}
+
+/**
+ * 处理删除维修记录
+ */
+const handleDelete = async (row) => {
+  try {
+    const loadingMessage = message.loading('正在删除维修记录...', { duration: 0 })
+    
+    await deviceMaintenanceApi.deleteRepairRecord(row.id)
+    
+    loadingMessage.destroy()
+    message.success('删除成功')
+    await getRecords(undefined, false)
+  } catch (error) {
+    console.error('删除维修记录失败:', error)
+    
+    let errorMessage = '删除维修记录失败'
+    if (error.response?.status === 403) {
+      errorMessage = '权限不足，无法删除维修记录'
+    } else if (error.response?.status === 404) {
+      errorMessage = '维修记录不存在或已被删除'
+    }
+    
+    message.error(errorMessage)
+  }
+}
+
+/**
+ * 处理批量删除维修记录
+ */
+const handleBatchDelete = async (ids) => {
+  try {
+    if (!ids || ids.length === 0) {
+      message.warning('请选择要删除的记录')
+      return
+    }
+    
+    const loadingMessage = message.loading(`正在删除 ${ids.length} 条记录...`, { duration: 0 })
+    
+    await deviceMaintenanceApi.batchDeleteRepairRecords(ids)
+    
+    loadingMessage.destroy()
+    message.success(`成功删除 ${ids.length} 条记录`)
+    await getRecords(undefined, false)
+  } catch (error) {
+    console.error('批量删除维修记录失败:', error)
+    
+    let errorMessage = '批量删除维修记录失败'
+    if (error.response?.status === 403) {
+      errorMessage = '权限不足，无法删除维修记录'
+    } else if (error.response?.data?.message) {
+      errorMessage = error.response.data.message
+    }
+    
+    message.error(errorMessage)
+  }
+}
+
+/**
+ * 处理保存维修记录
+ */
+const handleSave = async (formData) => {
+  try {
+    modalLoading.value = true
+
+    if (modalAction.value === 'add') {
+      await deviceMaintenanceApi.createRepairRecord(formData)
+      message.success('新建维修记录成功')
+    } else {
+      await deviceMaintenanceApi.updateRepairRecord(formData.id, formData)
+      message.success('更新维修记录成功')
+    }
+
+    modalVisible.value = false
+    await getRecords(undefined, false)
+  } catch (error) {
+    console.error('保存失败:', error)
+    
+    let errorMessage = '保存失败'
+    if (error.response?.status === 403) {
+      errorMessage = '权限不足，无法保存维修记录'
+    } else if (error.response?.status === 422) {
+      errorMessage = '数据验证失败，请检查输入内容'
+    } else if (error.response?.data?.message) {
+      errorMessage = error.response.data.message
+    }
+    
+    message.error(errorMessage)
+  } finally {
+    modalLoading.value = false
+  }
+}
+
+/**
+ * 处理搜索
+ */
+const handleSearch = (params) => {
+  // 合并基础搜索和高级搜索参数
+  const searchParams = { 
+    ...queryItems.value,
+    ...advancedSearchForm.value,
+    ...params 
+  }
+  
+  // 处理日期范围
+  if (searchParams.report_date_range && searchParams.report_date_range.length === 2) {
+    searchParams.start_date = searchParams.report_date_range[0]
+    searchParams.end_date = searchParams.report_date_range[1]
+    delete searchParams.report_date_range
+  }
+  
+  queryParams.value = searchParams
+  pagination.page = 1
+  loadTableData()
+}
+
+/**
+ * 处理重置搜索
+ */
+const handleReset = () => {
+  // 重置基础搜索表单
+  queryItems.value = {
+    device_number: '',
+    category: '',
+    applicant: '',
+    report_date_range: null
+  }
+  
+  // 重置高级搜索表单
+  advancedSearchForm.value = {
+    device_model: '',
+    company: '',
+    applicant_dept: '',
+    applicant_workshop: '',
+    construction_unit: '',
+    fault_reason: '',
+    damage_category: '',
+    repairer: ''
+  }
+  
+  queryParams.value = {}
+  pagination.page = 1
+  loadTableData()
+}
+
+/**
+ * 切换高级搜索
+ */
+const toggleAdvancedSearch = () => {
+  showAdvancedSearch.value = !showAdvancedSearch.value
+  if (showAdvancedSearch.value) {
+    advancedSearchExpanded.value = ['advanced']
+  } else {
+    advancedSearchExpanded.value = []
+  }
+}
+
+/**
+ * 处理分页变化
+ */
+const handlePageChange = (page) => {
+  pagination.page = page
+  loadTableData()
+}
+
+/**
+ * 处理页面大小变化
+ */
+const handlePageSizeChange = (pageSize) => {
+  pagination.pageSize = pageSize
+  pagination.page = 1
+  loadTableData()
+}
+
+/**
+ * 处理导出维修记录
+ */
+const handleExport = async () => {
+  try {
+    exporting.value = true
+    
+    const loadingMessage = message.loading('正在导出维修记录...', { duration: 0 })
+    
+    const params = { ...queryParams.value }
+    const response = await deviceMaintenanceApi.exportRepairRecords(params)
+    
+    loadingMessage.destroy()
+    
+    // 创建下载链接
+    const url = window.URL.createObjectURL(new Blob([response]))
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', `维修记录_${new Date().toISOString().slice(0, 10)}.xlsx`)
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    window.URL.revokeObjectURL(url)
+    
+    message.success('导出成功')
+  } catch (error) {
+    console.error('导出维修记录失败:', error)
+    
+    let errorMessage = '导出维修记录失败'
+    if (error.response?.status === 403) {
+      errorMessage = '权限不足，无法导出维修记录'
+    } else if (error.response?.status === 404) {
+      errorMessage = '导出接口不存在'
+    }
+    
+    message.error(errorMessage)
+  } finally {
+    exporting.value = false
+  }
+}
+
+/**
+ * 刷新数据
+ */
+const refreshData = async () => {
+  refreshing.value = true
+  try {
+    await getRecords()
+    message.success('刷新成功')
+  } catch (error) {
+    message.error('刷新失败')
+  } finally {
+    refreshing.value = false
+  }
+}
+
+// 初始化列可见性
+const initializeColumnVisibility = () => {
+  const savedVisibility = localStorage.getItem('repair-records-column-visibility')
+  if (savedVisibility) {
+    try {
+      const parsed = JSON.parse(savedVisibility)
+      columnVisibility.value = parsed
+    } catch (error) {
+      console.error('解析列可见性配置失败:', error)
+      // 设置默认可见性
+      setDefaultColumnVisibility()
+    }
+  } else {
+    // 首次使用，设置默认可见性
+    setDefaultColumnVisibility()
+  }
+}
+
+// 设置默认列可见性
+const setDefaultColumnVisibility = () => {
+  const defaultVisibility = {}
+  baseColumns.forEach(column => {
+    defaultVisibility[column.key] = column.defaultVisible !== false
+  })
+  columnVisibility.value = defaultVisibility
+}
+
+// 监听列可见性变化并保存
+watch(columnVisibility, (newVisibility) => {
+  localStorage.setItem('repair-records-column-visibility', JSON.stringify(newVisibility))
+}, { deep: true })
+
+// 生命周期
+onMounted(async () => {
+  // 初始化列可见性
+  initializeColumnVisibility()
+  
+  // 加载设备类型选项
+  await loadDeviceTypes()
+  
+  // 加载公司选项
+  await loadCompanyOptions()
+  
+  // 加载设备选项
+  deviceOptions.value = [
+    { label: '设备A', value: 1 },
+    { label: '设备B', value: 2 },
+    { label: '设备C', value: 3 }
+  ]
+  
+  // 初始化设备过滤器
+  if (route.query.device_id) {
+    deviceFilter.value.device_id = parseInt(route.query.device_id)
+  }
+  if (route.query.device_code) {
+    deviceFilter.value.device_code = route.query.device_code
+  }
+  
+  // 加载数据
+  await loadTableData()
+})
+</script>
+
+<style scoped>
+.repair-records-page {
+  /* 页面特定样式 */
+}
+
+.card-container {
+  padding: 16px;
+}
+
+.repair-record-card {
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+/* 为NCard组件添加主题色边框 */
+.repair-record-card {
+  border: 2px solid var(--primary-color) !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+
+.repair-record-card :deep(.n-card) {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.repair-record-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.query-bar {
+  margin-bottom: 16px;
+}
+
+/* 文本截断样式 */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 最小宽度样式 */
+.min-w-16 {
+  min-width: 4rem;
+}
+
+/* 卡片内容区域样式 */
+.repair-record-card .n-card-header {
+  padding: 1rem 1rem 0.5rem 1rem;
+}
+
+.repair-record-card .n-card__content {
+  padding: 0 1rem;
+}
+
+.repair-record-card .n-card__action {
+  padding: 0 1rem 1rem 1rem;
+}
+
+/* 表单样式 */
+.form-section {
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #fafafa;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.section-title {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #1890ff;
+  padding-bottom: 8px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.form-grid .full-width {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 响应式网格调整 */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1281px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* 卡片网格布局 */
+.repair-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+  padding: 16px 0;
+  /* 确保卡片容器可以滚动 */
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+/* 卡片状态样式 */
+.repair-record-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid #e8e8e8;
+}
+
+.repair-record-card.status-pending {
+  border-left: 4px solid #faad14;
+}
+
+.repair-record-card.status-processing {
+  border-left: 4px solid #1890ff;
+}
+
+.repair-record-card.status-completed {
+  border-left: 4px solid #52c41a;
+}
+
+.repair-record-card.status-cancelled {
+  border-left: 4px solid #ff4d4f;
+}
+
+/* 状态指示器 */
+.status-indicator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 100%;
+  z-index: 1;
+}
+
+.indicator-pending {
+  background: linear-gradient(180deg, #faad14 0%, #ffd666 100%);
+}
+
+.indicator-processing {
+  background: linear-gradient(180deg, #1890ff 0%, #69c0ff 100%);
+}
+
+.indicator-completed {
+  background: linear-gradient(180deg, #52c41a 0%, #95de64 100%);
+}
+
+.indicator-cancelled {
+  background: linear-gradient(180deg, #ff4d4f 0%, #ff7875 100%);
+}
+
+/* 卡片头部 */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.device-info {
+  flex: 1;
+}
+
+.device-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.device-icon {
+  color: #1890ff;
+}
+
+.device-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.device-subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: #8c8c8c;
+}
+
+.status-badge {
+  flex-shrink: 0;
+}
+
+/* 卡片内容 */
+.card-content {
+  margin-bottom: 16px;
+}
+
+.info-section {
+  margin-bottom: 16px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.section-icon {
+  color: #595959;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #595959;
+}
+
+/* 申请信息网格 */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.info-item.full-width {
+  grid-column: 1 / -1;
+}
+
+.info-label {
+  font-size: 13px;
+  color: #8c8c8c;
+  flex-shrink: 0;
+}
+
+.info-value {
+  font-size: 13px;
+  color: #262626;
+  text-align: right;
+  font-weight: 500;
+}
+
+/* 故障信息 */
+.fault-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fault-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fault-label {
+  font-size: 13px;
+  color: #8c8c8c;
+}
+
+.fault-text {
+  margin: 0;
+  font-size: 13px;
+  color: #262626;
+  line-height: 1.4;
+}
+
+/* 维修信息 */
+.repair-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.repair-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.repair-icon {
+  color: #595959;
+  flex-shrink: 0;
+}
+
+.repair-label {
+  font-size: 13px;
+  color: #8c8c8c;
+  min-width: 60px;
+}
+
+.repair-value {
+  font-size: 13px;
+  color: #262626;
+  font-weight: 500;
+}
+
+.cost-item .repair-value {
+  color: #f5222d;
+  font-weight: 600;
+}
+
+/* 卡片操作 */
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.action-btn {
+  min-width: 60px;
+}
+
+/* 响应式样式 */
+@media (max-width: 768px) {
+  .repair-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .status-badge {
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 640px) {
+  .hidden {
+    display: none;
+  }
+}
+</style>

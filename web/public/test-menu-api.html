@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试菜单API - 数据模型管理</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #333; border-bottom: 3px solid #409eff; padding-bottom: 10px; }
+        .section { margin: 20px 0; padding: 15px; background: #f9f9f9; border-left: 4px solid #409eff; border-radius: 4px; }
+        .success { border-left-color: #67c23a; background: #f0f9ff; }
+        .warning { border-left-color: #e6a23c; background: #fdf6ec; }
+        .error { border-left-color: #f56c6c; background: #fef0f0; }
+        button { background: #409eff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin: 5px; font-size: 14px; }
+        button:hover { background: #66b1ff; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 15px; border-radius: 4px; overflow-x: auto; max-height: 400px; }
+        .status { display: inline-block; padding: 3px 10px; border-radius: 3px; font-size: 12px; font-weight: bold; }
+        .status.ok { background: #67c23a; color: white; }
+        .status.fail { background: #f56c6c; color: white; }
+        input { padding: 8px; border: 1px solid #ddd; border-radius: 4px; width: 300px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 菜单API测试工具</h1>
+        
+        <div class="section">
+            <h3>1. 检查Token</h3>
+            <button onclick="checkToken()">检查Token</button>
+            <div id="tokenResult"></div>
+        </div>
+
+        <div class="section">
+            <h3>2. 调用菜单API</h3>
+            <button onclick="testMenuAPI()">测试 /api/v2/user/menus</button>
+            <button onclick="testMenuAPIv1()">测试 /api/v2/usermenu</button>
+            <button onclick="testMenuAPIold()">测试 /api/v1/base/usermenu</button>
+            <div id="apiResult"></div>
+        </div>
+
+        <div class="section">
+            <h3>3. 检查前端Store</h3>
+            <button onclick="checkStore()">检查Pinia Store</button>
+            <div id="storeResult"></div>
+        </div>
+
+        <div class="section">
+            <h3>4. 清除缓存</h3>
+            <button onclick="clearCache()">清除LocalStorage</button>
+            <button onclick="clearAll()">清除所有并刷新</button>
+        </div>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+        function addResult(title, content, type = 'section') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `section ${type}`;
+            div.innerHTML = `<h3>${title}</h3>${content}`;
+            results.appendChild(div);
+        }
+
+        function checkToken() {
+            const resultDiv = document.getElementById('tokenResult');
+            const token = localStorage.getItem('token');
+            
+            if (token) {
+                resultDiv.innerHTML = `
+                    <p class="status ok">Token存在</p>
+                    <pre>${token.substring(0, 50)}...</pre>
+                `;
+            } else {
+                resultDiv.innerHTML = `
+                    <p class="status fail">Token不存在</p>
+                    <p>请先登录系统</p>
+                `;
+            }
+        }
+
+        async function testMenuAPI() {
+            const resultDiv = document.getElementById('apiResult');
+            const token = localStorage.getItem('token');
+            
+            if (!token) {
+                resultDiv.innerHTML = '<p class="status fail">请先登录</p>';
+                return;
+            }
+
+            try {
+                resultDiv.innerHTML = '<p>正在调用API...</p>';
+                
+                const response = await fetch('/api/v2/user/menus', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                // 查找数据模型菜单
+                const findMenu = (menus, path) => {
+                    if (!menus) return null;
+                    for (let menu of menus) {
+                        if (menu.path === path || menu.path?.includes(path)) {
+                            return menu;
+                        }
+                        if (menu.children) {
+                            const found = findMenu(menu.children, path);
+                            if (found) return found;
+                        }
+                    }
+                    return null;
+                };
+                
+                const dataModelMenu = findMenu(data.data || [], '/data-model');
+                
+                let html = '<h4>API响应:</h4>';
+                html += `<p>状态码: ${response.status}</p>`;
+                html += `<p>菜单总数: ${data.data?.length || 0}</p>`;
+                
+                if (dataModelMenu) {
+                    html += '<p class="status ok">✅ 找到数据模型菜单</p>';
+                    html += '<pre>' + JSON.stringify(dataModelMenu, null, 2) + '</pre>';
+                } else {
+                    html += '<p class="status fail">❌ 未找到数据模型菜单</p>';
+                    html += '<h4>所有菜单路径:</h4><ul>';
+                    
+                    const listPaths = (menus) => {
+                        let paths = [];
+                        menus?.forEach(m => {
+                            paths.push(m.path);
+                            if (m.children) {
+                                paths = paths.concat(listPaths(m.children));
+                            }
+                        });
+                        return paths;
+                    };
+                    
+                    listPaths(data.data).forEach(path => {
+                        html += `<li>${path}</li>`;
+                    });
+                    html += '</ul>';
+                }
+                
+                html += '<h4>完整响应:</h4>';
+                html += '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                
+                resultDiv.innerHTML = html;
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<p class="status fail">❌ 请求失败: ${error.message}</p>`;
+            }
+        }
+
+        async function testMenuAPIv1() {
+            const resultDiv = document.getElementById('apiResult');
+            const token = localStorage.getItem('token');
+            
+            if (!token) {
+                resultDiv.innerHTML = '<p class="status fail">请先登录</p>';
+                return;
+            }
+
+            try {
+                resultDiv.innerHTML = '<p>正在调用API (v2/usermenu)...</p>';
+                
+                const response = await fetch('/api/v2/usermenu', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                let html = '<h4>API响应 (v2/usermenu):</h4>';
+                html += `<p>状态码: ${response.status}</p>`;
+                html += '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                
+                resultDiv.innerHTML = html;
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<p class="status fail">❌ 请求失败: ${error.message}</p>`;
+            }
+        }
+
+        async function testMenuAPIold() {
+            const resultDiv = document.getElementById('apiResult');
+            const token = localStorage.getItem('token');
+            
+            if (!token) {
+                resultDiv.innerHTML = '<p class="status fail">请先登录</p>';
+                return;
+            }
+
+            try {
+                resultDiv.innerHTML = '<p>正在调用API (v1)...</p>';
+                
+                const response = await fetch('/api/v1/base/usermenu', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                let html = '<h4>API响应 (v1):</h4>';
+                html += `<p>状态码: ${response.status}</p>`;
+                html += '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                
+                resultDiv.innerHTML = html;
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<p class="status fail">❌ 请求失败: ${error.message}</p>`;
+            }
+        }
+
+        function checkStore() {
+            const resultDiv = document.getElementById('storeResult');
+            
+            try {
+                if (!window.$pinia) {
+                    resultDiv.innerHTML = '<p class="status fail">Pinia未初始化（请在系统内打开此页面）</p>';
+                    return;
+                }
+                
+                const userStore = window.$pinia._s.get('user');
+                const permissionStore = window.$pinia._s.get('permission');
+                
+                let html = '<h4>User Store:</h4>';
+                if (userStore) {
+                    html += `<p>用户: ${userStore.username || '(空)'}</p>`;
+                    html += `<p>菜单数量: ${userStore.menus?.length || 0}</p>`;
+                    
+                    const dataModelMenu = userStore.menus?.find(m => m.path === '/data-model');
+                    if (dataModelMenu) {
+                        html += '<p class="status ok">✅ Store中有数据模型菜单</p>';
+                        html += '<pre>' + JSON.stringify(dataModelMenu, null, 2) + '</pre>';
+                    } else {
+                        html += '<p class="status fail">❌ Store中没有数据模型菜单</p>';
+                    }
+                } else {
+                    html += '<p class="status fail">User Store未找到</p>';
+                }
+                
+                html += '<h4>Permission Store:</h4>';
+                if (permissionStore) {
+                    html += `<p>权限路由数量: ${permissionStore.accessRoutes?.length || 0}</p>`;
+                } else {
+                    html += '<p class="status fail">Permission Store未找到</p>';
+                }
+                
+                resultDiv.innerHTML = html;
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<p class="status fail">❌ 检查失败: ${error.message}</p>`;
+            }
+        }
+
+        function clearCache() {
+            localStorage.clear();
+            alert('LocalStorage已清除！请重新登录。');
+        }
+
+        function clearAll() {
+            localStorage.clear();
+            sessionStorage.clear();
+            alert('所有缓存已清除！页面将刷新。');
+            window.location.reload();
+        }
+
+        // 页面加载时自动检查
+        window.addEventListener('load', () => {
+            checkToken();
+        });
+    </script>
+</body>
+</html>
+

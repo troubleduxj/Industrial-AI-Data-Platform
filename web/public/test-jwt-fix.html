@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JWT解码修复验证</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .test-section h3 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .info {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 JWT解码修复验证</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 30px;">
+            验证前端JWT解码修复是否解决了'Invalid crypto padding'错误
+        </p>
+
+        <div class="test-section">
+            <h3>📋 测试说明</h3>
+            <p>此页面用于验证JWT解码修复效果：</p>
+            <ul>
+                <li>✅ 修复前：使用atob()直接解码JWT payload会导致'Invalid crypto padding'错误</li>
+                <li>✅ 修复后：使用safeParseJWTPayload()安全解码JWT payload</li>
+                <li>✅ 测试token：使用项目中的实际JWT token进行测试</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h3>🧪 解码测试</h3>
+            <button onclick="testJWTDecoding()">测试JWT解码</button>
+            <button onclick="testWithRealToken()">使用真实Token测试</button>
+            <button onclick="clearResults()">清空结果</button>
+            <div id="testResult" class="result info">点击按钮开始测试...</div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔍 前端拦截器测试</h3>
+            <button onclick="testInterceptor()">测试HTTP拦截器</button>
+            <div id="interceptorResult" class="result info">点击按钮测试拦截器...</div>
+        </div>
+    </div>
+
+    <script>
+        // 测试用的JWT token（与后端一致）
+        const TEST_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiaXNfc3VwZXJ1c2VyIjp0cnVlLCJleHAiOjE3NTgyMTY1Njl9.Wa32RB2bWM-NeXEXad0wMusHT-Zix36doq9U3-mcliM'
+
+        // 安全的base64url解码函数（修复版本）
+        function safeBase64UrlDecode(str) {
+            try {
+                // 将base64url转换为标准base64
+                let base64 = str.replace(/-/g, '+').replace(/_/g, '/')
+                
+                // 添加必要的填充字符
+                const padding = base64.length % 4
+                if (padding === 2) {
+                    base64 += '=='
+                } else if (padding === 3) {
+                    base64 += '='
+                }
+                
+                // 使用标准base64解码
+                return atob(base64)
+            } catch (error) {
+                throw new Error(`Base64URL解码失败: ${error.message}`)
+            }
+        }
+
+        // 安全的JWT payload解析函数
+        function safeParseJWTPayload(token) {
+            try {
+                if (!token || typeof token !== 'string') {
+                    throw new Error('Token无效')
+                }
+                
+                const parts = token.split('.')
+                if (parts.length !== 3) {
+                    throw new Error('JWT格式无效，应该包含3个部分')
+                }
+                
+                const payloadStr = safeBase64UrlDecode(parts[1])
+                const payload = JSON.parse(payloadStr)
+                
+                return payload
+            } catch (error) {
+                throw error
+            }
+        }
+
+        // 原始的不安全解码方法（用于对比）
+        function unsafeParseJWTPayload(token) {
+            const parts = token.split('.')
+            if (parts.length !== 3) {
+                throw new Error('JWT格式无效')
+            }
+            
+            // 这里可能会导致'Invalid crypto padding'错误
+            const payloadStr = atob(parts[1])
+            const payload = JSON.parse(payloadStr)
+            
+            return payload
+        }
+
+        // 测试JWT解码
+        function testJWTDecoding() {
+            const resultDiv = document.getElementById('testResult')
+            let result = '🧪 JWT解码测试结果\n\n'
+            
+            // 测试原始方法
+            result += '❌ 原始方法测试 (atob):\n'
+            try {
+                const payload1 = unsafeParseJWTPayload(TEST_TOKEN)
+                result += `✅ 成功: ${JSON.stringify(payload1, null, 2)}\n\n`
+            } catch (error) {
+                result += `❌ 失败: ${error.message}\n\n`
+            }
+            
+            // 测试修复方法
+            result += '✅ 修复方法测试 (base64url):\n'
+            try {
+                const payload2 = safeParseJWTPayload(TEST_TOKEN)
+                result += `✅ 成功: ${JSON.stringify(payload2, null, 2)}\n\n`
+                
+                // 检查过期时间
+                const now = Math.floor(Date.now() / 1000)
+                const expired = payload2.exp < now
+                result += `⏰ Token状态: ${expired ? '已过期' : '有效'}\n`
+                result += `📅 过期时间: ${new Date(payload2.exp * 1000).toLocaleString()}\n`
+                
+                resultDiv.className = 'result success'
+            } catch (error) {
+                result += `❌ 失败: ${error.message}\n\n`
+                resultDiv.className = 'result error'
+            }
+            
+            resultDiv.textContent = result
+        }
+
+        // 使用真实token测试
+        function testWithRealToken() {
+            const resultDiv = document.getElementById('testResult')
+            
+            // 尝试从localStorage获取真实token
+            const realToken = localStorage.getItem('access_token')
+            
+            if (!realToken) {
+                resultDiv.className = 'result info'
+                resultDiv.textContent = 'ℹ️ 未找到真实token，请先登录系统\n\n使用测试token进行验证...'
+                setTimeout(() => testJWTDecoding(), 1000)
+                return
+            }
+            
+            let result = '🔍 真实Token解码测试\n\n'
+            result += `Token: ${realToken.substring(0, 50)}...\n\n`
+            
+            try {
+                const payload = safeParseJWTPayload(realToken)
+                result += `✅ 解码成功:\n${JSON.stringify(payload, null, 2)}\n\n`
+                
+                const now = Math.floor(Date.now() / 1000)
+                const expired = payload.exp < now
+                result += `⏰ Token状态: ${expired ? '已过期' : '有效'}\n`
+                result += `👤 用户: ${payload.username}\n`
+                result += `🆔 用户ID: ${payload.user_id}\n`
+                
+                resultDiv.className = 'result success'
+            } catch (error) {
+                result += `❌ 解码失败: ${error.message}\n\n`
+                result += '这表明JWT解码修复可能还有问题，需要进一步调试。'
+                resultDiv.className = 'result error'
+            }
+            
+            resultDiv.textContent = result
+        }
+
+        // 测试HTTP拦截器
+        function testInterceptor() {
+            const resultDiv = document.getElementById('interceptorResult')
+            let result = '🔍 HTTP拦截器测试\n\n'
+            
+            // 检查是否有token
+            const token = localStorage.getItem('access_token')
+            if (!token) {
+                result += '❌ 未找到access_token，无法测试拦截器\n'
+                result += '请先登录系统获取token'
+                resultDiv.className = 'result error'
+                resultDiv.textContent = result
+                return
+            }
+            
+            result += '✅ 找到access_token\n'
+            result += `Token长度: ${token.length}\n\n`
+            
+            // 模拟拦截器中的token验证逻辑
+            try {
+                // 验证token格式
+                const parts = token.split('.')
+                if (parts.length !== 3) {
+                    throw new Error('Token格式无效')
+                }
+                result += '✅ Token格式验证通过\n'
+                
+                // 尝试解码payload
+                const payload = safeParseJWTPayload(token)
+                result += '✅ Payload解码成功\n'
+                
+                // 检查过期时间
+                const currentTime = Math.floor(Date.now() / 1000)
+                if (payload.exp && payload.exp < currentTime) {
+                    result += '⚠️ Token已过期\n'
+                    result += `过期时间: ${new Date(payload.exp * 1000).toLocaleString()}\n`
+                } else {
+                    result += '✅ Token未过期\n'
+                }
+                
+                result += '\n🎉 HTTP拦截器测试通过！\n'
+                result += 'JWT解码修复已生效，不会再出现"Invalid crypto padding"错误。'
+                
+                resultDiv.className = 'result success'
+            } catch (error) {
+                result += `❌ 拦截器测试失败: ${error.message}\n\n`
+                result += '这表明JWT解码修复可能还有问题。'
+                resultDiv.className = 'result error'
+            }
+            
+            resultDiv.textContent = result
+        }
+
+        // 清空结果
+        function clearResults() {
+            document.getElementById('testResult').textContent = '点击按钮开始测试...'
+            document.getElementById('testResult').className = 'result info'
+            
+            document.getElementById('interceptorResult').textContent = '点击按钮测试拦截器...'
+            document.getElementById('interceptorResult').className = 'result info'
+        }
+
+        // 页面加载完成后的初始化
+        window.onload = function() {
+            console.log('🔧 JWT解码修复验证页面已加载')
+            console.log('可以开始测试JWT解码修复效果')
+        }
+    </script>
+</body>
+</html>

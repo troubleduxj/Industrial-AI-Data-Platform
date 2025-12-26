@@ -1,0 +1,109 @@
+{
+  "endpoints": [
+    {
+      "api_code": "auth_login",
+      "api_name": "用户登录",
+      "api_path": "/api/v2/auth/login",
+      "http_method": "POST",
+      "description": "用户登录认证",
+      "version": "v2",
+      "is_public": true,
+      "is_deprecated": false,
+      "permission_code": null,
+      "group_code": "auth",
+      "tags": "认证"
+    },
+    {
+      "api_code": "auth_logout",
+      "api_name": "用户登出",
+      "api_path": "/api/v2/auth/logout",
+      "http_method": "POST",
+      "description": "用户登出",
+      "version": "v2",
+      "is_public": false,
+      "is_deprecated": false,
+      "permission_code": null,
+      "group_code": "auth",
+      "tags": "认证"
+    },
+    {
+      "api_code": "get_users_list",
+      "api_name": "获取用户列表",
+      "api_path": "/api/v2/users",
+      "http_method": "GET",
+      "description": "获取系统用户列表",
+      "version": "v2",
+      "is_public": false,
+      "is_deprecated": false,
+      "permission_code": "user:list",
+      "group_code": "user_management",
+      "tags": "用户管理"
+    },
+    {
+      "api_code": "create_user",
+      "api_name": "创建用户",
+      "api_path": "/api/v2/users",
+      "http_method": "POST",
+      "description": "创建新用户",
+      "version": "v2",
+      "is_public": false,
+      "is_deprecated": false,
+      "permission_code": "user:create",
+      "group_code": "user_management",
+      "tags": "用户管理"
+    },
+    {
+      "api_code": "get_user_detail",
+      "api_name": "获取用户详情",
+      "api_path": "/api/v2/users/{id}",
+      "http_method": "GET",
+      "description": "获取指定用户详情",
+      "version": "v2",
+      "is_public": false,
+      "is_deprecated": false,
+      "permission_code": "user:detail",
+      "group_code": "user_management",
+      "tags": "用户管理"
+    },
+    {
+      "api_code": "update_user",
+      "api_name": "更新用户",
+      "api_path": "/api/v2/users/{id}",
+      "http_method": "PUT",
+      "description": "更新用户信息",
+      "version": "v2",
+      "is_public": false,
+      "is_deprecated": false,
+      "permission_code": "user:update",
+      "group_code": "user_management",
+      "tags": "用户管理"
+    },
+    {
+      "api_code": "delete_user",
+      "api_name": "删除用户",
+      "api_path": "/api/v2/users/{id}",
+      "http_method": "DELETE",
+      "description": "删除用户",
+      "version": "v2",
+      "is_public": false,
+      "is_deprecated": false,
+      "permission_code": "user:delete",
+      "group_code": "user_management",
+      "tags": "用户管理"
+    },
+    {
+      "api_code": "batch_delete_users",
+      "api_name": "批量删除用户",
+      "api_path": "/api/v2/users/batch-delete",
+      "http_method": "POST",
+      "description": "批量删除用户",
+      "version": "v2",
+      "is_public": false,
+      "is_deprecated": false,
+      "permission_code": "user:batch_delete",
+      "group_code": "user_management",
+      "tags": "用户管理,批量操作"
+    }
+  ],
+  "last_updated": "2024-12-19T12:00:00"
+}

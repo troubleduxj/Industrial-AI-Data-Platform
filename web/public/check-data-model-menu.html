@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据模型菜单诊断工具</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #409eff;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid #409eff;
+            border-radius: 4px;
+        }
+        .success { border-left-color: #67c23a; background: #f0f9ff; }
+        .warning { border-left-color: #e6a23c; background: #fdf6ec; }
+        .error { border-left-color: #f56c6c; background: #fef0f0; }
+        button {
+            background: #409eff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        button:hover { background: #66b1ff; }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            max-height: 400px;
+        }
+        .status { 
+            display: inline-block; 
+            padding: 3px 10px; 
+            border-radius: 3px; 
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status.ok { background: #67c23a; color: white; }
+        .status.fail { background: #f56c6c; color: white; }
+        .status.warn { background: #e6a23c; color: white; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #409eff;
+            color: white;
+        }
+        tr:hover { background: #f5f5f5; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 数据模型管理菜单诊断工具</h1>
+        
+        <div class="section">
+            <h3>📋 诊断说明</h3>
+            <p>本工具将检查"数据模型管理"菜单的路由、权限和配置状态。</p>
+            <p><strong>使用前提</strong>：请确保已登录系统</p>
+        </div>
+
+        <div class="section">
+            <h3>🚀 快速操作</h3>
+            <button onclick="checkRoutes()">检查路由</button>
+            <button onclick="checkMenus()">检查菜单</button>
+            <button onclick="checkPermissions()">检查权限</button>
+            <button onclick="runAllChecks()">运行所有检查</button>
+            <button onclick="refreshRoutes()">刷新路由</button>
+            <button onclick="clearResults()">清空结果</button>
+        </div>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const resultsDiv = document.getElementById('results');
+
+        function clearResults() {
+            resultsDiv.innerHTML = '';
+        }
+
+        function addResult(title, content, type = 'section') {
+            const div = document.createElement('div');
+            div.className = `section ${type}`;
+            div.innerHTML = `<h3>${title}</h3>${content}`;
+            resultsDiv.appendChild(div);
+        }
+
+        function checkRoutes() {
+            clearResults();
+            try {
+                // 尝试从多个可能的位置获取router
+                const router = window.$router || 
+                               window.__VUE_APP__?.config?.globalProperties?.$router ||
+                               window.__VUE_ROUTER__;
+
+                if (!router) {
+                    addResult('❌ 路由检查失败', '<p>无法访问路由器实例。请确保：</p><ol><li>已登录系统</li><li>在系统内打开此页面（不是独立打开）</li></ol>', 'error');
+                    return;
+                }
+
+                const allRoutes = router.getRoutes();
+                const dataModelRoutes = allRoutes.filter(r => 
+                    r.path && (r.path.includes('data-model') || r.name?.includes('DataModel'))
+                );
+
+                let html = '<table><tr><th>名称</th><th>路径</th><th>组件</th></tr>';
+                
+                if (dataModelRoutes.length === 0) {
+                    addResult('⚠️ 路由检查', '<p class="status warn">未找到数据模型相关路由</p><p>路由文件可能未被正确加载。</p>', 'warning');
+                } else {
+                    dataModelRoutes.forEach(route => {
+                        html += `<tr>
+                            <td>${route.name || '(无名称)'}</td>
+                            <td><code>${route.path}</code></td>
+                            <td>${route.component ? '✅' : '❌'}</td>
+                        </tr>`;
+                    });
+                    html += '</table>';
+                    html += `<p>✅ 找到 <strong>${dataModelRoutes.length}</strong> 个相关路由</p>`;
+                    addResult('✅ 路由检查', html, 'success');
+                }
+
+                // 显示所有路由摘要
+                const summary = `<p>总路由数: <strong>${allRoutes.length}</strong></p>`;
+                addResult('📊 路由摘要', summary, 'section');
+
+            } catch (error) {
+                addResult('❌ 路由检查错误', `<pre>${error.message}\n${error.stack}</pre>`, 'error');
+            }
+        }
+
+        function checkMenus() {
+            try {
+                // 尝试从pinia获取用户store
+                const pinia = window.$pinia;
+                if (!pinia) {
+                    addResult('❌ 菜单检查失败', '<p>无法访问状态管理（Pinia）。请在系统内打开此页面。</p>', 'error');
+                    return;
+                }
+
+                const userStore = pinia._s.get('user');
+                if (!userStore) {
+                    addResult('❌ 菜单检查失败', '<p>未找到用户Store。请确保已登录。</p>', 'error');
+                    return;
+                }
+
+                const menus = userStore.menus || [];
+                const dataModelMenu = menus.find(m => 
+                    m.path === '/data-model' || 
+                    m.name?.includes('数据模型')
+                );
+
+                if (!dataModelMenu) {
+                    addResult('⚠️ 菜单检查', 
+                        '<p class="status warn">未找到"数据模型管理"菜单</p>' +
+                        '<h4>可能原因：</h4>' +
+                        '<ol>' +
+                        '<li>菜单未在数据库中创建</li>' +
+                        '<li>路径配置不正确（应为 <code>/data-model</code>）</li>' +
+                        '<li>权限未分配给当前角色</li>' +
+                        '<li>菜单被隐藏（is_visible=false）</li>' +
+                        '</ol>' +
+                        '<h4>解决方案：</h4>' +
+                        '<p>运行数据库脚本：<code>python database/migrations/device-data-model/execute_menu_migration.py</code></p>',
+                        'warning');
+                } else {
+                    let html = '<table><tr><th>属性</th><th>值</th></tr>';
+                    html += `<tr><td>名称</td><td>${dataModelMenu.name || dataModelMenu.title}</td></tr>`;
+                    html += `<tr><td>路径</td><td><code>${dataModelMenu.path}</code></td></tr>`;
+                    html += `<tr><td>图标</td><td>${dataModelMenu.icon || '(无)'}</td></tr>`;
+                    html += `<tr><td>是否可见</td><td>${dataModelMenu.is_visible !== false ? '✅' : '❌'}</td></tr>`;
+                    html += `<tr><td>子菜单数</td><td>${dataModelMenu.children?.length || 0}</td></tr>`;
+                    html += '</table>';
+
+                    if (dataModelMenu.children && dataModelMenu.children.length > 0) {
+                        html += '<h4>子菜单：</h4><ul>';
+                        dataModelMenu.children.forEach(child => {
+                            html += `<li>${child.name || child.title} - <code>${child.path}</code></li>`;
+                        });
+                        html += '</ul>';
+                    }
+
+                    addResult('✅ 菜单检查', html, 'success');
+                }
+
+                // 显示所有菜单
+                let allMenusHtml = `<p>用户菜单总数: <strong>${menus.length}</strong></p>`;
+                allMenusHtml += '<details><summary>查看所有菜单</summary><pre>' + 
+                                JSON.stringify(menus, null, 2) + '</pre></details>';
+                addResult('📊 所有菜单', allMenusHtml, 'section');
+
+            } catch (error) {
+                addResult('❌ 菜单检查错误', `<pre>${error.message}\n${error.stack}</pre>`, 'error');
+            }
+        }
+
+        function checkPermissions() {
+            try {
+                const pinia = window.$pinia;
+                if (!pinia) {
+                    addResult('❌ 权限检查失败', '<p>无法访问状态管理。</p>', 'error');
+                    return;
+                }
+
+                const permissionStore = pinia._s.get('permission');
+                if (!permissionStore) {
+                    addResult('⚠️ 权限检查', '<p>未找到权限Store。</p>', 'warning');
+                    return;
+                }
+
+                const accessRoutes = permissionStore.accessRoutes || [];
+                const dataModelRoute = accessRoutes.find(r => r.path === '/data-model');
+
+                let html = '<table><tr><th>属性</th><th>值</th></tr>';
+                html += `<tr><td>权限路由总数</td><td>${accessRoutes.length}</td></tr>`;
+                html += `<tr><td>数据模型路由</td><td>${dataModelRoute ? '✅ 已授权' : '❌ 未授权'}</td></tr>`;
+                html += '</table>';
+
+                if (dataModelRoute) {
+                    html += '<h4>数据模型路由详情：</h4><pre>' + 
+                            JSON.stringify(dataModelRoute, null, 2) + '</pre>';
+                    addResult('✅ 权限检查', html, 'success');
+                } else {
+                    html += '<p class="status warn">当前用户无数据模型管理权限</p>';
+                    html += '<p>请在"系统管理 → 角色管理"中为您的角色分配权限。</p>';
+                    addResult('⚠️ 权限检查', html, 'warning');
+                }
+
+            } catch (error) {
+                addResult('❌ 权限检查错误', `<pre>${error.message}\n${error.stack}</pre>`, 'error');
+            }
+        }
+
+        async function refreshRoutes() {
+            try {
+                const pinia = window.$pinia;
+                if (!pinia) {
+                    addResult('❌ 刷新失败', '<p>无法访问状态管理。</p>', 'error');
+                    return;
+                }
+
+                const permissionStore = pinia._s.get('permission');
+                if (!permissionStore || !permissionStore.generateRoutes) {
+                    addResult('❌ 刷新失败', '<p>权限Store方法不可用。</p>', 'error');
+                    return;
+                }
+
+                addResult('🔄 正在刷新路由...', '<p>请稍候...</p>', 'section');
+                
+                await permissionStore.generateRoutes();
+                
+                addResult('✅ 路由刷新成功', '<p>路由已重新生成。请刷新页面查看效果。</p>', 'success');
+                
+                setTimeout(() => {
+                    runAllChecks();
+                }, 1000);
+
+            } catch (error) {
+                addResult('❌ 刷新路由错误', `<pre>${error.message}\n${error.stack}</pre>`, 'error');
+            }
+        }
+
+        function runAllChecks() {
+            clearResults();
+            addResult('🔍 运行完整诊断...', '<p>正在检查所有项...</p>', 'section');
+            setTimeout(() => {
+                checkRoutes();
+                checkMenus();
+                checkPermissions();
+            }, 100);
+        }
+
+        // 页面加载时提示
+        window.addEventListener('load', () => {
+            addResult('👋 欢迎使用诊断工具', 
+                '<p>请点击上方按钮开始诊断。</p>' +
+                '<p><strong>建议</strong>：先点击"运行所有检查"获取完整报告。</p>',
+                'section');
+        });
+    </script>
+</body>
+</html>
+

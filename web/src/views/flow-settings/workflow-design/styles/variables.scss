@@ -1,0 +1,331 @@
+/**
+ * 工作流设计器样式变量定义
+ * Workflow Designer Style Variables
+ */
+
+// ==================== 颜色系统 ====================
+
+// 主色调
+$primary-color: #1890ff;
+$primary-light: #40a9ff;
+$primary-dark: #096dd9;
+$primary-hover: #40a9ff;
+$primary-active: #096dd9;
+
+// 辅助色
+$secondary-color: #722ed1;
+$success-color: #52c41a;
+$warning-color: #faad14;
+$error-color: #f5222d;
+$info-color: #1890ff;
+
+// 中性色
+$white: #ffffff;
+$gray-1: #fafafa;
+$gray-2: #f5f5f5;
+$gray-3: #f0f0f0;
+$gray-4: #d9d9d9;
+$gray-5: #bfbfbf;
+$gray-6: #8c8c8c;
+$gray-7: #595959;
+$gray-8: #434343;
+$gray-9: #262626;
+$gray-10: #1f1f1f;
+$black: #000000;
+
+// 背景色
+$background-color-light: #ffffff;
+$background-color-base: #f0f2f5;
+$background-color-dark: #001529;
+
+// 文本色
+$text-color-primary: rgba(0, 0, 0, 0.85);
+$text-color-secondary: rgba(0, 0, 0, 0.65);
+$text-color-disabled: rgba(0, 0, 0, 0.25);
+$text-color-inverse: #ffffff;
+
+// 边框色
+$border-color-base: #d9d9d9;
+$border-color-split: #f0f0f0;
+$border-color-inverse: #ffffff;
+
+// ==================== 画布相关颜色 ====================
+
+// 画布背景
+$canvas-background: #fafafa;
+$canvas-background-dark: #1f1f1f;
+
+// 网格
+$grid-color: #e8e8e8;
+$grid-color-dark: #333333;
+$grid-subdivision-color: #f0f0f0;
+$grid-subdivision-color-dark: #2a2a2a;
+
+// 选择框
+$selection-color: $primary-color;
+$selection-background: rgba(24, 144, 255, 0.1);
+$selection-border: $primary-color;
+
+// 引导线
+$guide-color: $primary-color;
+$guide-color-secondary: $warning-color;
+
+// ==================== 节点相关颜色 ====================
+
+// 节点状态颜色
+$node-idle-color: $gray-6;
+$node-running-color: $primary-color;
+$node-success-color: $success-color;
+$node-error-color: $error-color;
+$node-warning-color: $warning-color;
+$node-disabled-color: $gray-4;
+
+// 节点类型颜色
+$node-start-color: #52c41a;
+$node-end-color: #f5222d;
+$node-process-color: #1890ff;
+$node-decision-color: #722ed1;
+$node-condition-color: #fa8c16;
+$node-loop-color: #13c2c2;
+$node-api-color: #eb2f96;
+$node-database-color: #2f54eb;
+$node-timer-color: #faad14;
+$node-email-color: #fa541c;
+$node-file-color: #a0d911;
+$node-action-color: #722ed1;
+
+// 节点边框
+$node-border-color: #d9d9d9;
+$node-border-selected: $primary-color;
+$node-border-hover: $primary-light;
+$node-border-error: $error-color;
+
+// 节点背景
+$node-background: #ffffff;
+$node-background-hover: #f5f5f5;
+$node-background-selected: #e6f7ff;
+$node-background-disabled: #f5f5f5;
+
+// ==================== 连接相关颜色 ====================
+
+// 连接线颜色
+$connection-color: #8c8c8c;
+$connection-color-hover: $primary-color;
+$connection-color-selected: $primary-color;
+$connection-color-error: $error-color;
+$connection-color-disabled: $gray-4;
+
+// 连接类型颜色
+$connection-data-color: #1890ff;
+$connection-control-color: #52c41a;
+$connection-event-color: #fa8c16;
+$connection-condition-color: #722ed1;
+
+// 连接点颜色
+$connection-point-color: #ffffff;
+$connection-point-border: #d9d9d9;
+$connection-point-hover: $primary-color;
+$connection-point-active: $primary-dark;
+
+// ==================== 尺寸系统 ====================
+
+// 基础尺寸
+$base-unit: 4px;
+$border-radius-base: 6px;
+$border-radius-sm: 2px;
+$border-radius-lg: 8px;
+
+// 间距
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-xxl: 48px;
+
+// 画布尺寸
+$canvas-min-width: 800px;
+$canvas-min-height: 600px;
+$canvas-max-zoom: 3;
+$canvas-min-zoom: 0.1;
+$canvas-zoom-step: 0.1;
+
+// 网格尺寸
+$grid-size: 20px;
+$grid-subdivision: 5;
+
+// 节点尺寸
+$node-min-width: 120px;
+$node-min-height: 60px;
+$node-max-width: 400px;
+$node-max-height: 300px;
+$node-border-width: 1px;
+$node-border-radius: 8px;
+$node-padding: 12px;
+
+// 连接尺寸
+$connection-width: 2px;
+$connection-width-hover: 3px;
+$connection-width-selected: 3px;
+$connection-point-size: 8px;
+$connection-point-border-width: 2px;
+
+// 工具栏尺寸
+$toolbar-height: 48px;
+$toolbar-item-size: 32px;
+$toolbar-padding: 8px;
+
+// 侧边栏尺寸
+$sidebar-width: 280px;
+$sidebar-min-width: 200px;
+$sidebar-max-width: 400px;
+
+// ==================== 字体系统 ====================
+
+// 字体族
+$font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+$font-family-code: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+
+// 字体大小
+$font-size-base: 14px;
+$font-size-lg: 16px;
+$font-size-sm: 12px;
+$font-size-xs: 10px;
+
+// 字体粗细
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 600;
+
+// 行高
+$line-height-base: 1.5715;
+$line-height-lg: 1.5;
+$line-height-sm: 1.66;
+
+// ==================== 阴影系统 ====================
+
+// 基础阴影
+$box-shadow-base: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+$box-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+$box-shadow-lg: 0 6px 16px -8px rgba(0, 0, 0, 0.08), 0 9px 28px 0 rgba(0, 0, 0, 0.05), 0 12px 48px 16px rgba(0, 0, 0, 0.03);
+
+// 节点阴影
+$node-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+$node-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.15);
+$node-shadow-selected: 0 0 0 2px rgba(24, 144, 255, 0.2);
+
+// 面板阴影
+$panel-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+$modal-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+// ==================== 动画系统 ====================
+
+// 动画时长
+$animation-duration-slow: 0.3s;
+$animation-duration-base: 0.2s;
+$animation-duration-fast: 0.1s;
+
+// 动画缓动
+$ease-base-out: cubic-bezier(0.7, 0.3, 0.1, 0.7);
+$ease-base-in: cubic-bezier(0.9, 0, 0.3, 0.7);
+$ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+$ease-in: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+$ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+$ease-out-back: cubic-bezier(0.12, 0.4, 0.29, 1.46);
+$ease-in-back: cubic-bezier(0.71, -0.46, 0.88, 0.6);
+$ease-in-out-back: cubic-bezier(0.71, -0.46, 0.29, 1.46);
+$ease-out-circ: cubic-bezier(0.08, 0.82, 0.17, 1);
+$ease-in-circ: cubic-bezier(0.6, 0.04, 0.98, 0.34);
+$ease-in-out-circ: cubic-bezier(0.78, 0.14, 0.15, 0.86);
+$ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+$ease-in-quint: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+$ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
+
+// ==================== 层级系统 ====================
+
+// z-index
+$zindex-base: 0;
+$zindex-canvas: 1;
+$zindex-nodes: 10;
+$zindex-connections: 5;
+$zindex-temp-connection: 15;
+$zindex-selection: 20;
+$zindex-toolbar: 100;
+$zindex-sidebar: 200;
+$zindex-modal: 1000;
+$zindex-notification: 1010;
+$zindex-tooltip: 1060;
+$zindex-popover: 1030;
+$zindex-dropdown: 1050;
+
+// ==================== 响应式断点 ====================
+
+// 屏幕尺寸
+$screen-xs: 480px;
+$screen-sm: 576px;
+$screen-md: 768px;
+$screen-lg: 992px;
+$screen-xl: 1200px;
+$screen-xxl: 1600px;
+
+// 断点别名
+$breakpoint-xs: $screen-xs;
+$breakpoint-sm: $screen-sm;
+$breakpoint-md: $screen-md;
+$breakpoint-lg: $screen-lg;
+$breakpoint-xl: $screen-xl;
+$breakpoint-xxl: $screen-xxl;
+
+// 侧边栏尺寸变体
+$sidebar-width-collapsed: 60px;
+$sidebar-width-wide: 320px;
+
+// 动画时长别名
+$duration-normal: $animation-duration-base;
+$easing-ease-out: $ease-out;
+
+// z-index 别名
+$z-sidebar: $zindex-sidebar;
+
+// 颜色别名
+$color-text-primary: $text-color-primary;
+$color-text-secondary: $text-color-secondary;
+$color-text-disabled: $text-color-disabled;
+
+// 容器最大宽度
+$container-max-width-sm: 540px;
+$container-max-width-md: 720px;
+$container-max-width-lg: 960px;
+$container-max-width-xl: 1140px;
+$container-max-width-xxl: 1320px;
+
+// ==================== 暗色主题 ====================
+
+// 暗色背景
+$dark-background-color-light: #141414;
+$dark-background-color-base: #000000;
+$dark-background-color-dark: #000000;
+
+// 暗色文本
+$dark-text-color-primary: rgba(255, 255, 255, 0.85);
+$dark-text-color-secondary: rgba(255, 255, 255, 0.65);
+$dark-text-color-disabled: rgba(255, 255, 255, 0.25);
+$dark-text-color-inverse: #000000;
+
+// 暗色边框
+$dark-border-color-base: #434343;
+$dark-border-color-split: #303030;
+
+// 暗色节点
+$dark-node-background: #1f1f1f;
+$dark-node-border-color: #434343;
+
+// ==================== 打印样式 ====================
+
+// 打印时隐藏的元素
+$print-hidden-elements: '.no-print, .toolbar, .sidebar, .minimap';
+
+// 打印时的颜色调整
+$print-background: white;
+$print-text-color: black;
+$print-border-color: #cccccc;

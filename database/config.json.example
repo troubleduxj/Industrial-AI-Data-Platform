@@ -1,0 +1,76 @@
+{
+  "database_url": "postgresql://user:password@localhost:5432/database",
+  "migrations_dir": "database/migrations",
+  "migrations": [
+    {
+      "migration_id": "api_permission_migration",
+      "source_table": "api",
+      "target_table": "t_sys_api_endpoints",
+      "description": "API权限系统迁移"
+    },
+    {
+      "migration_id": "user_permission_migration",
+      "source_table": "user_permissions",
+      "target_table": "t_sys_user_permissions",
+      "description": "用户权限迁移"
+    },
+    {
+      "migration_id": "role_permission_migration",
+      "source_table": "role_permissions",
+      "target_table": "t_sys_role_permissions",
+      "description": "角色权限迁移"
+    }
+  ],
+  "monitoring": {
+    "enabled": true,
+    "interval": 30,
+    "alert_thresholds": {
+      "max_execution_time": 300000,
+      "max_failure_rate": 0.1,
+      "max_pending_time": 3600,
+      "min_success_rate": 0.9
+    },
+    "notifications": {
+      "email": {
+        "enabled": false,
+        "smtp_server": "smtp.example.com",
+        "smtp_port": 587,
+        "use_tls": true,
+        "username": "monitor@example.com",
+        "password": "your_password",
+        "from": "monitor@example.com",
+        "to": ["admin@example.com", "dev@example.com"]
+      },
+      "webhook": {
+        "enabled": false,
+        "url": "https://hooks.slack.com/services/xxx/yyy/zzz",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  },
+  "validation": {
+    "rules_file": "database/validation_rules.json",
+    "default_level": "detailed",
+    "sample_size": 10000,
+    "batch_size": 1000
+  },
+  "switch": {
+    "configs_file": "database/read_switch_configs.json",
+    "default_strategy": "gradual",
+    "switch_intervals": [10, 25, 50, 75, 100],
+    "wait_time_seconds": 60
+  },
+  "alerting": {
+    "config_file": "database/alerting_config.json",
+    "enabled": true,
+    "check_interval": 60
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "migration_system.log",
+    "max_size": "10MB",
+    "backup_count": 5
+  }
+}

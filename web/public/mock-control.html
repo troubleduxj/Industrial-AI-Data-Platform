@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mock数据控制面板</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 800px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+
+    .status-card {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      border: 2px solid #e9ecef;
+    }
+
+    .status-card.enabled {
+      background: #d4edda;
+      border-color: #28a745;
+    }
+
+    .status-card.disabled {
+      background: #f8d7da;
+      border-color: #dc3545;
+    }
+
+    .status-title {
+      font-weight: 600;
+      font-size: 18px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .enabled .status-icon {
+      background: #28a745;
+      color: white;
+    }
+
+    .disabled .status-icon {
+      background: #dc3545;
+      color: white;
+    }
+
+    .status-info {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .button-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    button {
+      padding: 14px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .btn-primary {
+      background: #28a745;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #218838;
+    }
+
+    .btn-danger {
+      background: #dc3545;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #c82333;
+    }
+
+    .btn-secondary {
+      background: #6c757d;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #5a6268;
+    }
+
+    .btn-info {
+      background: #17a2b8;
+      color: white;
+    }
+
+    .btn-info:hover {
+      background: #138496;
+    }
+
+    .console-output {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 20px;
+      border-radius: 8px;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      max-height: 300px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .console-output:empty::before {
+      content: '控制台输出将显示在这里...';
+      color: #666;
+      font-style: italic;
+    }
+
+    .log-success {
+      color: #4ec9b0;
+    }
+
+    .log-error {
+      color: #f48771;
+    }
+
+    .log-info {
+      color: #9cdcfe;
+    }
+
+    .log-warning {
+      color: #dcdcaa;
+    }
+
+    .quick-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid #e9ecef;
+    }
+
+    .quick-link {
+      padding: 8px 16px;
+      background: #f8f9fa;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #495057;
+      font-size: 13px;
+      transition: all 0.3s ease;
+    }
+
+    .quick-link:hover {
+      background: #e9ecef;
+      color: #212529;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎭 Mock数据控制面板</h1>
+    <p class="subtitle">设备监控系统 - 前端Mock数据管理</p>
+
+    <!-- 状态卡片 -->
+    <div id="statusCard" class="status-card">
+      <div class="status-title">
+        <span class="status-icon" id="statusIcon">?</span>
+        <span id="statusText">正在检测...</span>
+      </div>
+      <div class="status-info" id="statusInfo">
+        正在检查Mock模式状态...
+      </div>
+    </div>
+
+    <!-- 操作按钮 -->
+    <div class="button-group">
+      <button class="btn-primary" onclick="enableMock()">✅ 启用Mock模式</button>
+      <button class="btn-danger" onclick="disableMock()">❌ 禁用Mock模式</button>
+      <button class="btn-info" onclick="reloadRules()">🔄 重新加载规则</button>
+      <button class="btn-secondary" onclick="checkStatus()">📊 检查状态</button>
+    </div>
+
+    <!-- 控制台输出 -->
+    <h3 style="margin-bottom: 12px; color: #333;">📋 控制台输出</h3>
+    <div id="consoleOutput" class="console-output"></div>
+
+    <!-- 快捷链接 -->
+    <div class="quick-links">
+      <a href="/" class="quick-link">🏠 返回主页</a>
+      <a href="/#/advanced-settings/mock-data" class="quick-link">⚙️ Mock管理页面</a>
+      <a href="/#/device-monitor/monitor" class="quick-link">📡 实时监测</a>
+      <a href="/mock-diagnostic.html" class="quick-link">🔍 诊断工具</a>
+    </div>
+  </div>
+
+  <script>
+    // 日志输出到页面
+    function log(message, type = 'info') {
+      const output = document.getElementById('consoleOutput')
+      const timestamp = new Date().toLocaleTimeString()
+      const colorClass = `log-${type}`
+      output.innerHTML += `<span class="${colorClass}">[${timestamp}] ${message}</span>\n`
+      output.scrollTop = output.scrollHeight
+      console.log(message)
+    }
+
+    // 更新状态显示
+    function updateStatus(enabled, rulesCount = 0) {
+      const card = document.getElementById('statusCard')
+      const icon = document.getElementById('statusIcon')
+      const text = document.getElementById('statusText')
+      const info = document.getElementById('statusInfo')
+
+      if (enabled) {
+        card.className = 'status-card enabled'
+        icon.textContent = '✓'
+        text.textContent = 'Mock模式已启用'
+        info.textContent = `当前已加载 ${rulesCount} 条Mock规则，API请求将被拦截并返回模拟数据。`
+      } else {
+        card.className = 'status-card disabled'
+        icon.textContent = '✗'
+        text.textContent = 'Mock模式已禁用'
+        info.textContent = '所有API请求将正常发送到后端服务器。'
+      }
+    }
+
+    // 启用Mock模式
+    async function enableMock() {
+      try {
+        log('正在启用Mock模式...', 'info')
+        localStorage.setItem('mock_enabled', 'true')
+        
+        if (window.__mockInterceptor) {
+          window.__mockInterceptor.enable()
+          await window.__mockInterceptor.reload()
+          const stats = window.__mockInterceptor.getStats()
+          log(`✅ Mock模式已启用！加载了 ${stats.rulesCount} 条规则`, 'success')
+          updateStatus(true, stats.rulesCount)
+        } else {
+          log('⚠️ Mock拦截器未初始化，请刷新页面', 'warning')
+          updateStatus(true, 0)
+        }
+      } catch (error) {
+        log(`❌ 启用失败: ${error.message}`, 'error')
+      }
+    }
+
+    // 禁用Mock模式
+    function disableMock() {
+      try {
+        log('正在禁用Mock模式...', 'info')
+        localStorage.setItem('mock_enabled', 'false')
+        
+        if (window.__mockInterceptor) {
+          window.__mockInterceptor.disable()
+          log('✅ Mock模式已禁用', 'success')
+        } else {
+          log('✅ Mock模式已禁用（拦截器未初始化）', 'success')
+        }
+        
+        updateStatus(false, 0)
+      } catch (error) {
+        log(`❌ 禁用失败: ${error.message}`, 'error')
+      }
+    }
+
+    // 重新加载规则
+    async function reloadRules() {
+      try {
+        log('正在重新加载Mock规则...', 'info')
+        
+        if (window.__mockInterceptor) {
+          const rules = await window.__mockInterceptor.reload()
+          log(`✅ 已加载 ${rules.length} 条Mock规则`, 'success')
+          
+          rules.forEach((rule, index) => {
+            log(`  ${index + 1}. [${rule.method}] ${rule.name}`, 'info')
+          })
+          
+          const stats = window.__mockInterceptor.getStats()
+          updateStatus(stats.enabled, stats.rulesCount)
+        } else {
+          log('❌ Mock拦截器未初始化，请刷新主应用', 'error')
+        }
+      } catch (error) {
+        log(`❌ 加载失败: ${error.message}`, 'error')
+      }
+    }
+
+    // 检查状态
+    async function checkStatus() {
+      try {
+        log('正在检查Mock状态...', 'info')
+        
+        const localStorageState = localStorage.getItem('mock_enabled')
+        log(`📦 localStorage状态: ${localStorageState}`, 'info')
+        
+        if (window.__mockInterceptor) {
+          const stats = window.__mockInterceptor.getStats()
+          log(`📊 Mock拦截器状态:`, 'info')
+          log(`  - 启用状态: ${stats.enabled}`, 'info')
+          log(`  - 规则数量: ${stats.rulesCount}`, 'info')
+          log(`  - 命中次数: ${stats.hitCount || 0}`, 'info')
+          
+          if (stats.rules && stats.rules.length > 0) {
+            log(`📋 已加载的规则:`, 'info')
+            stats.rules.forEach((rule, index) => {
+              log(`  ${index + 1}. [${rule.method}] ${rule.name} - ${rule.url_pattern}`, 'info')
+            })
+          }
+          
+          updateStatus(stats.enabled, stats.rulesCount)
+        } else {
+          log('⚠️ Mock拦截器未在主应用中初始化', 'warning')
+          log('💡 请在主应用页面中使用Mock功能', 'warning')
+          updateStatus(localStorageState === 'true', 0)
+        }
+        
+        // 检查后端连接
+        log('正在检查后端连接...', 'info')
+        const response = await fetch('/api/v2/mock-data/active/list')
+        const data = await response.json()
+        log(`✅ 后端返回 ${data.data?.length || 0} 条启用的规则`, 'success')
+        
+      } catch (error) {
+        log(`❌ 状态检查失败: ${error.message}`, 'error')
+      }
+    }
+
+    // 页面加载时自动检查状态
+    window.addEventListener('load', () => {
+      log('🎭 Mock控制面板已加载', 'success')
+      checkStatus()
+    })
+  </script>
+</body>
+</html>
+

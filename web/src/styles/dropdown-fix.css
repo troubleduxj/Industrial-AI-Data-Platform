@@ -1,0 +1,82 @@
+/**
+ * 全局Dropdown菜单超出视口修复
+ * 确保所有dropdown菜单都不会超出浏览器边界
+ */
+
+/* 全局dropdown菜单约束 */
+.n-dropdown-menu {
+  /* 强制约束在视口内 */
+  max-width: calc(100vw - 20px) !important;
+  max-height: calc(100vh - 60px) !important;
+  overflow-y: auto !important;
+  
+  /* 确保菜单有足够的层级 */
+  z-index: 9999 !important;
+  
+  /* 添加边界检测 */
+  box-sizing: border-box !important;
+}
+
+/* 针对右侧对齐的dropdown */
+.n-dropdown-menu[data-placement*="end"],
+.n-dropdown-menu[data-placement*="right"] {
+  /* 强制右对齐，防止超出 */
+  right: 10px !important;
+  left: auto !important;
+  transform-origin: top right !important;
+}
+
+/* 针对header区域的特殊处理 */
+.layout-header .n-dropdown-menu {
+  /* 更严格的约束 */
+  max-width: min(200px, calc(100vw - 30px)) !important;
+  
+  /* 确保在header高度范围内 */
+  top: 100% !important;
+  
+  /* 防止被其他元素遮挡 */
+  z-index: 10000 !important;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .n-dropdown-menu {
+    max-width: calc(100vw - 16px) !important;
+    min-width: 120px !important;
+  }
+  
+  .layout-header .n-dropdown-menu {
+    max-width: calc(100vw - 20px) !important;
+    right: 8px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .n-dropdown-menu {
+    max-width: calc(100vw - 12px) !important;
+    min-width: 100px !important;
+  }
+  
+  .layout-header .n-dropdown-menu {
+    max-width: calc(100vw - 16px) !important;
+    right: 6px !important;
+  }
+}
+
+/* 确保dropdown动画不会导致超出 */
+.n-dropdown-menu {
+  transition: transform 0.2s ease, opacity 0.2s ease !important;
+}
+
+/* 强制约束所有可能超出的情况 */
+.n-dropdown-menu {
+  /* 使用clip-path确保不超出视口 */
+  clip-path: inset(0 0 0 0) !important;
+}
+
+/* 针对菜单展开时的特殊处理 */
+body.menu-expanded .layout-header .n-dropdown-menu {
+  /* 当菜单展开时，进一步约束dropdown位置 */
+  right: 15px !important;
+  max-width: calc(100vw - 40px) !important;
+}

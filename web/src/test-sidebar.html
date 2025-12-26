@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SidebarTrigger 测试</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+        
+        .test-trigger {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 9998;
+            user-select: none;
+        }
+        
+        .trigger-button {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+        
+        .trigger-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 24px rgba(102, 126, 234, 0.6);
+        }
+        
+        .trigger-icon {
+            font-size: 28px;
+            color: white;
+            z-index: 1;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4), 0 0 0 0 rgba(102, 126, 234, 0.7);
+            }
+            70% {
+                box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4), 0 0 0 10px rgba(102, 126, 234, 0);
+            }
+            100% {
+                box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4), 0 0 0 0 rgba(102, 126, 234, 0);
+            }
+        }
+        
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>SidebarTrigger 组件测试页面</h1>
+        <p>这是一个测试页面，用于验证边栏触发器是否能正常显示。</p>
+        <p>请查看页面右侧是否有一个紫色的圆形按钮，带有脉冲动画效果。</p>
+        <p>如果您能看到这个按钮，说明CSS样式是正常的。</p>
+        <p>如果看不到，可能是以下原因：</p>
+        <ul>
+            <li>CSS样式被其他样式覆盖</li>
+            <li>z-index层级问题</li>
+            <li>组件没有正确渲染</li>
+            <li>JavaScript错误阻止了组件显示</li>
+        </ul>
+    </div>
+    
+    <!-- 测试触发器 -->
+    <div class="test-trigger">
+        <button class="trigger-button" onclick="alert('触发器点击成功！')">
+            <span class="trigger-icon">🤖</span>
+        </button>
+    </div>
+    
+    <script>
+        console.log('测试页面已加载');
+        console.log('触发器元素:', document.querySelector('.test-trigger'));
+    </script>
+</body>
+</html>

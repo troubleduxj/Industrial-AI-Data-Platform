@@ -1,0 +1,22 @@
+{
+  "name": "@device-monitor/shared",
+  "version": "1.0.0",
+  "description": "Shared code for DeviceMonitor (Web & Mobile)",
+  "main": "index.ts",
+  "types": "index.ts",
+  "private": true,
+  "exports": {
+    ".": "./index.ts",
+    "./api": "./api/index.ts",
+    "./types": "./types/index.ts",
+    "./utils": "./utils/index.ts"
+  },
+  "scripts": {
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "~5.0.0"
+  }
+}
+

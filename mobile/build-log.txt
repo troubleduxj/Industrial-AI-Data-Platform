@@ -1,0 +1,758 @@
+﻿Preparing project...
+
+Using @nativescript/android which requires nsconfig.json to be present.
+Writing nsconfig.json based on the values set in nativescript.config.(js|ts).
+You may add nsconfig.json to .gitignore as the CLI will regenerate it as necessary.
+
+[@nativescript/webpack] Info: 
+ Discovered config: D:\Cursor\Project\DeviceMonitorV2_20251013_V1\DeviceMonitorV2\mobile\node_modules\nativescript-vue\nativescript.webpack.js
+[@nativescript/webpack] Info: 
+ Applying external config...
+[@nativescript/webpack] Info: 
+ Resolved chainable config (before merges):
+[@nativescript/webpack] Info: 
+ {
+  mode: 'development',
+  externals: [
+    'package.json',
+    '~/package.json'
+  ],
+  externalsPresets: {
+    node: false
+  },
+  devtool: 'inline-source-map',
+  target: 'node',
+  watchOptions: {
+    ignored: [
+      'D:\\Cursor\\Project\\DeviceMonitorV2_20251013_V1\\DeviceMonitorV2\\mobile\\platforms/**',
+      'D:\\Cursor\\Project\\DeviceMonitorV2_20251013_V1\\DeviceMonitorV2\\mobile\\App_Resources/**'
+    ]
+  },
+  ignoreWarnings: [
+    /System.import\(\) is deprecated/
+  ],
+  output: {
+    path: 'D:\\Cursor\\Project\\DeviceMonitorV2_20251013_V1\\DeviceMonitorV2\\mobile\\platforms\\android\\app\\src\\main\\assets\\app',
+    pathinfo: false,
+    publicPath: '',
+    libraryTarget: 'commonjs',
+    globalObject: 'global',
+    clean: true
+  },
+  resolve: {
+    symlinks: true,
+    alias: {
+      '~': 'D:\\Cursor\\Project\\DeviceMonitorV2_20251013_V1\\DeviceMonitorV2\\mobile\\app',
+      '@': 'D:\\Cursor\\Project\\DeviceMonitorV2_20251013_V1\\DeviceMonitorV2\\mobile\\app',
+      vue: 'nativescript-vue',
+      '@shared': 'D:\\Cursor\\Project\\DeviceMonitorV2_20251013_V1\\DeviceMonitorV2\\packages\\shared',
+      '@device-monitor/shared': 'D:\\Cursor\\Project\\DeviceMonitorV2_20251013_V1\\DeviceMonitorV2\\packages\\shared'
+    },
+    extensions: [
+      '.android.vue',
+      '.vue',
+      '.android.ts',
+      '.ts',
+      '.android.js',
+      '.js',
+      '.android.mjs',
+      '.mjs',
+      '.android.css',
+      '.css',
+      '.android.scss',
+      '.scss',
+      '.android.json',
+      '.json'
+    ],
+    modules: [
+      'D:\\Cursor\\Project\\DeviceMonitorV2_20251013_V1\\DeviceMonitorV2\\mobile\\node_modules',
+      'node_modules'
+    ]
+  },
+  resolveLoader: {
+    modules: [
+      'D:\\Cursor\\Project\\DeviceMonitorV2_20251013_V1\\DeviceMonitorV2\\mobile\\node_modules\\@nativescript\\webpack\\dist\\loaders',
+      'D:\\Cursor\\Project\\DeviceMonitorV2_20251013_V1\\DeviceMonitorV2\\mobile\\node_modules\\@nativescript\\webpack\\node_modules',
+      'D:\\Cursor\\Project\\DeviceMonitorV2_20251013_V1\\DeviceMonitorV2\\mobile\\node_modules',
+      'node_modules'
+    ]
+  },
+  module: {
+    rules: [
+      /* config.module.rule('bundle') */
+      {
+        enforce: 'post',
+        test: 'D:\\Cursor\\Project\\DeviceMonitorV2_20251013_V1\\DeviceMonitorV2\\mobile\\app\\app.ts',
+        use: [
+          /* config.module.rule('bundle').use('app-css-loader') */
+          {
+            loader: 'app-css-loader',
+            options: {
+              platform: 'android'
+            }
+          }
+        ]
+      },
+      /* config.module.rule('workers') */
+      {
+        test: /\.(mjs|js|ts)$/,
+        use: [
+          /* config.module.rule('workers').use('nativescript-worker-loader') */
+          {
+            loader: 'nativescript-worker-loader'
+          }
+        ]
+      },
+      /* config.module.rule('ts') */
+      {
+        test: [
+          /\.ts$/
+        ],
+        use: [
+          /* config.module.rule('ts').use('ts-loader') */
+          {
+            loader: 'ts-loader',
+            options: {
+              configFile: 'D:\\Cursor\\Project\\DeviceMonitorV2_20251013_V1\\DeviceMonitorV2\\mobile\\tsconfig.json',
+              transpileOnly: true,
+              allowTsInNodeModules: true,
+              compilerOptions: {
+                sourceMap: true,
+                declaration: false
+              },
+              getCustomTransformers: function () { /* omitted long function */ },
+              appendTsSuffixTo: [
+                '\\.vue$'
+              ]
+            }
+          }
+        ]
+      },
+      /* config.module.rule('js') */
+      {
+        test: /\.js$/,
+        exclude: [
+          /node_modules/
+        ]
+      },
+      /* config.module.rule('xml') */
+      {
+        test: /\.xml$/,
+        use: [
+          /* config.module.rule('xml').use('xml-namespace-loader') */
+          {
+            loader: 'xml-namespace-loader'
+          }
+        ]
+      },
+      /* config.module.rule('css') */
+      {
+        test: /\.css$/,
+        use: [
+          /* config.module.rule('css').use('apply-css-loader') */
+          {
+            loader: 'apply-css-loader'
+          },
+          /* config.module.rule('css').use('css2json-loader') */
+          {
+            loader: 'css2json-loader'
+          },
+          /* config.module.rule('css').use('vue-css-loader') */
+          {
+            loader: 'D:\\Cursor\\Project\\DeviceMonitorV2_20251013_V1\\DeviceMonitorV2\\mobile\\node_modules\\nativescript-vue\\node_modules\\vue-loader\\dist\\stylePostLoader.js'
+          },
+          /* config.module.rule('css').use('postcss-loader') */
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [
+                  [
+                    'postcss-import',
+                    {
+                      resolve: function () { /* omitted long function */ }
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ]
+      },
+      /* config.module.rule('scss') */
+      {
+        test: /\.scss$/,
+        use: [
+          /* config.module.rule('scss').use('apply-css-loader') */
+          {
+            loader: 'apply-css-loader'
+          },
+          /* config.module.rule('scss').use('css2json-loader') */
+          {
+            loader: 'css2json-loader'
+          },
+          /* config.module.rule('scss').use('vue-css-loader') */
+          {
+            loader: 'D:\\Cursor\\Project\\DeviceMonitorV2_20251013_V1\\DeviceMonitorV2\\mobile\\node_modules\\nativescript-vue\\node_modules\\vue-loader\\dist\\stylePostLoader.js'
+          },
+          /* config.module.rule('scss').use('postcss-loader') */
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [
+                  [
+                    'postcss-import',
+                    {
+                      resolve: function () { /* omitted long function */ }
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          /* config.module.rule('scss').use('sass-loader') */
+          {
+            loader: 'sass-loader'
+          }
+        ]
+      },
+      /* config.module.rule('vue') */
+      {
+        test: /\.vue$/,
+        use: [
+          /* config.module.rule('vue').use('vue-loader') */
+          {
+            loader: 'D:\\Cursor\\Project\\DeviceMonitorV2_20251013_V1\\DeviceMonitorV2\\mobile\\node_modules\\nativescript-vue\\node_modules\\vue-loader\\dist\\index.js',
+            options: {
+              compiler: undefined,
+              isServerBuild: false,
+              compilerOptions: {}
+            }
+          }
+        ]
+      }
+    ]
+  },
+  optimization: {
+    runtimeChunk: 'single',
+    splitChunks: {
+      cacheGroups: {
+        defaultVendor: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          name: 'vendor',
+          chunks: 'all'
+        }
+      }
+    },
+    minimizer: [
+      /* config.optimization.minimizer('TerserPlugin') */
+      new TerserPlugin(
+        {
+          terserOptions: {
+            compress: {
+              collapse_vars: false,
+              sequences: false,
+              keep_infinity: true,
+              drop_console: false,
+              global_defs: {
+                __UGLIFIED__: true
+              }
+            },
+            keep_fnames: true,
+            keep_classnames: true,
+            format: {
+              keep_quoted_props: true
+            }
+          }
+        }
+      )
+    ]
+  },
+  plugins: [
+    /* config.plugin('VueLoaderPlugin') */
+    new Plugin(),
+    /* config.plugin('ForkTsCheckerWebpackPlugin') */
+    new ForkTsCheckerWebpackPlugin(
+      {
+        async: false,
+        typescript: {
+          memoryLimit: 4096,
+          configFile: 'D:\\Cursor\\Project\\DeviceMonitorV2_20251013_V1\\DeviceMonitorV2\\mobile\\tsconfig.json',
+          extensions: {
+            vue: {
+              enabled: false,
+              compiler: 'nativescript-vue-template-compiler'
+            }
+          }
+        }
+      }
+    ),
+    /* config.plugin('PlatformSuffixPlugin') */
+    new PlatformSuffixPlugin(
+      {
+        extensions: [
+          'android'
+        ]
+      }
+    ),
+    /* config.plugin('ContextExclusionPlugin|App_Resources') */
+    new ContextExclusionPlugin(
+      /(.*)App_Resources(.*)/
+    ),
+    /* config.plugin('ContextExclusionPlugin|Other_Platforms') */
+    new ContextExclusionPlugin(
+      /\.(ios|visionos)\.(\w+)$/
+    ),
+    /* config.plugin('DefinePlugin') */
+    new DefinePlugin(
+      {
+        __DEV__: true,
+        __NS_WEBPACK__: true,
+        __NS_ENV_VERBOSE__: true,
+        __NS_DEV_HOST_IPS__: '["192.168.110.1","192.168.237.1","172.22.25.38","127.0.0.1"]',
+        __CSS_PARSER__: '"css-tree"',
+        __UI_USE_XML_PARSER__: true,
+        __UI_USE_EXTERNAL_RENDERER__: false,
+        __ANDROID__: true,
+        __IOS__: false,
+        __VISIONOS__: false,
+        __APPLE__: false,
+        'global.isAndroid': true,
+        'global.isIOS': false,
+        'global.isVisionOS': false,
+        process: 'global.process',
+        __VUE_OPTIONS_API__: true,
+        __VUE_PROD_DEVTOOLS__: false,
+        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false
+      }
+    ),
+    /* config.plugin('CopyWebpackPlugin') */
+    new CopyPlugin(
+      {
+        patterns: [
+          {
+            from: 'assets/**',
+            context: 'D:\\Cursor\\Project\\DeviceMonitorV2_20251013_V1\\DeviceMonitorV2\\mobile\\app',
+            noErrorOnMissing: true,
+            globOptions: {
+              dot: false,
+              ignore: [
+                '**/App_Resources/**'
+              ]
+            }
+          },
+          {
+            from: 'fonts/**',
+            context: 'D:\\Cursor\\Project\\DeviceMonitorV2_20251013_V1\\DeviceMonitorV2\\mobile\\app',
+            noErrorOnMissing: true,
+            globOptions: {
+              dot: false,
+              ignore: [
+                '**/App_Resources/**'
+              ]
+            }
+          },
+          {
+            from: '**/*.+(jpg|png)',
+            context: 'D:\\Cursor\\Project\\DeviceMonitorV2_20251013_V1\\DeviceMonitorV2\\mobile\\app',
+            noErrorOnMissing: true,
+            globOptions: {
+              dot: false,
+              ignore: [
+                '**/App_Resources/**'
+              ]
+            }
+          }
+        ]
+      }
+    ),
+    /* config.plugin('WatchStatePlugin') */
+    new WatchStatePlugin()
+  ],
+  entry: {
+    bundle: [
+      '@nativescript/core/globals/index',
+      '@nativescript/core/bundle-entry-points',
+      'D:\\Cursor\\Project\\DeviceMonitorV2_20251013_V1\\DeviceMonitorV2\\mobile\\app\\app.ts',
+      '@nativescript/core/ui/frame',
+      '@nativescript/core/ui/frame/activity'
+    ],
+    'tns_modules/inspector_modules': [
+      '@nativescript/core/inspector_modules'
+    ]
+  }
+}
+assets by path [1m[32m*.js[39m[22m 9 MiB
+  asset [1m[32mvendor.js[39m[22m 8.42 MiB [1m[33m[compared for emit][39m[22m (name: vendor) (id hint: defaultVendor)
+  asset [1m[32mbundle.js[39m[22m 586 KiB [1m[33m[compared for emit][39m[22m (name: bundle)
+  asset [1m[32mruntime.js[39m[22m 13 KiB [1m[33m[compared for emit][39m[22m (name: runtime)
+assets by path [1m[32mfonts/*.ttf[39m[22m 374 KiB
+  asset [1m[32mfonts/fa-solid-900.ttf[39m[22m 204 KiB [1m[33m[compared for emit][39m[22m [from: app/fonts/fa-solid-900.ttf] [1m[32m[copied][39m[22m
+  asset [1m[32mfonts/fa-brands-400.ttf[39m[22m 131 KiB [1m[33m[compared for emit][39m[22m [from: app/fonts/fa-brands-400.ttf] [1m[32m[copied][39m[22m
+  asset [1m[32mfonts/fa-regular-400.ttf[39m[22m 39.1 KiB [1m[33m[compared for emit][39m[22m [from: app/fonts/fa-regular-400.ttf] [1m[32m[copied][39m[22m
+asset [1m[32mtns_modules/inspector_modules.js[39m[22m 1.28 KiB [1m[33m[compared for emit][39m[22m (name: tns_modules/inspector_modules)
+Entrypoint [1mbundle[39m[22m 9 MiB = [1m[32mruntime.js[39m[22m 13 KiB [1m[32mvendor.js[39m[22m 8.42 MiB [1m[32mbundle.js[39m[22m 586 KiB
+Entrypoint [1mtns_modules/inspector_modules[39m[22m 8.43 MiB = [1m[32mruntime.js[39m[22m 13 KiB [1m[32mvendor.js[39m[22m 8.42 MiB [1m[32mtns_modules/inspector_modules.js[39m[22m 1.28 KiB
+orphan modules 5 KiB [1m[33m[orphan][39m[22m 14 modules
+runtime modules 2.8 KiB 8 modules
+modules by path [1m./node_modules/[39m[22m 3.13 MiB 392 modules
+modules by path [1m./app/[39m[22m 183 KiB
+  modules by path [1m./app/pages/*.vue[39m[22m 42.7 KiB
+    [1m./app/pages/LoginPage.vue[39m[22m 966 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+    + 13 modules
+  + 4 modules
+modules by path [1m../packages/shared/api/*.ts[39m[22m 10.8 KiB
+  [1m../packages/shared/api/index.ts[39m[22m 1.29 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m../packages/shared/api/client.ts[39m[22m 2.32 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m../packages/shared/api/auth.ts[39m[22m 1.04 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m../packages/shared/api/device.ts[39m[22m 2.21 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  + 2 modules
+[1mexternal "~/package.json"[39m[22m 42 bytes [1m[33m[optional][39m[22m [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+
+[1m[33mWARNING[39m[22m in [1m./app/app.scss[39m[22m
+[1mModule Warning (from ./node_modules/sass-loader/dist/cjs.js):
+Deprecation The legacy JS API is [1m[33mdeprecated[39m[22m[1m and will be removed in Dart Sass 2.0.0.
+
+More info: https://sass-lang.com/d/legacy-js-api[39m[22m
+ @ ./app/app.ts 2:0-20 11:0-20
+
+[1m[33mWARNING[39m[22m in [1m./app/app.scss[39m[22m
+[1mModule Warning (from ./node_modules/sass-loader/dist/cjs.js):
+Deprecation Warning on line 0, column 8 of file:///D:/Cursor/Project/DeviceMonitorV2_20251013_V1/DeviceMonitorV2/mobile/app/app.scss:0:8:
+Sass @import rules are [1m[33mdeprecated[39m[22m[1m and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+0 | @import '@nativescript/theme/core';
+
+
+app\app.scss 1:9  root stylesheet
+[39m[22m
+ @ ./app/app.ts 2:0-20 11:0-20
+
+[1m[33mWARNING[39m[22m in [1m./app/app.scss[39m[22m
+[1mModule Warning (from ./node_modules/sass-loader/dist/cjs.js):
+Deprecation Warning on line 1, column 8 of file:///D:/Cursor/Project/DeviceMonitorV2_20251013_V1/DeviceMonitorV2/mobile/app/app.scss:1:8:
+Sass @import rules are [1m[33mdeprecated[39m[22m[1m and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+1 | @import '@nativescript/theme/default';
+
+
+app\app.scss 2:9  root stylesheet
+[39m[22m
+ @ ./app/app.ts 2:0-20 11:0-20
+
+[1m[33mWARNING[39m[22m in [1m./app/app.scss[39m[22m
+[1mModule Warning (from ./node_modules/sass-loader/dist/cjs.js):
+Deprecation Warning on line 1, column 8 of file:///D:/Cursor/Project/DeviceMonitorV2_20251013_V1/DeviceMonitorV2/mobile/node_modules/@nativescript/theme/scss/core/_index.scss:1:8:
+Sass @import rules are [1m[33mdeprecated[39m[22m[1m and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+1 | @import '../variables/index';
+
+
+node_modules\@nativescript\theme\scss\core\_index.scss 2:9  @import
+node_modules\@nativescript\theme\core.scss 8:9              @import
+app\app.scss 1:9                                            root stylesheet
+[39m[22m
+ @ ./app/app.ts 2:0-20 11:0-20
+
+[1m[33mWARNING[39m[22m in [1m./app/app.scss[39m[22m
+[1mModule Warning (from ./node_modules/sass-loader/dist/cjs.js):
+Deprecation Warning on line 4, column 8 of file:///D:/Cursor/Project/DeviceMonitorV2_20251013_V1/DeviceMonitorV2/mobile/node_modules/@nativescript/theme/scss/core/_index.scss:4:8:
+Sass @import rules are [1m[33mdeprecated[39m[22m[1m and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+4 | @import './primitives/index';
+
+
+node_modules\@nativescript\theme\scss\core\_index.scss 5:9  @import
+node_modules\@nativescript\theme\core.scss 8:9              @import
+app\app.scss 1:9                                            root stylesheet
+[39m[22m
+ @ ./app/app.ts 2:0-20 11:0-20
+
+[1m[33mWARNING[39m[22m in [1m./app/app.scss[39m[22m
+[1mModule Warning (from ./node_modules/sass-loader/dist/cjs.js):
+Deprecation Warning on line 7, column 8 of file:///D:/Cursor/Project/DeviceMonitorV2_20251013_V1/DeviceMonitorV2/mobile/node_modules/@nativescript/theme/core.scss:7:8:
+Sass @import rules are [1m[33mdeprecated[39m[22m[1m and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+7 | @import './scss/core/index';
+
+
+node_modules\@nativescript\theme\core.scss 8:9  @import
+app\app.scss 1:9                                root stylesheet
+[39m[22m
+ @ ./app/app.ts 2:0-20 11:0-20
+
+[1m[33mWARNING[39m[22m in [1m./app/app.scss[39m[22m
+[1mModule Warning (from ./node_modules/sass-loader/dist/cjs.js):
+Deprecation Warning on line 76, column 30 of file:///D:/Cursor/Project/DeviceMonitorV2_20251013_V1/DeviceMonitorV2/mobile/node_modules/@nativescript/theme/scss/mixins/_utilities.scss:76:30:
+red() is [1m[33mdeprecated[39m[22m[1m. Suggestion:
+
+color.channel($color, "red", $space: rgb)
+
+More info: https://sass-lang.com/d/color-functions
+
+76 |     $color-brightness: round((red($color) * 299) + (green($color) * 587) + math.div(blue($color) * 114, 1000));
+
+
+node_modules\@nativescript\theme\scss\mixins\_utilities.scss 77:31  check-contrast()
+node_modules\@nativescript\theme\scss\mixins\_utilities.scss 86:49  alternate()
+node_modules\@nativescript\theme\scss\variables\_index.scss 56:11   @import
+node_modules\@nativescript\theme\scss\core\_index.scss 2:9          @import
+node_modules\@nativescript\theme\core.scss 8:9                      @import
+app\app.scss 1:9                                                    root stylesheet
+[39m[22m
+ @ ./app/app.ts 2:0-20 11:0-20
+
+[1m[33mWARNING[39m[22m in [1m./app/app.scss[39m[22m
+[1mModule Warning (from ./node_modules/sass-loader/dist/cjs.js):
+Deprecation Warning on line 76, column 52 of file:///D:/Cursor/Project/DeviceMonitorV2_20251013_V1/DeviceMonitorV2/mobile/node_modules/@nativescript/theme/scss/mixins/_utilities.scss:76:52:
+green() is [1m[33mdeprecated[39m[22m[1m. Suggestion:
+
+color.channel($color, "green", $space: rgb)
+
+More info: https://sass-lang.com/d/color-functions
+
+76 |     $color-brightness: round((red($color) * 299) + (green($color) * 587) + math.div(blue($color) * 114, 1000));
+
+
+node_modules\@nativescript\theme\scss\mixins\_utilities.scss 77:53  check-contrast()
+node_modules\@nativescript\theme\scss\mixins\_utilities.scss 86:49  alternate()
+node_modules\@nativescript\theme\scss\variables\_index.scss 56:11   @import
+node_modules\@nativescript\theme\scss\core\_index.scss 2:9          @import
+node_modules\@nativescript\theme\core.scss 8:9                      @import
+app\app.scss 1:9                                                    root stylesheet
+[39m[22m
+ @ ./app/app.ts 2:0-20 11:0-20
+
+[1m[33mWARNING[39m[22m in [1m./app/app.scss[39m[22m
+[1mModule Warning (from ./node_modules/sass-loader/dist/cjs.js):
+Deprecation Warning on line 76, column 84 of file:///D:/Cursor/Project/DeviceMonitorV2_20251013_V1/DeviceMonitorV2/mobile/node_modules/@nativescript/theme/scss/mixins/_utilities.scss:76:84:
+blue() is [1m[33mdeprecated[39m[22m[1m. Suggestion:
+
+color.channel($color, "blue", $space: rgb)
+
+More info: https://sass-lang.com/d/color-functions
+
+76 |     $color-brightness: round((red($color) * 299) + (green($color) * 587) + math.div(blue($color) * 114, 1000));
+
+
+node_modules\@nativescript\theme\scss\mixins\_utilities.scss 77:85  check-contrast()
+node_modules\@nativescript\theme\scss\mixins\_utilities.scss 86:49  alternate()
+node_modules\@nativescript\theme\scss\variables\_index.scss 56:11   @import
+node_modules\@nativescript\theme\scss\core\_index.scss 2:9          @import
+node_modules\@nativescript\theme\core.scss 8:9                      @import
+app\app.scss 1:9                                                    root stylesheet
+[39m[22m
+ @ ./app/app.ts 2:0-20 11:0-20
+
+[1m[33mWARNING[39m[22m in [1m./app/app.scss[39m[22m
+[1mModule Warning (from ./node_modules/sass-loader/dist/cjs.js):
+Deprecation Warning on line 77, column 25 of file:///D:/Cursor/Project/DeviceMonitorV2_20251013_V1/DeviceMonitorV2/mobile/node_modules/@nativescript/theme/scss/mixins/_utilities.scss:77:25:
+red() is [1m[33mdeprecated[39m[22m[1m. Suggestion:
+
+color.channel($color, "red", $space: rgb)
+
+More info: https://sass-lang.com/d/color-functions
+
+77 |     $light-color: round((red(#ffffff) * 299) + (green(#ffffff) * 587) + math.div(blue(#ffffff) * 114, 1000));
+
+
+node_modules\@nativescript\theme\scss\mixins\_utilities.scss 78:26  check-contrast()
+node_modules\@nativescript\theme\scss\mixins\_utilities.scss 86:49  alternate()
+node_modules\@nativescript\theme\scss\variables\_index.scss 56:11   @import
+node_modules\@nativescript\theme\scss\core\_index.scss 2:9          @import
+node_modules\@nativescript\theme\core.scss 8:9                      @import
+app\app.scss 1:9                                                    root stylesheet
+[39m[22m
+ @ ./app/app.ts 2:0-20 11:0-20
+
+[1m[33mWARNING[39m[22m in [1m./app/app.scss[39m[22m
+[1mModule Warning (from ./node_modules/sass-loader/dist/cjs.js):
+Deprecation Warning on line 77, column 48 of file:///D:/Cursor/Project/DeviceMonitorV2_20251013_V1/DeviceMonitorV2/mobile/node_modules/@nativescript/theme/scss/mixins/_utilities.scss:77:48:
+green() is [1m[33mdeprecated[39m[22m[1m. Suggestion:
+
+color.channel($color, "green", $space: rgb)
+
+More info: https://sass-lang.com/d/color-functions
+
+77 |     $light-color: round((red(#ffffff) * 299) + (green(#ffffff) * 587) + math.div(blue(#ffffff) * 114, 1000));
+
+
+node_modules\@nativescript\theme\scss\mixins\_utilities.scss 78:49  check-contrast()
+node_modules\@nativescript\theme\scss\mixins\_utilities.scss 86:49  alternate()
+node_modules\@nativescript\theme\scss\variables\_index.scss 56:11   @import
+node_modules\@nativescript\theme\scss\core\_index.scss 2:9          @import
+node_modules\@nativescript\theme\core.scss 8:9                      @import
+app\app.scss 1:9                                                    root stylesheet
+[39m[22m
+ @ ./app/app.ts 2:0-20 11:0-20
+
+[1m[33mWARNING[39m[22m in [1m./app/app.scss[39m[22m
+[1mModule Warning (from ./node_modules/sass-loader/dist/cjs.js):
+Deprecation Warning on line 663, column 5 of file:///D:/Cursor/Project/DeviceMonitorV2_20251013_V1/DeviceMonitorV2/mobile/node_modules/@nativescript/theme/scss/core/primitives/_kendo-palletes.scss:663:5:
+Global built-in functions are [1m[33mdeprecated[39m[22m[1m and will be removed in Dart Sass 3.0.0.
+[1m[33mUse meta.global-variable-exists instead[39m[22m[1m.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+663 | @if (global_variable_exists("palettes-custom")) {
+
+
+node_modules\@nativescript\theme\scss\core\primitives\_kendo-palletes.scss 664:6  @import
+node_modules\@nativescript\theme\scss\variables\_index.scss 14:9                  @import
+node_modules\@nativescript\theme\scss\core\_index.scss 2:9                        @import
+node_modules\@nativescript\theme\core.scss 8:9                                    @import
+app\app.scss 1:9                                                                  root stylesheet
+[39m[22m
+ @ ./app/app.ts 2:0-20 11:0-20
+
+[1m[33mWARNING[39m[22m in [1m./app/app.scss[39m[22m
+[1mModule Warning (from ./node_modules/sass-loader/dist/cjs.js):
+Deprecation Warning on line 669, column 10 of file:///D:/Cursor/Project/DeviceMonitorV2_20251013_V1/DeviceMonitorV2/mobile/node_modules/@nativescript/theme/scss/core/primitives/_kendo-palletes.scss:669:10:
+Global built-in functions are [1m[33mdeprecated[39m[22m[1m and will be removed in Dart Sass 3.0.0.
+[1m[33mUse map.get instead[39m[22m[1m.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+669 |   @return map-get( $palettes, $name );
+
+
+node_modules\@nativescript\theme\scss\core\primitives\_kendo-palletes.scss 670:11  get-base-palette()
+node_modules\@nativescript\theme\scss\core\primitives\_kendo-palletes.scss 674:20  get-base-hue()
+node_modules\@nativescript\theme\scss\core\primitives\_kendo-palletes.scss 685:19  @import
+node_modules\@nativescript\theme\scss\variables\_index.scss 14:9                   @import
+node_modules\@nativescript\theme\scss\core\_index.scss 2:9                         @import
+node_modules\@nativescript\theme\core.scss 8:9                                     @import
+app\app.scss 1:9                                                                   root stylesheet
+[39m[22m
+ @ ./app/app.ts 2:0-20 11:0-20
+
+[1m[33mWARNING[39m[22m in [1m./app/app.scss[39m[22m
+[1mModule Warning (from ./node_modules/sass-loader/dist/cjs.js):
+Deprecation Warning on line 673, column 10 of file:///D:/Cursor/Project/DeviceMonitorV2_20251013_V1/DeviceMonitorV2/mobile/node_modules/@nativescript/theme/scss/core/primitives/_kendo-palletes.scss:673:10:
+Global built-in functions are [1m[33mdeprecated[39m[22m[1m and will be removed in Dart Sass 3.0.0.
+[1m[33mUse map.get instead[39m[22m[1m.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+673 |   @return map-get( get-base-palette( $palette ), $hue );
+
+
+node_modules\@nativescript\theme\scss\core\primitives\_kendo-palletes.scss 674:11  get-base-hue()
+node_modules\@nativescript\theme\scss\core\primitives\_kendo-palletes.scss 685:19  @import
+node_modules\@nativescript\theme\scss\variables\_index.scss 14:9                   @import
+node_modules\@nativescript\theme\scss\core\_index.scss 2:9                         @import
+node_modules\@nativescript\theme\core.scss 8:9                                     @import
+app\app.scss 1:9                                                                   root stylesheet
+[39m[22m
+ @ ./app/app.ts 2:0-20 11:0-20
+
+[1m[33mWARNING[39m[22m in [1m./app/app.scss[39m[22m
+[1mModule Warning (from ./node_modules/sass-loader/dist/cjs.js):
+Deprecation Warning on line 677, column 10 of file:///D:/Cursor/Project/DeviceMonitorV2_20251013_V1/DeviceMonitorV2/mobile/node_modules/@nativescript/theme/scss/core/primitives/_kendo-palletes.scss:677:10:
+Global built-in functions are [1m[33mdeprecated[39m[22m[1m and will be removed in Dart Sass 3.0.0.
+[1m[33mUse map.get instead[39m[22m[1m.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+677 |   @return map-get( map-get( get-base-palette($palette), contrast), $hue );
+
+
+node_modules\@nativescript\theme\scss\core\primitives\_kendo-palletes.scss 678:11  get-base-contrast()
+node_modules\@nativescript\theme\scss\core\primitives\_kendo-palletes.scss 686:21  @import
+node_modules\@nativescript\theme\scss\variables\_index.scss 14:9                   @import
+node_modules\@nativescript\theme\scss\core\_index.scss 2:9                         @import
+node_modules\@nativescript\theme\core.scss 8:9                                     @import
+app\app.scss 1:9                                                                   root stylesheet
+[39m[22m
+ @ ./app/app.ts 2:0-20 11:0-20
+
+[1m[33mWARNING[39m[22m in [1m./app/app.scss[39m[22m
+[1mModule Warning (from ./node_modules/sass-loader/dist/cjs.js):
+Deprecation Warning on line 677, column 19 of file:///D:/Cursor/Project/DeviceMonitorV2_20251013_V1/DeviceMonitorV2/mobile/node_modules/@nativescript/theme/scss/core/primitives/_kendo-palletes.scss:677:19:
+Global built-in functions are [1m[33mdeprecated[39m[22m[1m and will be removed in Dart Sass 3.0.0.
+[1m[33mUse map.get instead[39m[22m[1m.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+677 |   @return map-get( map-get( get-base-palette($palette), contrast), $hue );
+
+
+node_modules\@nativescript\theme\scss\core\primitives\_kendo-palletes.scss 678:20  get-base-contrast()
+node_modules\@nativescript\theme\scss\core\primitives\_kendo-palletes.scss 686:21  @import
+node_modules\@nativescript\theme\scss\variables\_index.scss 14:9                   @import
+node_modules\@nativescript\theme\scss\core\_index.scss 2:9                         @import
+node_modules\@nativescript\theme\core.scss 8:9                                     @import
+app\app.scss 1:9                                                                   root stylesheet
+[39m[22m
+ @ ./app/app.ts 2:0-20 11:0-20
+
+[1m[33mWARNING[39m[22m in [1m./app/app.scss[39m[22m
+[1mModule Warning (from ./node_modules/sass-loader/dist/cjs.js):
+149 repetitive deprecation warnings omitted.[39m[22m
+ @ ./app/app.ts 2:0-20 11:0-20
+
+webpack 5.102.1 compiled with [1m[33m17 warnings[39m[22m in 7355 ms
+Webpack compilation complete.
+[WatchStatePlugin] Notify:  {
+  type: 'compilation',
+  version: 1,
+  hash: '13af11fc880806ea27e5',
+  data: {
+    emittedAssets: [
+      'bundle.js',
+      'tns_modules/inspector_modules.js',
+      'runtime.js',
+      'vendor.js',
+      'fonts/fa-brands-400.ttf',
+      'fonts/fa-regular-400.ttf',
+      'fonts/fa-solid-900.ttf'
+    ],
+    staleAssets: []
+  }
+}
+	 ~ applying user-defined configuration from D:\Cursor\Project\DeviceMonitorV2_20251013_V1\DeviceMonitorV2\mobile\App_Resources\Android\before-plugins.gradle
+npx : 
+所在位置 C:\Users\duxia\AppData\Local\Temp\ps-script-58cd92c6-0aa2-450a-b362-247ab5ae8ae3.ps1:92 字符: 74
++ ... ceMonitorV2\mobile; npx ns prepare android --env.verbose 2>&1 | Out-F ...
++                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':extractReleaseAnnotations'.
+> Could not resolve all files for configuration ':detachedConfiguration1'.
+   > Could not resolve com.android.tools.lint:lint-gradle:31.12.1.
+     Required by:
+         root project :
+      > Could not resolve com.android.tools.lint:lint-gradle:31.12.1.
+         > Could not get resource 'https://maven.google.com/com/android/tools/lint/lint-gradle/31.12.1/lint-gradle-31.1
+2.1.pom'.
+            > Could not GET 'https://maven.google.com/com/android/tools/lint/lint-gradle/31.12.1/lint-gradle-31.12.1.po
+m'.
+               > Got socket exception during request. It might be caused by SSL misconfiguration
+                  > Connect to maven.google.com:443 [maven.google.com/142.250.217.110] failed: Connection timed out: ge
+tsockopt
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1m 11s
+Failed to build plugin @nativescript/core : 
+Error: Command gradlew.bat failed with exit code 1

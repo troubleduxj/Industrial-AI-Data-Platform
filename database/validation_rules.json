@@ -1,0 +1,81 @@
+{
+  "rules": [
+    {
+      "rule_id": "count_comparison",
+      "rule_name": "记录数量比较",
+      "rule_type": "count",
+      "source_query": "SELECT COUNT(*) FROM {source_table}",
+      "target_query": "SELECT COUNT(*) FROM {target_table}",
+      "comparison_fields": [],
+      "tolerance": 0.0,
+      "enabled": true,
+      "description": "比较源表和目标表的记录总数"
+    },
+    {
+      "rule_id": "primary_key_match",
+      "rule_name": "主键匹配检查",
+      "rule_type": "primary_key",
+      "source_query": "SELECT {pk_field} FROM {source_table}",
+      "target_query": "SELECT {pk_field} FROM {target_table}",
+      "comparison_fields": ["id"],
+      "tolerance": 0.0,
+      "enabled": true,
+      "description": "检查主键在两个表中的匹配情况"
+    },
+    {
+      "rule_id": "api_path_validation",
+      "rule_name": "API路径验证",
+      "rule_type": "field_comparison",
+      "source_query": "SELECT id, path FROM {source_table} WHERE id = $1",
+      "target_query": "SELECT id, api_path FROM {target_table} WHERE id = $1",
+      "comparison_fields": ["path", "api_path"],
+      "tolerance": 0.0,
+      "enabled": true,
+      "description": "验证API路径字段的一致性"
+    },
+    {
+      "rule_id": "permission_code_validation",
+      "rule_name": "权限代码验证",
+      "rule_type": "field_comparison",
+      "source_query": "SELECT id, permission_code FROM {source_table} WHERE id = $1",
+      "target_query": "SELECT id, new_permission FROM {target_table} WHERE id = $1",
+      "comparison_fields": ["permission_code", "new_permission"],
+      "tolerance": 0.0,
+      "enabled": true,
+      "description": "验证权限代码映射的正确性"
+    },
+    {
+      "rule_id": "api_group_validation",
+      "rule_name": "API分组验证",
+      "rule_type": "field_comparison",
+      "source_query": "SELECT id, group_name FROM {source_table} WHERE id = $1",
+      "target_query": "SELECT id, api_group FROM {target_table} WHERE id = $1",
+      "comparison_fields": ["group_name", "api_group"],
+      "tolerance": 0.0,
+      "enabled": true,
+      "description": "验证API分组映射的正确性"
+    },
+    {
+      "rule_id": "status_consistency",
+      "rule_name": "状态一致性检查",
+      "rule_type": "field_comparison",
+      "source_query": "SELECT id, status FROM {source_table} WHERE id = $1",
+      "target_query": "SELECT id, status FROM {target_table} WHERE id = $1",
+      "comparison_fields": ["status"],
+      "tolerance": 0.0,
+      "enabled": true,
+      "description": "验证记录状态的一致性"
+    },
+    {
+      "rule_id": "timestamp_validation",
+      "rule_name": "时间戳验证",
+      "rule_type": "field_comparison",
+      "source_query": "SELECT id, created_at, updated_at FROM {source_table} WHERE id = $1",
+      "target_query": "SELECT id, created_at, updated_at FROM {target_table} WHERE id = $1",
+      "comparison_fields": ["created_at", "updated_at"],
+      "tolerance": 1.0,
+      "enabled": true,
+      "description": "验证时间戳字段的一致性（允许1秒误差）"
+    }
+  ]
+}

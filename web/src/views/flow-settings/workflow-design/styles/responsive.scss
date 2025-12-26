@@ -1,0 +1,799 @@
+/**
+ * 响应式样式
+ * Responsive styles for the workflow designer
+ */
+
+@import 'variables';
+@import 'mixins';
+
+// ============================================================================
+// 响应式断点
+// ============================================================================
+
+// 超小屏幕 (手机竖屏)
+@media (max-width: $breakpoint-xs) {
+  .workflow-designer {
+    // 隐藏侧边栏
+    .left-sidebar,
+    .right-sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      z-index: $z-sidebar;
+      transform: translateX(-100%);
+      transition: transform $duration-normal $easing-ease-out;
+      
+      &.open {
+        transform: translateX(0);
+      }
+    }
+    
+    .right-sidebar {
+      right: 0;
+      transform: translateX(100%);
+      
+      &.open {
+        transform: translateX(0);
+      }
+    }
+    
+    // 主内容区域全宽
+    .main-content {
+      margin-left: 0;
+      margin-right: 0;
+      width: 100%;
+    }
+    
+    // 工具栏适配
+    .canvas-toolbar {
+      flex-wrap: wrap;
+      padding: $spacing-xs;
+      
+      .toolbar-group {
+        margin-bottom: $spacing-xs;
+      }
+      
+      .toolbar-button {
+        min-width: 40px;
+        height: 40px;
+        
+        .button-text {
+          display: none;
+        }
+      }
+    }
+    
+    // 节点库适配
+    .node-library {
+      .library-search {
+        margin-bottom: $spacing-xs;
+      }
+      
+      .library-category {
+        .category-header {
+          padding: $spacing-xs;
+          font-size: $font-size-sm;
+        }
+        
+        .category-items {
+          grid-template-columns: repeat(2, 1fr);
+          gap: $spacing-xs;
+        }
+      }
+      
+      .library-item {
+        padding: $spacing-xs;
+        
+        .item-icon {
+          width: 24px;
+          height: 24px;
+        }
+        
+        .item-name {
+          font-size: $font-size-xs;
+        }
+      }
+    }
+    
+    // 属性面板适配
+    .properties-panel {
+      .panel-header {
+        padding: $spacing-xs;
+        font-size: $font-size-sm;
+      }
+      
+      .panel-content {
+        padding: $spacing-xs;
+      }
+      
+      .form-group {
+        margin-bottom: $spacing-sm;
+        
+        .form-label {
+          font-size: $font-size-xs;
+          margin-bottom: $spacing-xs;
+        }
+        
+        .form-input,
+        .form-select,
+        .form-textarea {
+          font-size: $font-size-sm;
+          padding: $spacing-xs;
+        }
+      }
+    }
+    
+    // 画布适配
+    .workflow-canvas {
+      .canvas-container {
+        touch-action: pan-x pan-y;
+      }
+      
+      // 节点适配
+      .workflow-node {
+        min-width: 80px;
+        min-height: 60px;
+        
+        .node-header {
+          padding: $spacing-xs;
+          font-size: $font-size-xs;
+        }
+        
+        .node-content {
+          padding: $spacing-xs;
+          font-size: $font-size-xs;
+        }
+        
+        .node-ports {
+          .port {
+            width: 8px;
+            height: 8px;
+          }
+        }
+      }
+      
+      // 连接点适配
+      .connection-point {
+        width: 12px;
+        height: 12px;
+        
+        &:hover,
+        &.active {
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+    
+    // 上下文菜单适配
+    .context-menu {
+      min-width: 150px;
+      
+      .menu-item {
+        padding: $spacing-sm $spacing-xs;
+        font-size: $font-size-sm;
+      }
+    }
+    
+    // 模态框适配
+    .modal {
+      .modal-dialog {
+        margin: $spacing-sm;
+        max-width: calc(100vw - #{$spacing-md});
+      }
+      
+      .modal-header {
+        padding: $spacing-sm;
+        
+        .modal-title {
+          font-size: $font-size-lg;
+        }
+      }
+      
+      .modal-body {
+        padding: $spacing-sm;
+        max-height: 60vh;
+        overflow-y: auto;
+      }
+      
+      .modal-footer {
+        padding: $spacing-sm;
+        
+        .btn {
+          margin-left: $spacing-xs;
+        }
+      }
+    }
+  }
+}
+
+// 小屏幕 (手机横屏/小平板)
+@media (min-width: ($breakpoint-xs + 1)) and (max-width: $breakpoint-sm) {
+  .workflow-designer {
+    // 侧边栏可折叠
+    .left-sidebar {
+      width: $sidebar-width-collapsed;
+      
+      &.expanded {
+        width: $sidebar-width;
+      }
+      
+      .sidebar-content {
+        .sidebar-item {
+          .item-text {
+            display: none;
+          }
+        }
+        
+        &.expanded {
+          .sidebar-item {
+            .item-text {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+    
+    .right-sidebar {
+      width: $sidebar-width-collapsed;
+      
+      &.expanded {
+        width: $sidebar-width;
+      }
+    }
+    
+    // 主内容区域适配
+    .main-content {
+      margin-left: $sidebar-width-collapsed;
+      margin-right: $sidebar-width-collapsed;
+      
+      .left-sidebar.expanded ~ & {
+        margin-left: $sidebar-width;
+      }
+      
+      .right-sidebar.expanded ~ & {
+        margin-right: $sidebar-width;
+      }
+    }
+    
+    // 工具栏适配
+    .canvas-toolbar {
+      .toolbar-button {
+        .button-text {
+          display: none;
+        }
+      }
+    }
+    
+    // 节点适配
+    .workflow-node {
+      .node-header {
+        font-size: $font-size-sm;
+      }
+      
+      .node-content {
+        font-size: $font-size-sm;
+      }
+    }
+  }
+}
+
+// 中等屏幕 (平板)
+@media (min-width: ($breakpoint-sm + 1)) and (max-width: $breakpoint-md) {
+  .workflow-designer {
+    // 侧边栏正常显示
+    .left-sidebar,
+    .right-sidebar {
+      width: $sidebar-width;
+    }
+    
+    // 工具栏显示图标和文字
+    .canvas-toolbar {
+      .toolbar-button {
+        .button-text {
+          display: inline;
+        }
+      }
+    }
+    
+    // 节点库网格适配
+    .node-library {
+      .library-category {
+        .category-items {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+    }
+  }
+}
+
+// 大屏幕 (桌面)
+@media (min-width: ($breakpoint-md + 1)) and (max-width: $breakpoint-lg) {
+  .workflow-designer {
+    // 标准布局
+    .left-sidebar,
+    .right-sidebar {
+      width: $sidebar-width;
+    }
+    
+    // 节点库网格
+    .node-library {
+      .library-category {
+        .category-items {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+    }
+    
+    // 属性面板多列布局
+    .properties-panel {
+      .form-row {
+        display: flex;
+        gap: $spacing-sm;
+        
+        .form-group {
+          flex: 1;
+        }
+      }
+    }
+  }
+}
+
+// 超大屏幕 (大桌面)
+@media (min-width: ($breakpoint-lg + 1)) {
+  .workflow-designer {
+    // 宽屏布局
+    .left-sidebar,
+    .right-sidebar {
+      width: $sidebar-width-wide;
+    }
+    
+    .main-content {
+      margin-left: $sidebar-width-wide;
+      margin-right: $sidebar-width-wide;
+    }
+    
+    // 节点库网格
+    .node-library {
+      .library-category {
+        .category-items {
+          grid-template-columns: repeat(5, 1fr);
+        }
+      }
+    }
+    
+    // 工具栏扩展
+    .canvas-toolbar {
+      .toolbar-group {
+        &.extended {
+          display: flex;
+        }
+      }
+    }
+    
+    // 属性面板扩展
+    .properties-panel {
+      .panel-tabs {
+        display: flex;
+        
+        .tab-item {
+          flex: 1;
+        }
+      }
+    }
+  }
+}
+
+// ============================================================================
+// 设备特定样式
+// ============================================================================
+
+// 触摸设备
+@media (hover: none) and (pointer: coarse) {
+  .workflow-designer {
+    // 增大触摸目标
+    .toolbar-button,
+    .menu-item,
+    .tab-item,
+    .form-input,
+    .form-select {
+      min-height: 44px;
+    }
+    
+    // 连接点增大
+    .connection-point {
+      width: 16px;
+      height: 16px;
+      
+      &:hover,
+      &.active {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    
+    // 节点调整手柄增大
+    .node-resize-handle {
+      width: 16px;
+      height: 16px;
+    }
+    
+    // 滚动条样式
+    .scrollable {
+      -webkit-overflow-scrolling: touch;
+      
+      &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+    }
+    
+    // 禁用悬停效果
+    .hover-effect {
+      &:hover {
+        transform: none;
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+// 高分辨率屏幕
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .workflow-designer {
+    // 图标优化
+    .icon {
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+    }
+    
+    // 线条优化
+    .connection-line,
+    .grid-line,
+    .guide-line {
+      shape-rendering: crispEdges;
+    }
+    
+    // 文字优化
+    .text {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  }
+}
+
+// ============================================================================
+// 方向适配
+// ============================================================================
+
+// 横屏
+@media (orientation: landscape) {
+  .workflow-designer {
+    // 横屏时优化布局
+    .mobile-toolbar {
+      flex-direction: row;
+      height: auto;
+      
+      .toolbar-item {
+        flex: 1;
+      }
+    }
+    
+    // 侧边栏可以显示
+    .left-sidebar,
+    .right-sidebar {
+      @include respond-to(tablet) {
+        position: relative;
+        transform: none;
+      }
+    }
+  }
+}
+
+// 竖屏
+@media (orientation: portrait) {
+  .workflow-designer {
+    // 竖屏时隐藏侧边栏
+    @include respond-to(mobile) {
+      .left-sidebar,
+      .right-sidebar {
+        position: fixed;
+        transform: translateX(-100%);
+        
+        &.open {
+          transform: translateX(0);
+        }
+      }
+      
+      .right-sidebar {
+        transform: translateX(100%);
+        
+        &.open {
+          transform: translateX(0);
+        }
+      }
+    }
+    
+    // 工具栏垂直布局
+    .mobile-toolbar {
+      flex-direction: column;
+      width: 100%;
+      
+      .toolbar-item {
+        width: 100%;
+        margin-bottom: $spacing-xs;
+      }
+    }
+  }
+}
+
+// ============================================================================
+// 打印样式
+// ============================================================================
+
+@media print {
+  .workflow-designer {
+    // 隐藏UI元素
+    .left-sidebar,
+    .right-sidebar,
+    .canvas-toolbar,
+    .status-bar,
+    .context-menu,
+    .modal,
+    .tooltip {
+      display: none !important;
+    }
+    
+    // 主内容全宽
+    .main-content {
+      margin: 0;
+      width: 100%;
+      height: auto;
+    }
+    
+    // 画布适配
+    .workflow-canvas {
+      .canvas-container {
+        transform: none !important;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+      }
+      
+      // 网格隐藏
+      .canvas-grid {
+        display: none;
+      }
+      
+      // 参考线隐藏
+      .canvas-guides {
+        display: none;
+      }
+      
+      // 选择框隐藏
+      .selection-box {
+        display: none;
+      }
+    }
+    
+    // 节点样式
+    .workflow-node {
+      break-inside: avoid;
+      
+      // 移除交互样式
+      &:hover,
+      &.selected,
+      &.dragging {
+        box-shadow: none;
+        transform: none;
+      }
+      
+      // 调整手柄隐藏
+      .resize-handles {
+        display: none;
+      }
+    }
+    
+    // 连接线样式
+    .connection-line {
+      // 移除动画
+      animation: none;
+      
+      // 调整颜色
+      stroke: $color-text-primary;
+    }
+    
+    // 连接点隐藏
+    .connection-point {
+      display: none;
+    }
+    
+    // 文字优化
+    .text {
+      color: $color-text-primary;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      // 移除已废弃的color-adjust属性,使用print-color-adjust替代
+      print-color-adjust: exact;
+    }
+    
+    // 背景优化
+    .canvas-background {
+      background: white !important;
+    }
+  }
+}
+
+// ============================================================================
+// 可访问性
+// ============================================================================
+
+// 减少动画
+@media (prefers-reduced-motion: reduce) {
+  .workflow-designer {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+// 高对比度
+@media (prefers-contrast: high) {
+  .workflow-designer {
+    // 增强对比度
+    .workflow-node {
+      border-width: 2px;
+      border-color: $color-text-primary;
+    }
+    
+    .connection-line {
+      stroke-width: 3px;
+      stroke: $color-text-primary;
+    }
+    
+    .toolbar-button,
+    .menu-item {
+      border: 1px solid $color-text-primary;
+    }
+    
+    // 移除渐变和阴影
+    * {
+      background-image: none !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+    }
+  }
+}
+
+// 深色模式偏好
+@media (prefers-color-scheme: dark) {
+  .workflow-designer:not(.theme-light) {
+    @include theme-dark;
+  }
+}
+
+// 浅色模式偏好
+@media (prefers-color-scheme: light) {
+  .workflow-designer:not(.theme-dark) {
+    @include theme-light;
+  }
+}
+
+// ============================================================================
+// 容器查询 (实验性)
+// ============================================================================
+
+// 当容器宽度小于600px时
+@container (max-width: 600px) {
+  .workflow-designer {
+    .canvas-toolbar {
+      flex-wrap: wrap;
+    }
+    
+    .node-library {
+      .category-items {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+}
+
+// 当容器高度小于400px时
+@container (max-height: 400px) {
+  .workflow-designer {
+    .left-sidebar,
+    .right-sidebar {
+      .sidebar-content {
+        .sidebar-section {
+          &:not(.active) {
+            .section-content {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// ============================================================================
+// 工具类
+// ============================================================================
+
+// 响应式显示/隐藏
+.show-xs { display: none; }
+.show-sm { display: none; }
+.show-md { display: none; }
+.show-lg { display: none; }
+.show-xl { display: none; }
+
+.hide-xs { display: block; }
+.hide-sm { display: block; }
+.hide-md { display: block; }
+.hide-lg { display: block; }
+.hide-xl { display: block; }
+
+@include respond-to(mobile) {
+  .show-xs { display: block; }
+  .hide-xs { display: none; }
+}
+
+@include respond-to(tablet) {
+  .show-sm { display: block; }
+  .hide-sm { display: none; }
+}
+
+@include respond-to(desktop) {
+  .show-md { display: block; }
+  .hide-md { display: none; }
+}
+
+@include respond-to(large) {
+  .show-lg { display: block; }
+  .hide-lg { display: none; }
+}
+
+@include respond-to(xlarge) {
+  .show-xl { display: block; }
+  .hide-xl { display: none; }
+}
+
+// 响应式文字大小
+.text-responsive {
+  font-size: $font-size-xs;
+  
+  @include respond-to(tablet) {
+    font-size: $font-size-sm;
+  }
+  
+  @include respond-to(desktop) {
+    font-size: $font-size-base;
+  }
+  
+  @include respond-to(large) {
+    font-size: $font-size-lg;
+  }
+}
+
+// 响应式间距
+.spacing-responsive {
+  padding: $spacing-xs;
+  
+  @include respond-to(tablet) {
+    padding: $spacing-sm;
+  }
+  
+  @include respond-to(desktop) {
+    padding: $spacing-md;
+  }
+  
+  @include respond-to(large) {
+    padding: $spacing-lg;
+  }
+}

@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock数据诊断工具</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .header h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .card h2 {
+            color: #333;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .result {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .result pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .info-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 3px solid #667eea;
+        }
+        
+        .info-item strong {
+            display: block;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Mock数据诊断工具</h1>
+            <p>检查Mock数据管理功能的各个环节</p>
+        </div>
+        
+        <div class="card">
+            <h2>1️⃣ 后端API检查</h2>
+            <button onclick="checkBackendAPI()">检查后端连接</button>
+            <button onclick="getMockRules()">获取Mock规则列表</button>
+            <button onclick="testMockAPI()">测试Mock API</button>
+            <div id="backend-result" class="result" style="display:none;"></div>
+        </div>
+        
+        <div class="card">
+            <h2>2️⃣ Mock拦截器状态</h2>
+            <button onclick="checkInterceptor()">检查拦截器</button>
+            <button onclick="reloadMockRules()">重新加载规则</button>
+            <div id="interceptor-result" class="result" style="display:none;"></div>
+        </div>
+        
+        <div class="card">
+            <h2>3️⃣ 菜单权限检查</h2>
+            <button onclick="checkMenu()">检查Mock管理菜单</button>
+            <div id="menu-result" class="result" style="display:none;"></div>
+        </div>
+        
+        <div class="card">
+            <h2>4️⃣ 完整诊断</h2>
+            <button onclick="runFullDiagnosis()">运行完整诊断</button>
+            <div id="full-result" class="result" style="display:none;"></div>
+        </div>
+    </div>
+    
+    <script>
+        const API_BASE = window.location.origin + '/api/v2';
+        
+        function showResult(elementId, content, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.innerHTML = content;
+        }
+        
+        function showLoading(elementId) {
+            showResult(elementId, '<span class="loading"></span> 检查中...');
+        }
+        
+        function getToken() {
+            return localStorage.getItem('token') || localStorage.getItem('access_token');
+        }
+        
+        async function checkBackendAPI() {
+            showLoading('backend-result');
+            
+            try {
+                const response = await fetch(API_BASE + '/health', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                showResult('backend-result', `
+                    <div class="status success">✓ 后端连接正常</div>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `);
+            } catch (error) {
+                showResult('backend-result', `
+                    <div class="status error">✗ 后端连接失败</div>
+                    <pre>错误: ${error.message}</pre>
+                    <p>请确保后端服务已启动</p>
+                `);
+            }
+        }
+        
+        async function getMockRules() {
+            showLoading('backend-result');
+            
+            const token = getToken();
+            if (!token) {
+                showResult('backend-result', `
+                    <div class="status warning">⚠ 未登录</div>
+                    <p>请先登录系统后再测试</p>
+                `);
+                return;
+            }
+            
+            try {
+                const response = await fetch(API_BASE + '/mock-data/rules', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token,
+                        'token': token
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success && data.data) {
+                    const rules = data.data;
+                    let tableHTML = `
+                        <div class="status success">✓ 成功获取 ${rules.length} 条Mock规则</div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>名称</th>
+                                    <th>URL</th>
+                                    <th>方法</th>
+                                    <th>状态</th>
+                                    <th>优先级</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+                    
+                    if (rules.length === 0) {
+                        tableHTML += '<tr><td colspan="6" style="text-align:center;">❌ 没有Mock规则</td></tr>';
+                    } else {
+                        rules.slice(0, 10).forEach(rule => {
+                            tableHTML += `
+                                <tr>
+                                    <td>${rule.id}</td>
+                                    <td>${rule.name}</td>
+                                    <td>${rule.url_pattern}</td>
+                                    <td>${rule.method}</td>
+                                    <td>${rule.enabled ? '✓ 启用' : '✗ 禁用'}</td>
+                                    <td>${rule.priority}</td>
+                                </tr>
+                            `;
+                        });
+                        
+                        if (rules.length > 10) {
+                            tableHTML += `<tr><td colspan="6" style="text-align:center;">... 还有 ${rules.length - 10} 条规则</td></tr>`;
+                        }
+                    }
+                    
+                    tableHTML += '</tbody></table>';
+                    showResult('backend-result', tableHTML);
+                } else {
+                    showResult('backend-result', `
+                        <div class="status error">✗ 获取Mock规则失败</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `);
+                }
+            } catch (error) {
+                showResult('backend-result', `
+                    <div class="status error">✗ 请求失败</div>
+                    <pre>错误: ${error.message}</pre>
+                `);
+            }
+        }
+        
+        async function testMockAPI() {
+            showLoading('backend-result');
+            
+            const token = getToken();
+            
+            try {
+                const response = await fetch(API_BASE + '/mock-data/rules', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': token ? 'Bearer ' + token : '',
+                        'token': token || ''
+                    }
+                });
+                
+                const result = {
+                    status: response.status,
+                    statusText: response.statusText,
+                    headers: Object.fromEntries(response.headers.entries()),
+                    data: await response.json()
+                };
+                
+                showResult('backend-result', `
+                    <div class="status ${response.ok ? 'success' : 'error'}">${response.ok ? '✓' : '✗'} API响应</div>
+                    <pre>${JSON.stringify(result, null, 2)}</pre>
+                `);
+            } catch (error) {
+                showResult('backend-result', `
+                    <div class="status error">✗ API测试失败</div>
+                    <pre>错误: ${error.message}</pre>
+                `);
+            }
+        }
+        
+        function checkInterceptor() {
+            showLoading('interceptor-result');
+            
+            setTimeout(() => {
+                if (window.__mockInterceptor) {
+                    const stats = window.__mockInterceptor.getStats();
+                    showResult('interceptor-result', `
+                        <div class="status success">✓ Mock拦截器已加载</div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <strong>启用状态</strong>
+                                ${stats.enabled ? '✓ 已启用' : '✗ 已禁用'}
+                            </div>
+                            <div class="info-item">
+                                <strong>规则数量</strong>
+                                ${stats.rulesCount} 条
+                            </div>
+                            <div class="info-item">
+                                <strong>命中次数</strong>
+                                ${stats.hits || 0} 次
+                            </div>
+                        </div>
+                        <pre>${JSON.stringify(stats, null, 2)}</pre>
+                    `);
+                } else {
+                    showResult('interceptor-result', `
+                        <div class="status error">✗ Mock拦截器未加载</div>
+                        <p>请检查 main.js 中是否正确初始化Mock拦截器</p>
+                    `);
+                }
+            }, 500);
+        }
+        
+        async function reloadMockRules() {
+            showLoading('interceptor-result');
+            
+            if (window.__mockInterceptor) {
+                try {
+                    await window.__mockInterceptor.reload();
+                    const stats = window.__mockInterceptor.getStats();
+                    showResult('interceptor-result', `
+                        <div class="status success">✓ Mock规则已重新加载</div>
+                        <pre>当前规则数: ${stats.rulesCount}</pre>
+                    `);
+                } catch (error) {
+                    showResult('interceptor-result', `
+                        <div class="status error">✗ 重新加载失败</div>
+                        <pre>错误: ${error.message}</pre>
+                    `);
+                }
+            } else {
+                showResult('interceptor-result', `
+                    <div class="status error">✗ Mock拦截器未加载</div>
+                `);
+            }
+        }
+        
+        async function checkMenu() {
+            showLoading('menu-result');
+            
+            const token = getToken();
+            if (!token) {
+                showResult('menu-result', `
+                    <div class="status warning">⚠ 未登录</div>
+                    <p>请先登录系统</p>
+                `);
+                return;
+            }
+            
+            try {
+                const response = await fetch(API_BASE + '/base/usermenu', {
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                        'token': token
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success && data.data) {
+                    let found = false;
+                    let menuPath = '';
+                    
+                    function findMenu(menus, path = []) {
+                        for (const menu of menus) {
+                            const currentPath = [...path, menu.name];
+                            if (menu.name === 'Mock数据管理') {
+                                found = true;
+                                menuPath = currentPath.join(' → ');
+                                return menu;
+                            }
+                            if (menu.children) {
+                                const result = findMenu(menu.children, currentPath);
+                                if (result) return result;
+                            }
+                        }
+                        return null;
+                    }
+                    
+                    const mockMenu = findMenu(data.data);
+                    
+                    if (found) {
+                        showResult('menu-result', `
+                            <div class="status success">✓ 找到Mock数据管理菜单</div>
+                            <div class="info-item">
+                                <strong>菜单路径</strong>
+                                ${menuPath}
+                            </div>
+                            <pre>${JSON.stringify(mockMenu, null, 2)}</pre>
+                        `);
+                    } else {
+                        showResult('menu-result', `
+                            <div class="status error">✗ 未找到Mock数据管理菜单</div>
+                            <p>请检查:</p>
+                            <ul>
+                                <li>数据库中是否有Mock数据管理菜单</li>
+                                <li>当前用户是否有该菜单权限</li>
+                                <li>菜单的parent_id是否正确</li>
+                            </ul>
+                        `);
+                    }
+                } else {
+                    showResult('menu-result', `
+                        <div class="status error">✗ 获取菜单失败</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `);
+                }
+            } catch (error) {
+                showResult('menu-result', `
+                    <div class="status error">✗ 请求失败</div>
+                    <pre>错误: ${error.message}</pre>
+                `);
+            }
+        }
+        
+        async function runFullDiagnosis() {
+            showLoading('full-result');
+            
+            let report = '<h3>📋 完整诊断报告</h3>';
+            
+            // 1. 检查登录状态
+            const token = getToken();
+            report += `<h4>1. 登录状态</h4>`;
+            if (token) {
+                report += `<div class="status success">✓ 已登录</div>`;
+            } else {
+                report += `<div class="status error">✗ 未登录</div>`;
+            }
+            
+            // 2. 检查后端连接
+            report += `<h4>2. 后端连接</h4>`;
+            try {
+                const healthResponse = await fetch(API_BASE + '/health');
+                if (healthResponse.ok) {
+                    report += `<div class="status success">✓ 后端正常</div>`;
+                } else {
+                    report += `<div class="status error">✗ 后端异常</div>`;
+                }
+            } catch (error) {
+                report += `<div class="status error">✗ 无法连接后端</div>`;
+            }
+            
+            // 3. 检查Mock API
+            report += `<h4>3. Mock API</h4>`;
+            if (token) {
+                try {
+                    const mockResponse = await fetch(API_BASE + '/mock-data/rules', {
+                        headers: {
+                            'Authorization': 'Bearer ' + token,
+                            'token': token
+                        }
+                    });
+                    const mockData = await mockResponse.json();
+                    if (mockData.success) {
+                        const count = mockData.data ? mockData.data.length : 0;
+                        report += `<div class="status success">✓ Mock API正常 (${count}条规则)</div>`;
+                    } else {
+                        report += `<div class="status error">✗ Mock API返回错误</div>`;
+                    }
+                } catch (error) {
+                    report += `<div class="status error">✗ Mock API请求失败</div>`;
+                }
+            } else {
+                report += `<div class="status warning">⚠ 需要登录</div>`;
+            }
+            
+            // 4. 检查Mock拦截器
+            report += `<h4>4. Mock拦截器</h4>`;
+            if (window.__mockInterceptor) {
+                const stats = window.__mockInterceptor.getStats();
+                report += `<div class="status success">✓ 拦截器已加载 (${stats.rulesCount}条规则, ${stats.enabled ? '已启用' : '已禁用'})</div>`;
+            } else {
+                report += `<div class="status error">✗ 拦截器未加载</div>`;
+            }
+            
+            // 5. 检查菜单
+            report += `<h4>5. 菜单权限</h4>`;
+            if (token) {
+                try {
+                    const menuResponse = await fetch(API_BASE + '/base/usermenu', {
+                        headers: {
+                            'Authorization': 'Bearer ' + token,
+                            'token': token
+                        }
+                    });
+                    const menuData = await menuResponse.json();
+                    if (menuData.success) {
+                        let found = false;
+                        function findMenu(menus) {
+                            for (const menu of menus) {
+                                if (menu.name === 'Mock数据管理') return true;
+                                if (menu.children && findMenu(menu.children)) return true;
+                            }
+                            return false;
+                        }
+                        found = findMenu(menuData.data || []);
+                        if (found) {
+                            report += `<div class="status success">✓ 找到Mock管理菜单</div>`;
+                        } else {
+                            report += `<div class="status error">✗ 未找到Mock管理菜单</div>`;
+                        }
+                    }
+                } catch (error) {
+                    report += `<div class="status error">✗ 菜单请求失败</div>`;
+                }
+            } else {
+                report += `<div class="status warning">⚠ 需要登录</div>`;
+            }
+            
+            showResult('full-result', report);
+        }
+    </script>
+</body>
+</html>
+

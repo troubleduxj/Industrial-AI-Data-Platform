@@ -1,0 +1,14 @@
+{
+  "header": {
+    "height": 60
+  },
+  "tags": {
+    "visible": true,
+    "height": 50
+  },
+  "naiveThemeOverrides": {
+    "Tabs": {
+      "tabFontWeightActive": "600"
+    }
+  }
+}

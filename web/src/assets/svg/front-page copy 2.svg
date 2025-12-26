@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <!-- Background Circle -->
+  <circle cx="250" cy="250" r="200" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  
+  <!-- Main Circuit Board -->
+  <rect x="150" y="180" width="200" height="140" rx="8" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+  
+  <!-- CPU Chip -->
+  <rect x="200" y="220" width="100" height="60" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+  <rect x="210" y="230" width="80" height="40" rx="2" fill="#1e40af" stroke="#3b82f6" stroke-width="1"/>
+  
+  <!-- CPU Grid Pattern -->
+  <g stroke="#60a5fa" stroke-width="0.5" opacity="0.8">
+    <line x1="220" y1="240" x2="280" y2="240"/>
+    <line x1="220" y1="250" x2="280" y2="250"/>
+    <line x1="220" y1="260" x2="280" y2="260"/>
+    <line x1="230" y1="235" x2="230" y2="265"/>
+    <line x1="250" y1="235" x2="250" y2="265"/>
+    <line x1="270" y1="235" x2="270" y2="265"/>
+  </g>
+  
+  <!-- Circuit Traces -->
+  <g stroke="#10b981" stroke-width="2" fill="none">
+    <!-- Horizontal traces -->
+    <path d="M160 200 L190 200 L190 210 L340 210"/>
+    <path d="M160 240 L190 240"/>
+    <path d="M310 240 L340 240 L340 250 L360 250"/>
+    <path d="M160 280 L190 280 L190 290 L340 290"/>
+    
+    <!-- Vertical traces -->
+    <path d="M180 190 L180 220 L200 220"/>
+    <path d="M320 190 L320 220 L300 220"/>
+    <path d="M180 300 L180 270 L200 270"/>
+    <path d="M320 300 L320 270 L300 270"/>
+  </g>
+  
+  <!-- Connection Points -->
+  <g fill="#fbbf24">
+    <circle cx="160" cy="200" r="3"/>
+    <circle cx="160" cy="240" r="3"/>
+    <circle cx="160" cy="280" r="3"/>
+    <circle cx="340" cy="210" r="3"/>
+    <circle cx="340" cy="290" r="3"/>
+    <circle cx="360" cy="250" r="3"/>
+    <circle cx="180" cy="190" r="3"/>
+    <circle cx="320" cy="190" r="3"/>
+    <circle cx="180" cy="300" r="3"/>
+    <circle cx="320" cy="300" r="3"/>
+  </g>
+  
+  <!-- Memory Modules -->
+  <rect x="170" y="195" width="15" height="30" rx="2" fill="#059669" stroke="#10b981" stroke-width="1"/>
+  <rect x="315" y="195" width="15" height="30" rx="2" fill="#059669" stroke="#10b981" stroke-width="1"/>
+  
+  <!-- Data Flow Animation Paths -->
+  <g stroke="#3b82f6" stroke-width="1" fill="none" opacity="0.6">
+    <path d="M100 150 Q150 120 200 150 T300 150 T400 150">
+      <animate attributeName="stroke-dasharray" values="0,20;20,0;0,20" dur="2s" repeatCount="indefinite"/>
+    </path>
+    <path d="M100 350 Q150 380 200 350 T300 350 T400 350">
+      <animate attributeName="stroke-dasharray" values="20,0;0,20;20,0" dur="2s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  
+  <!-- Signal Indicators -->
+  <g>
+    <circle cx="380" cy="150" r="8" fill="#10b981">
+      <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="380" cy="170" r="6" fill="#f59e0b">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="380" cy="185" r="4" fill="#ef4444">
+      <animate attributeName="opacity" values="1;0.5;1" dur="1.2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Network Nodes -->
+  <g stroke="#6366f1" stroke-width="1" fill="#a5b4fc" opacity="0.8">
+    <circle cx="120" cy="120" r="12"/>
+    <circle cx="380" cy="120" r="12"/>
+    <circle cx="120" cy="380" r="12"/>
+    <circle cx="380" cy="380" r="12"/>
+    
+    <!-- Network connections -->
+    <line x1="120" y1="120" x2="200" y2="180" stroke-dasharray="5,5">
+      <animate attributeName="stroke-dashoffset" values="0;10" dur="1s" repeatCount="indefinite"/>
+    </line>
+    <line x1="380" y1="120" x2="300" y2="180" stroke-dasharray="5,5">
+      <animate attributeName="stroke-dashoffset" values="10;0" dur="1s" repeatCount="indefinite"/>
+    </line>
+    <line x1="120" y1="380" x2="200" y2="320" stroke-dasharray="5,5">
+      <animate attributeName="stroke-dashoffset" values="0;10" dur="1s" repeatCount="indefinite"/>
+    </line>
+    <line x1="380" y1="380" x2="300" y2="320" stroke-dasharray="5,5">
+      <animate attributeName="stroke-dashoffset" values="10;0" dur="1s" repeatCount="indefinite"/>
+    </line>
+  </g>
+  
+  <!-- Central Processing Indicator -->
+  <circle cx="250" cy="250" r="25" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.6">
+    <animate attributeName="r" values="25;35;25" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Tech Text -->
+  <text x="250" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1e293b">DEVICE MONITOR</text>
+  <text x="250" y="420" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#64748b">Real-time AI Management</text>
+</svg>

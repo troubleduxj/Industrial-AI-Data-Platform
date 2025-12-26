@@ -1,0 +1,657 @@
+/**
+ * 工作流设计器样式混入
+ * Workflow Designer Style Mixins
+ */
+
+@import './variables.scss';
+
+// ==================== 基础混入 ====================
+
+// 清除浮动
+@mixin clearfix {
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+// 文本省略
+@mixin text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// 多行文本省略
+@mixin text-ellipsis-multiline($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// 隐藏滚动条
+@mixin hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// 自定义滚动条
+@mixin custom-scrollbar($width: 6px, $track-color: transparent, $thumb-color: rgba(0, 0, 0, 0.2)) {
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $width;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+    border-radius: $width / 2;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-color;
+    border-radius: $width / 2;
+    
+    &:hover {
+      background: rgba(0, 0, 0, 0.4);
+    }
+  }
+}
+
+// ==================== 布局混入 ====================
+
+// Flexbox 居中
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Flexbox 垂直居中
+@mixin flex-center-vertical {
+  display: flex;
+  align-items: center;
+}
+
+// Flexbox 水平居中
+@mixin flex-center-horizontal {
+  display: flex;
+  justify-content: center;
+}
+
+// Flexbox 两端对齐
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+// 绝对定位居中
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// 绝对定位填满
+@mixin absolute-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+// 固定宽高比
+@mixin aspect-ratio($width: 1, $height: 1) {
+  position: relative;
+  
+  &::before {
+    content: '';
+    display: block;
+    padding-top: percentage($height / $width);
+  }
+  
+  > * {
+    @include absolute-fill;
+  }
+}
+
+// ==================== 动画混入 ====================
+
+// 过渡动画
+@mixin transition($properties: all, $duration: $animation-duration-base, $timing: $ease-out) {
+  transition: $properties $duration $timing;
+}
+
+// 悬停过渡
+@mixin hover-transition($property: all, $duration: $animation-duration-fast) {
+  transition: $property $duration $ease-out;
+  
+  &:hover {
+    @content;
+  }
+}
+
+// 淡入动画
+@mixin fade-in($duration: $animation-duration-base) {
+  animation: fadeIn $duration $ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// 滑入动画
+@mixin slide-in($direction: 'up', $distance: 20px, $duration: $animation-duration-base) {
+  @if $direction == 'up' {
+    animation: slideInUp $duration $ease-out;
+    
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY($distance);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  } @else if $direction == 'down' {
+    animation: slideInDown $duration $ease-out;
+    
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-$distance);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  } @else if $direction == 'left' {
+    animation: slideInLeft $duration $ease-out;
+    
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX($distance);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  } @else if $direction == 'right' {
+    animation: slideInRight $duration $ease-out;
+    
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(-$distance);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  }
+}
+
+// 缩放动画
+@mixin scale-in($duration: $animation-duration-base) {
+  animation: scaleIn $duration $ease-out-back;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// 脉冲动画
+@mixin pulse($color: $primary-color, $duration: 2s) {
+  animation: pulse $duration infinite;
+  
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba($color, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba($color, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba($color, 0);
+    }
+  }
+}
+
+// ==================== 主题混入 ====================
+
+// 暗色主题
+@mixin dark-theme {
+  [data-theme='dark'] &,
+  .dark-theme & {
+    @content;
+  }
+}
+
+// 主题变量
+@mixin theme-vars($light-vars, $dark-vars) {
+  @each $property, $value in $light-vars {
+    #{$property}: $value;
+  }
+  
+  @include dark-theme {
+    @each $property, $value in $dark-vars {
+      #{$property}: $value;
+    }
+  }
+}
+
+// 主题 mixin
+@mixin theme-light {
+  background-color: $background-color-light;
+  color: $text-color-primary;
+  
+  .workflow-canvas {
+    background-color: $canvas-background;
+  }
+  
+  .workflow-node {
+    background-color: $node-background;
+    border-color: $node-border-color;
+    color: $text-color-primary;
+  }
+  
+  .connection-line {
+    stroke: $connection-color;
+  }
+}
+
+@mixin theme-dark {
+  background-color: $dark-background-color-base;
+  color: $dark-text-color-primary;
+  
+  .workflow-canvas {
+    background-color: $canvas-background-dark;
+  }
+  
+  .workflow-node {
+    background-color: $dark-node-background;
+    border-color: $dark-node-border-color;
+    color: $dark-text-color-primary;
+  }
+  
+  .connection-line {
+    stroke: $dark-text-color-secondary;
+  }
+}
+
+// ==================== 响应式混入 ====================
+
+// 媒体查询
+@mixin media($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: #{$screen-xs - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == sm {
+    @media (min-width: $screen-sm) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media (min-width: $screen-md) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media (min-width: $screen-lg) {
+      @content;
+    }
+  } @else if $breakpoint == xl {
+    @media (min-width: $screen-xl) {
+      @content;
+    }
+  } @else if $breakpoint == xxl {
+    @media (min-width: $screen-xxl) {
+      @content;
+    }
+  }
+}
+
+// 移动端优先
+@mixin mobile-first($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+// 桌面端优先
+@mixin desktop-first($breakpoint) {
+  @media (max-width: ($breakpoint - 1px)) {
+    @content;
+  }
+}
+
+// 响应式断点 mixin
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == mobile {
+    @media (max-width: ($breakpoint-sm - 1px)) {
+      @content;
+    }
+  } @else if $breakpoint == tablet {
+    @media (min-width: $breakpoint-sm) and (max-width: ($breakpoint-md - 1px)) {
+      @content;
+    }
+  } @else if $breakpoint == desktop {
+    @media (min-width: $breakpoint-md) and (max-width: ($breakpoint-lg - 1px)) {
+      @content;
+    }
+  } @else if $breakpoint == large {
+    @media (min-width: $breakpoint-lg) and (max-width: ($breakpoint-xl - 1px)) {
+      @content;
+    }
+  } @else if $breakpoint == xlarge {
+    @media (min-width: $breakpoint-xl) {
+      @content;
+    }
+  }
+}
+
+// ==================== 组件混入 ====================
+
+// 按钮基础样式
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-base;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  @include transition(all);
+  
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+// 按钮尺寸
+@mixin button-size($padding-vertical, $padding-horizontal, $font-size, $border-radius) {
+  padding: $padding-vertical $padding-horizontal;
+  font-size: $font-size;
+  border-radius: $border-radius;
+}
+
+// 按钮变体
+@mixin button-variant($color, $background, $border) {
+  color: $color;
+  background-color: $background;
+  border-color: $border;
+  
+  &:hover {
+    color: $color;
+    background-color: lighten($background, 5%);
+    border-color: lighten($border, 5%);
+  }
+  
+  &:active {
+    color: $color;
+    background-color: darken($background, 5%);
+    border-color: darken($border, 5%);
+  }
+}
+
+// 输入框基础样式
+@mixin input-base {
+  display: block;
+  width: 100%;
+  padding: $spacing-sm $spacing-md;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  color: $text-color-primary;
+  background-color: $white;
+  border: 1px solid $border-color-base;
+  border-radius: $border-radius-base;
+  outline: none;
+  @include transition(border-color, box-shadow);
+  
+  &:focus {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+  }
+  
+  &:disabled {
+    background-color: $gray-1;
+    color: $text-color-disabled;
+    cursor: not-allowed;
+  }
+  
+  &::placeholder {
+    color: $text-color-secondary;
+  }
+}
+
+// 卡片样式
+@mixin card {
+  background: $white;
+  border-radius: $border-radius-base;
+  box-shadow: $box-shadow-base;
+  overflow: hidden;
+  
+  @include dark-theme {
+    background: $dark-node-background;
+    border: 1px solid $dark-border-color-base;
+  }
+}
+
+// 面板样式
+@mixin panel {
+  @include card;
+  padding: $spacing-lg;
+}
+
+// ==================== 工作流特定混入 ====================
+
+// 节点基础样式
+@mixin node-base {
+  position: absolute;
+  min-width: $node-min-width;
+  min-height: $node-min-height;
+  background: $node-background;
+  border: $node-border-width solid $node-border-color;
+  border-radius: $node-border-radius;
+  box-shadow: $node-shadow;
+  cursor: move;
+  user-select: none;
+  @include transition(all);
+  
+  &:hover {
+    box-shadow: $node-shadow-hover;
+    border-color: $node-border-hover;
+  }
+  
+  &.selected {
+    border-color: $node-border-selected;
+    box-shadow: $node-shadow-selected;
+  }
+  
+  &.disabled {
+    background: $node-background-disabled;
+    color: $text-color-disabled;
+    cursor: not-allowed;
+  }
+}
+
+// 节点状态样式
+@mixin node-status($color) {
+  border-left: 4px solid $color;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 8px;
+    height: 8px;
+    background: $color;
+    border-radius: 50%;
+  }
+}
+
+// 连接点样式
+@mixin connection-point {
+  position: absolute;
+  width: $connection-point-size;
+  height: $connection-point-size;
+  background: $connection-point-color;
+  border: $connection-point-border-width solid $connection-point-border;
+  border-radius: 50%;
+  cursor: crosshair;
+  @include transition(all);
+  
+  &:hover {
+    background: $connection-point-hover;
+    border-color: $connection-point-hover;
+    transform: scale(1.2);
+  }
+  
+  &.active {
+    background: $connection-point-active;
+    border-color: $connection-point-active;
+  }
+}
+
+// 连接线样式
+@mixin connection-line($color: $connection-color, $width: $connection-width) {
+  stroke: $color;
+  stroke-width: $width;
+  fill: none;
+  cursor: pointer;
+  @include transition(all);
+  
+  &:hover {
+    stroke: $connection-color-hover;
+    stroke-width: $connection-width-hover;
+  }
+  
+  &.selected {
+    stroke: $connection-color-selected;
+    stroke-width: $connection-width-selected;
+  }
+  
+  &.error {
+    stroke: $connection-color-error;
+    stroke-dasharray: 5, 5;
+  }
+}
+
+// 工具栏样式
+@mixin toolbar {
+  display: flex;
+  align-items: center;
+  height: $toolbar-height;
+  padding: 0 $toolbar-padding;
+  background: $white;
+  border-bottom: 1px solid $border-color-split;
+  box-shadow: $box-shadow-sm;
+  
+  @include dark-theme {
+    background: $dark-background-color-light;
+    border-bottom-color: $dark-border-color-split;
+  }
+}
+
+// 工具栏项目
+@mixin toolbar-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $toolbar-item-size;
+  height: $toolbar-item-size;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  @include transition(all);
+  
+  &:hover {
+    background: $gray-2;
+  }
+  
+  &.active {
+    background: $primary-color;
+    color: $white;
+  }
+  
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+// 侧边栏样式
+@mixin sidebar {
+  width: $sidebar-width;
+  min-width: $sidebar-min-width;
+  max-width: $sidebar-max-width;
+  background: $white;
+  border-right: 1px solid $border-color-split;
+  overflow: hidden;
+  
+  @include dark-theme {
+    background: $dark-background-color-light;
+    border-right-color: $dark-border-color-split;
+  }
+}
+
+// ==================== 打印样式混入 ====================
+
+// 打印时隐藏
+@mixin print-hidden {
+  @media print {
+    display: none !important;
+  }
+}
+
+// 打印时显示
+@mixin print-only {
+  display: none;
+  
+  @media print {
+    display: block !important;
+  }
+}
+
+// 打印样式重置
+@mixin print-reset {
+  @media print {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+    border-color: #cccccc !important;
+  }
+}

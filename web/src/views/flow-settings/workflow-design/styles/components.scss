@@ -1,0 +1,831 @@
+/**
+ * 工作流设计器组件通用样式
+ * Workflow Designer Component Styles
+ */
+
+@import './variables.scss';
+@import './mixins.scss';
+
+// ==================== 基础组件样式 ====================
+
+// 按钮组件
+.workflow-button {
+  @include button-base;
+  
+  // 按钮尺寸
+  &--small {
+    @include button-size(4px, 8px, $font-size-sm, $border-radius-sm);
+  }
+  
+  &--medium {
+    @include button-size(6px, 12px, $font-size-base, $border-radius-base);
+  }
+  
+  &--large {
+    @include button-size(8px, 16px, $font-size-lg, $border-radius-lg);
+  }
+  
+  // 按钮类型
+  &--primary {
+    @include button-variant($white, $primary-color, $primary-color);
+  }
+  
+  &--secondary {
+    @include button-variant($text-color-primary, $white, $border-color-base);
+  }
+  
+  &--success {
+    @include button-variant($white, $success-color, $success-color);
+  }
+  
+  &--warning {
+    @include button-variant($white, $warning-color, $warning-color);
+  }
+  
+  &--error {
+    @include button-variant($white, $error-color, $error-color);
+  }
+  
+  &--text {
+    background: transparent;
+    border: none;
+    color: $primary-color;
+    
+    &:hover {
+      background: rgba($primary-color, 0.1);
+    }
+  }
+  
+  // 图标按钮
+  &--icon {
+    width: $toolbar-item-size;
+    height: $toolbar-item-size;
+    padding: 0;
+    
+    .icon {
+      font-size: 16px;
+    }
+  }
+}
+
+// 输入框组件
+.workflow-input {
+  @include input-base;
+  
+  &--small {
+    padding: 4px 8px;
+    font-size: $font-size-sm;
+  }
+  
+  &--large {
+    padding: 12px 16px;
+    font-size: $font-size-lg;
+  }
+  
+  &--error {
+    border-color: $error-color;
+    
+    &:focus {
+      border-color: $error-color;
+      box-shadow: 0 0 0 2px rgba($error-color, 0.2);
+    }
+  }
+}
+
+// 选择框组件
+.workflow-select {
+  @include input-base;
+  cursor: pointer;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid $text-color-secondary;
+  }
+}
+
+// 复选框组件
+.workflow-checkbox {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  
+  input {
+    margin-right: 8px;
+  }
+  
+  label {
+    cursor: pointer;
+    user-select: none;
+  }
+}
+
+// 开关组件
+.workflow-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 22px;
+  
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $gray-4;
+    border-radius: 22px;
+    @include transition(background-color);
+    
+    &::before {
+      position: absolute;
+      content: '';
+      height: 18px;
+      width: 18px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      border-radius: 50%;
+      @include transition(transform);
+    }
+  }
+  
+  input:checked + .slider {
+    background-color: $primary-color;
+    
+    &::before {
+      transform: translateX(22px);
+    }
+  }
+}
+
+// ==================== 布局组件样式 ====================
+
+// 面板组件
+.workflow-panel {
+  @include panel;
+  
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $spacing-md;
+    padding-bottom: $spacing-sm;
+    border-bottom: 1px solid $border-color-split;
+    
+    h3 {
+      margin: 0;
+      font-size: $font-size-lg;
+      font-weight: $font-weight-medium;
+    }
+  }
+  
+  &__content {
+    flex: 1;
+    overflow: auto;
+  }
+  
+  &__footer {
+    margin-top: $spacing-md;
+    padding-top: $spacing-sm;
+    border-top: 1px solid $border-color-split;
+    text-align: right;
+  }
+}
+
+// 抽屉组件
+.workflow-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  background: $white;
+  box-shadow: $box-shadow-lg;
+  z-index: $zindex-sidebar;
+  @include transition(transform);
+  
+  &--hidden {
+    transform: translateX(100%);
+  }
+  
+  &__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: $zindex-sidebar - 1;
+  }
+}
+
+// 模态框组件
+.workflow-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: $zindex-modal;
+  
+  &__content {
+    background: $white;
+    border-radius: $border-radius-lg;
+    box-shadow: $modal-shadow;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow: auto;
+  }
+}
+
+// 工具提示组件
+.workflow-tooltip {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-sm;
+  white-space: nowrap;
+  z-index: $zindex-tooltip;
+  pointer-events: none;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid rgba(0, 0, 0, 0.8);
+  }
+}
+
+// ==================== 工作流特定组件样式 ====================
+
+// 画布组件
+.workflow-canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: $canvas-background;
+  cursor: grab;
+  
+  &--panning {
+    cursor: grabbing;
+  }
+  
+  &--selecting {
+    cursor: crosshair;
+  }
+  
+  &--connecting {
+    cursor: crosshair;
+  }
+  
+  @include dark-theme {
+    background: $canvas-background-dark;
+  }
+}
+
+// 网格组件
+.workflow-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  
+  &__pattern {
+    fill: none;
+    stroke: $grid-color;
+    stroke-width: 1;
+    opacity: 0.5;
+    
+    @include dark-theme {
+      stroke: $grid-color-dark;
+    }
+  }
+  
+  &__subdivision {
+    fill: none;
+    stroke: $grid-subdivision-color;
+    stroke-width: 0.5;
+    opacity: 0.3;
+    
+    @include dark-theme {
+      stroke: $grid-subdivision-color-dark;
+    }
+  }
+}
+
+// 节点组件
+.workflow-node {
+  @include node-base;
+  
+  &__header {
+    display: flex;
+    align-items: center;
+    padding: $spacing-sm $spacing-md;
+    background: rgba(0, 0, 0, 0.02);
+    border-bottom: 1px solid $border-color-split;
+    
+    .icon {
+      margin-right: $spacing-sm;
+      font-size: 16px;
+    }
+    
+    .title {
+      flex: 1;
+      font-weight: $font-weight-medium;
+      @include text-ellipsis;
+    }
+    
+    .status {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-left: $spacing-sm;
+    }
+  }
+  
+  &__content {
+    padding: $spacing-md;
+    
+    .description {
+      color: $text-color-secondary;
+      font-size: $font-size-sm;
+      @include text-ellipsis-multiline(2);
+    }
+  }
+  
+  &__ports {
+    position: absolute;
+    
+    &--input {
+      left: -$connection-point-size / 2;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    
+    &--output {
+      right: -$connection-point-size / 2;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+  
+  // 节点状态
+  &--idle {
+    @include node-status($node-idle-color);
+  }
+  
+  &--running {
+    @include node-status($node-running-color);
+    @include pulse($node-running-color);
+  }
+  
+  &--success {
+    @include node-status($node-success-color);
+  }
+  
+  &--error {
+    @include node-status($node-error-color);
+  }
+  
+  &--warning {
+    @include node-status($node-warning-color);
+  }
+  
+  &--disabled {
+    @include node-status($node-disabled-color);
+  }
+  
+  // 节点类型
+  &--start {
+    border-color: $node-start-color;
+    
+    .workflow-node__header {
+      background: rgba($node-start-color, 0.1);
+    }
+  }
+  
+  &--end {
+    border-color: $node-end-color;
+    
+    .workflow-node__header {
+      background: rgba($node-end-color, 0.1);
+    }
+  }
+  
+  &--process {
+    border-color: $node-process-color;
+    
+    .workflow-node__header {
+      background: rgba($node-process-color, 0.1);
+    }
+  }
+  
+  &--decision {
+    border-color: $node-decision-color;
+    
+    .workflow-node__header {
+      background: rgba($node-decision-color, 0.1);
+    }
+  }
+}
+
+// 连接点组件
+.workflow-connection-point {
+  @include connection-point;
+  
+  &--input {
+    border-color: $success-color;
+    
+    &:hover {
+      background: $success-color;
+      border-color: $success-color;
+    }
+  }
+  
+  &--output {
+    border-color: $primary-color;
+    
+    &:hover {
+      background: $primary-color;
+      border-color: $primary-color;
+    }
+  }
+}
+
+// 连接线组件
+.workflow-connection {
+  @include connection-line;
+  
+  &--data {
+    stroke: $connection-data-color;
+  }
+  
+  &--control {
+    stroke: $connection-control-color;
+  }
+  
+  &--event {
+    stroke: $connection-event-color;
+  }
+  
+  &--condition {
+    stroke: $connection-condition-color;
+  }
+  
+  &__label {
+    fill: $text-color-primary;
+    font-size: $font-size-sm;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    pointer-events: none;
+  }
+  
+  &__marker {
+    fill: currentColor;
+  }
+}
+
+// 工具栏组件
+.workflow-toolbar {
+  @include toolbar;
+  
+  &__group {
+    display: flex;
+    align-items: center;
+    margin-right: $spacing-md;
+    
+    &:not(:last-child) {
+      border-right: 1px solid $border-color-split;
+      padding-right: $spacing-md;
+    }
+  }
+  
+  &__item {
+    @include toolbar-item;
+    margin-right: $spacing-xs;
+    
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  
+  &__separator {
+    width: 1px;
+    height: 20px;
+    background: $border-color-split;
+    margin: 0 $spacing-sm;
+  }
+}
+
+// 侧边栏组件
+.workflow-sidebar {
+  @include sidebar;
+  
+  &__header {
+    padding: $spacing-md;
+    border-bottom: 1px solid $border-color-split;
+    
+    h3 {
+      margin: 0;
+      font-size: $font-size-lg;
+      font-weight: $font-weight-medium;
+    }
+  }
+  
+  &__content {
+    flex: 1;
+    overflow: auto;
+    padding: $spacing-md;
+  }
+  
+  &__section {
+    margin-bottom: $spacing-lg;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    h4 {
+      margin: 0 0 $spacing-sm 0;
+      font-size: $font-size-base;
+      font-weight: $font-weight-medium;
+      color: $text-color-secondary;
+    }
+  }
+}
+
+// 节点库组件
+.workflow-node-library {
+  &__search {
+    margin-bottom: $spacing-md;
+  }
+  
+  &__category {
+    margin-bottom: $spacing-md;
+    
+    &-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: $spacing-sm 0;
+      cursor: pointer;
+      
+      h5 {
+        margin: 0;
+        font-size: $font-size-base;
+        font-weight: $font-weight-medium;
+      }
+      
+      .icon {
+        @include transition(transform);
+      }
+      
+      &.collapsed .icon {
+        transform: rotate(-90deg);
+      }
+    }
+    
+    &-content {
+      @include transition(all);
+      overflow: hidden;
+      
+      &.collapsed {
+        height: 0;
+      }
+    }
+  }
+  
+  &__node {
+    display: flex;
+    align-items: center;
+    padding: $spacing-sm;
+    margin-bottom: $spacing-xs;
+    background: $white;
+    border: 1px solid $border-color-base;
+    border-radius: $border-radius-base;
+    cursor: grab;
+    @include transition(all);
+    
+    &:hover {
+      border-color: $primary-color;
+      box-shadow: $box-shadow-sm;
+    }
+    
+    &:active {
+      cursor: grabbing;
+    }
+    
+    .icon {
+      margin-right: $spacing-sm;
+      font-size: 16px;
+    }
+    
+    .info {
+      flex: 1;
+      
+      .name {
+        font-weight: $font-weight-medium;
+        @include text-ellipsis;
+      }
+      
+      .description {
+        font-size: $font-size-sm;
+        color: $text-color-secondary;
+        @include text-ellipsis;
+      }
+    }
+  }
+}
+
+// 属性面板组件
+.workflow-property-panel {
+  &__group {
+    margin-bottom: $spacing-lg;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    h4 {
+      margin: 0 0 $spacing-md 0;
+      font-size: $font-size-base;
+      font-weight: $font-weight-medium;
+      color: $text-color-primary;
+    }
+  }
+  
+  &__field {
+    margin-bottom: $spacing-md;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: $spacing-xs;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      color: $text-color-secondary;
+    }
+    
+    .description {
+      margin-top: $spacing-xs;
+      font-size: $font-size-xs;
+      color: $text-color-secondary;
+    }
+    
+    .error {
+      margin-top: $spacing-xs;
+      font-size: $font-size-xs;
+      color: $error-color;
+    }
+  }
+}
+
+// 状态栏组件
+.workflow-status-bar {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 $spacing-md;
+  background: $gray-1;
+  border-top: 1px solid $border-color-split;
+  font-size: $font-size-sm;
+  color: $text-color-secondary;
+  
+  &__item {
+    margin-right: $spacing-md;
+    
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  
+  &__separator {
+    width: 1px;
+    height: 16px;
+    background: $border-color-split;
+    margin: 0 $spacing-sm;
+  }
+}
+
+// 小地图组件
+.workflow-minimap {
+  position: absolute;
+  bottom: $spacing-md;
+  right: $spacing-md;
+  width: 200px;
+  height: 150px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid $border-color-base;
+  border-radius: $border-radius-base;
+  overflow: hidden;
+  z-index: $zindex-sidebar;
+  
+  &__viewport {
+    position: absolute;
+    border: 2px solid $primary-color;
+    background: rgba($primary-color, 0.1);
+    cursor: move;
+  }
+  
+  &__node {
+    position: absolute;
+    background: $primary-color;
+    border-radius: 2px;
+  }
+  
+  &__connection {
+    stroke: $connection-color;
+    stroke-width: 1;
+    fill: none;
+  }
+}
+
+// ==================== 响应式样式 ====================
+
+@include media(md) {
+  .workflow-sidebar {
+    width: $sidebar-width * 0.8;
+  }
+  
+  .workflow-minimap {
+    width: 150px;
+    height: 112px;
+  }
+}
+
+@include media(sm) {
+  .workflow-toolbar {
+    &__group {
+      margin-right: $spacing-sm;
+      
+      &:not(:last-child) {
+        padding-right: $spacing-sm;
+      }
+    }
+  }
+  
+  .workflow-sidebar {
+    width: 100%;
+    max-width: none;
+  }
+  
+  .workflow-minimap {
+    display: none;
+  }
+}
+
+// ==================== 打印样式 ====================
+
+@media print {
+  .workflow-toolbar,
+  .workflow-sidebar,
+  .workflow-minimap,
+  .workflow-status-bar {
+    @include print-hidden;
+  }
+  
+  .workflow-canvas {
+    @include print-reset;
+  }
+  
+  .workflow-node {
+    @include print-reset;
+    break-inside: avoid;
+  }
+  
+  .workflow-connection {
+    stroke: black !important;
+  }
+}

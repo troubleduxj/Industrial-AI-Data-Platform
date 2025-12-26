@@ -1,0 +1,595 @@
+/**
+ * 工作流设计器样式
+ * Workflow Designer Styles
+ */
+
+// 变量定义
+:root {
+  // 颜色变量
+  --workflow-primary: #1890ff;
+  --workflow-success: #52c41a;
+  --workflow-warning: #faad14;
+  --workflow-error: #ff4d4f;
+  --workflow-info: #13c2c2;
+  
+  // 背景色
+  --workflow-bg: #f5f5f5;
+  --workflow-canvas-bg: #ffffff;
+  --workflow-grid-color: #e8e8e8;
+  --workflow-grid-dot-color: #d9d9d9;
+  
+  // 节点颜色
+  --node-bg: #ffffff;
+  --node-border: #d9d9d9;
+  --node-shadow: rgba(0, 0, 0, 0.1);
+  --node-hover-shadow: rgba(0, 0, 0, 0.15);
+  --node-selected-border: var(--workflow-primary);
+  --node-error-border: var(--workflow-error);
+  
+  // 连接线颜色
+  --connection-stroke: #8c8c8c;
+  --connection-hover: var(--workflow-primary);
+  --connection-selected: var(--workflow-primary);
+  --connection-temp: #40a9ff;
+  
+  // 尺寸变量
+  --node-min-width: 120px;
+  --node-min-height: 60px;
+  --node-border-radius: 6px;
+  --connection-stroke-width: 2px;
+  --grid-size: 20px;
+  
+  // 动画变量
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+// 工作流容器
+.workflow-designer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: var(--workflow-bg);
+  overflow: hidden;
+  user-select: none;
+  
+  * {
+    box-sizing: border-box;
+  }
+}
+
+// 画布容器
+.workflow-canvas {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  cursor: grab;
+  
+  &.dragging {
+    cursor: grabbing;
+  }
+  
+  &.connecting {
+    cursor: crosshair;
+  }
+}
+
+// SVG 画布
+.workflow-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  
+  .grid-pattern {
+    .grid-line {
+      stroke: var(--workflow-grid-color);
+      stroke-width: 0.5px;
+      
+      &.major {
+        stroke-width: 1px;
+      }
+    }
+    
+    .grid-dot {
+      fill: var(--workflow-grid-dot-color);
+      r: 1px;
+    }
+  }
+  
+  .alignment-guides {
+    .guide-line {
+      stroke: var(--workflow-primary);
+      stroke-width: 1px;
+      stroke-dasharray: 4 4;
+      opacity: 0.8;
+    }
+  }
+}
+
+// 连接线样式
+.workflow-connections {
+  .connection {
+    fill: none;
+    stroke: var(--connection-stroke);
+    stroke-width: var(--connection-stroke-width);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    pointer-events: stroke;
+    
+    &:hover {
+      stroke: var(--connection-hover);
+      stroke-width: 3px;
+    }
+    
+    &.selected {
+      stroke: var(--connection-selected);
+      stroke-width: 3px;
+    }
+    
+    &.highlighted {
+      stroke: var(--workflow-warning);
+      stroke-width: 3px;
+      animation: pulse 1s infinite;
+    }
+    
+    &.error {
+      stroke: var(--workflow-error);
+      stroke-dasharray: 5 5;
+    }
+  }
+  
+  .temp-connection {
+    fill: none;
+    stroke: var(--connection-temp);
+    stroke-width: var(--connection-stroke-width);
+    stroke-dasharray: 8 4;
+    pointer-events: none;
+    
+    animation: dash 1s linear infinite;
+  }
+  
+  .connection-arrow {
+    fill: var(--connection-stroke);
+    
+    .connection:hover + & {
+      fill: var(--connection-hover);
+    }
+    
+    .connection.selected + & {
+      fill: var(--connection-selected);
+    }
+  }
+}
+
+// 磁性吸附指示器
+.magnetic-indicator {
+  fill: var(--workflow-primary);
+  stroke: var(--workflow-canvas-bg);
+  stroke-width: 2px;
+  opacity: 0.8;
+  animation: pulse 0.8s ease-in-out infinite;
+}
+
+// 节点容器
+.workflow-nodes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  
+  .node-wrapper {
+    position: absolute;
+    pointer-events: auto;
+  }
+}
+
+// 节点样式
+.workflow-node {
+  min-width: var(--node-min-width);
+  min-height: var(--node-min-height);
+  background: var(--node-bg);
+  border: 2px solid var(--node-border);
+  border-radius: var(--node-border-radius);
+  box-shadow: 0 2px 8px var(--node-shadow);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  
+  &:hover {
+    box-shadow: 0 4px 16px var(--node-hover-shadow);
+    transform: translateY(-1px);
+  }
+  
+  &.selected {
+    border-color: var(--node-selected-border);
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  }
+  
+  &.highlighted {
+    border-color: var(--workflow-warning);
+    box-shadow: 0 0 0 2px rgba(250, 173, 20, 0.3);
+  }
+  
+  &.dragging {
+    opacity: 0.8;
+    transform: rotate(2deg);
+    z-index: 1000;
+  }
+  
+  &.error {
+    border-color: var(--node-error-border);
+    
+    .node-header {
+      background: rgba(255, 77, 79, 0.1);
+    }
+  }
+  
+  &.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+// 节点头部
+.node-header {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--node-border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: var(--node-border-radius) var(--node-border-radius) 0 0;
+  
+  .node-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    
+    &.start { color: var(--workflow-success); }
+    &.end { color: var(--workflow-error); }
+    &.process { color: var(--workflow-primary); }
+    &.decision { color: var(--workflow-warning); }
+    &.parallel { color: var(--workflow-info); }
+  }
+  
+  .node-title {
+    font-weight: 500;
+    font-size: 14px;
+    color: #262626;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .node-status {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    
+    &.success { background: var(--workflow-success); }
+    &.error { background: var(--workflow-error); }
+    &.warning { background: var(--workflow-warning); }
+    &.running { 
+      background: var(--workflow-primary);
+      animation: pulse 1s infinite;
+    }
+  }
+}
+
+// 节点内容
+.node-content {
+  padding: 12px;
+  flex: 1;
+  
+  .node-description {
+    font-size: 12px;
+    color: #8c8c8c;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+  
+  .node-properties {
+    .property-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+      font-size: 12px;
+      
+      .property-label {
+        color: #595959;
+      }
+      
+      .property-value {
+        color: #262626;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+// 节点连接点
+.node-connector {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--workflow-primary);
+  background: var(--node-bg);
+  border-radius: 50%;
+  cursor: crosshair;
+  transition: all var(--transition-fast);
+  z-index: 10;
+  
+  &.input {
+    left: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  &.output {
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  &:hover {
+    transform: translateY(-50%) scale(1.2);
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.3);
+  }
+  
+  &.active {
+    background: var(--workflow-primary);
+    transform: translateY(-50%) scale(1.3);
+  }
+  
+  &.magnetic {
+    background: var(--workflow-warning);
+    border-color: var(--workflow-warning);
+    animation: pulse 0.6s ease-in-out infinite;
+  }
+}
+
+// 节点操作按钮
+.node-actions {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  
+  .workflow-node:hover & {
+    opacity: 1;
+  }
+  
+  .action-btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    transition: all var(--transition-fast);
+    
+    &.edit {
+      background: var(--workflow-primary);
+      color: white;
+      
+      &:hover {
+        background: #40a9ff;
+      }
+    }
+    
+    &.copy {
+      background: var(--workflow-success);
+      color: white;
+      
+      &:hover {
+        background: #73d13d;
+      }
+    }
+    
+    &.delete {
+      background: var(--workflow-error);
+      color: white;
+      
+      &:hover {
+        background: #ff7875;
+      }
+    }
+  }
+}
+
+// 选择框
+.selection-box {
+  position: absolute;
+  border: 1px dashed var(--workflow-primary);
+  background: rgba(24, 144, 255, 0.1);
+  pointer-events: none;
+  z-index: 999;
+}
+
+// 错误提示
+.node-error-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--workflow-error);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1001;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: var(--workflow-error);
+  }
+}
+
+// 动画定义
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -12;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .workflow-node {
+    min-width: 100px;
+    min-height: 50px;
+  }
+  
+  .node-header {
+    padding: 6px 8px;
+    
+    .node-title {
+      font-size: 12px;
+    }
+  }
+  
+  .node-content {
+    padding: 8px;
+    
+    .node-description {
+      font-size: 11px;
+    }
+  }
+  
+  .node-connector {
+    width: 10px;
+    height: 10px;
+    
+    &.input {
+      left: -5px;
+    }
+    
+    &.output {
+      right: -5px;
+    }
+  }
+}
+
+// 深色主题支持
+@media (prefers-color-scheme: dark) {
+  :root {
+    --workflow-bg: #141414;
+    --workflow-canvas-bg: #1f1f1f;
+    --workflow-grid-color: #303030;
+    --workflow-grid-dot-color: #434343;
+    
+    --node-bg: #262626;
+    --node-border: #434343;
+    --node-shadow: rgba(0, 0, 0, 0.3);
+    --node-hover-shadow: rgba(0, 0, 0, 0.4);
+    
+    --connection-stroke: #8c8c8c;
+  }
+  
+  .node-header {
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom-color: #434343;
+    
+    .node-title {
+      color: #f0f0f0;
+    }
+  }
+  
+  .node-content {
+    .node-description {
+      color: #8c8c8c;
+    }
+    
+    .property-label {
+      color: #a6a6a6;
+    }
+    
+    .property-value {
+      color: #f0f0f0;
+    }
+  }
+}
+
+// 打印样式
+@media print {
+  .workflow-designer {
+    background: white;
+  }
+  
+  .node-actions,
+  .selection-box,
+  .magnetic-indicator {
+    display: none;
+  }
+  
+  .workflow-node {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    
+    &:hover {
+      transform: none;
+    }
+  }
+  
+  .connection {
+    &:hover {
+      stroke-width: var(--connection-stroke-width);
+    }
+  }
+}

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API文档模式对比 - 在线 vs 离线</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #1976d2;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+
+        .current-status {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .doc-type {
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .doc-type:hover {
+            transform: translateY(-5px);
+        }
+
+        .doc-type::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4caf50, #8bc34a);
+        }
+
+        .online {
+            background: linear-gradient(135deg, #f1f8e9, #e8f5e8);
+            border: 2px solid #4caf50;
+        }
+
+        .offline {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border: 2px solid #ff9800;
+        }
+
+        .offline::before {
+            background: linear-gradient(90deg, #ff9800, #ffc107);
+        }
+
+        .doc-type h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .features {
+            text-align: left;
+            margin: 20px 0;
+            padding-left: 0;
+        }
+
+        .features li {
+            margin: 12px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            list-style: none;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .features li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4caf50;
+        }
+
+        .features li.warning::before {
+            background: #ff9800;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 8px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9em;
+        }
+
+        .btn-online {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            color: white;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-offline {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .switch-guide {
+            margin: 40px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            border-left: 4px solid #6c757d;
+        }
+
+        .switch-guide h3 {
+            color: #495057;
+            margin-top: 0;
+        }
+
+        .code {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .highlight {
+            background: rgba(255, 255, 0, 0.2);
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        .status-online {
+            background: #4caf50;
+        }
+
+        .status-offline {
+            background: #ff9800;
+        }
+
+        .status-error {
+            background: #f44336;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .footer-links {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e9ecef;
+        }
+
+        .footer-links .btn {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            color: white;
+            margin: 0 10px;
+        }
+
+        @media (max-width: 768px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🚀 API文档模式对比</h1>
+
+        <div class="current-status">
+            <h3>📊 当前文档模式</h3>
+            <p id="current-mode-text">
+                <span class="status-indicator status-error"></span>
+                检测中...
+            </p>
+        </div>
+
+        <div class="comparison">
+            <div class="doc-type online">
+                <h3>🌐 在线文档模式</h3>
+                <ul class="features">
+                    <li>使用CDN资源，加载速度快</li>
+                    <li>最新的UI界面和功能</li>
+                    <li>自动更新的组件</li>
+                    <li>更好的交互体验</li>
+                    <li>支持OAuth2认证流程</li>
+                    <li>完整的API测试功能</li>
+                    <li class="warning">需要互联网连接</li>
+                </ul>
+                <a href="/docs" class="btn btn-online" target="_blank">🔗 Swagger UI</a>
+                <a href="/redoc" class="btn btn-online" target="_blank">📚 ReDoc</a>
+            </div>
+
+            <div class="doc-type offline">
+                <h3>💾 离线文档模式</h3>
+                <ul class="features">
+                    <li>内网环境完全可用</li>
+                    <li>不依赖外部CDN</li>
+                    <li>自定义样式和功能</li>
+                    <li>企业环境友好</li>
+                    <li>完全离线可用</li>
+                    <li>安全性更高</li>
+                    <li class="warning">UI可能不是最新版本</li>
+                </ul>
+                <a href="/docs" class="btn btn-offline" target="_blank">🔗 离线Swagger</a>
+                <a href="/redoc" class="btn btn-offline" target="_blank">📚 离线ReDoc</a>
+            </div>
+        </div>
+
+        <div class="switch-guide">
+            <h3>🔄 如何切换文档模式</h3>
+
+            <h4>方法1: 使用切换脚本（推荐）</h4>
+            <div class="code">
+                # 切换到在线文档
+                python switch_docs_mode.py online
+
+                # 切换到离线文档
+                python switch_docs_mode.py offline
+
+                # 查看当前模式
+                python switch_docs_mode.py status
+            </div>
+
+            <h4>方法2: 手动修改配置</h4>
+            <div class="code">
+                # 在 app/__init__.py 中修改：
+
+                # 在线模式：
+                docs_url="/docs", # 启用在线Swagger UI
+                redoc_url="/redoc", # 启用在线ReDoc
+
+                # 离线模式：
+                docs_url=None, # 禁用默认文档
+                redoc_url=None, # 禁用默认ReDoc
+            </div>
+
+            <p><strong>⚠️ 重要提醒</strong>：修改后需要重启服务才能生效</p>
+            <div class="code">
+                python run.py
+            </div>
+        </div>
+
+        <div class="footer-links">
+            <a href="/openapi.json" class="btn" target="_blank">📄 OpenAPI规范</a>
+            <a href="/" class="btn">🏠 返回首页</a>
+        </div>
+    </div>
+
+    <script>
+        // 检测当前文档模式
+        async function detectCurrentMode() {
+            const statusElement = document.getElementById('current-mode-text');
+
+            try {
+                const response = await fetch('/docs');
+                const text = await response.text();
+
+                if (response.ok) {
+                    if (text.includes('swagger-ui-bundle.js') || text.includes('cdn.jsdelivr.net')) {
+                        statusElement.innerHTML = `
+                            <span class="status-indicator status-online"></span>
+                            <strong style="color: #4caf50;">🌐 在线文档模式</strong><br>
+                            <small>使用CDN资源，最新UI界面</small>
+                        `;
+                    } else if (text.includes('swagger') || text.includes('API')) {
+                        statusElement.innerHTML = `
+                            <span class="status-indicator status-offline"></span>
+                            <strong style="color: #ff9800;">💾 离线文档模式</strong><br>
+                            <small>使用本地资源，内网可用</small>
+                        `;
+                    } else {
+                        statusElement.innerHTML = `
+                            <span class="status-indicator status-error"></span>
+                            <strong style="color: #f44336;">❓ 未知模式</strong><br>
+                            <small>无法识别当前文档类型</small>
+                        `;
+                    }
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                statusElement.innerHTML = `
+                    <span class="status-indicator status-error"></span>
+                    <strong style="color: #f44336;">❌ 检测失败</strong><br>
+                    <small>请检查服务状态 (${error.message})</small>
+                `;
+            }
+        }
+
+        // 页面加载时检测模式
+        window.addEventListener('load', detectCurrentMode);
+
+        // 每30秒重新检测一次
+        setInterval(detectCurrentMode, 30000);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_core\ingestion\monitor.py
+# hypothesis_version: 6.148.8
+
+[0.0, 0.1, 0.5, 0.9, 10.0, 'adapter', 'adapters', 'bytes_per_second', 'config', 'degraded', 'error_count', 'error_rate', 'error_statistics', 'health', 'health_summary', 'healthy', 'is_running', 'issue', 'issues', 'last_check_time', 'latency_ms', 'metrics', 'name', 'overall', 'overall_health', 'overall_status', 'protocol', 'running_adapters', 'statistics', 'status', 'stopped_adapters', 'success_count', 'success_rate', 'timestamp', 'total_adapters', 'total_bytes', 'total_data_points', 'unhealthy', 'unknown', 'uptime_seconds', '运行超过1分钟但未收到数据', '适配器处于错误状态', '适配器正在重连', '采集监控已停止', '采集监控已启动']

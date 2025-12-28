@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\middleware\audit_middleware.py
+# hypothesis_version: 6.148.8
+
+[200, 400, 401, 403, 1000, ',', '/', '/api/v2/admin', '/api/v2/permissions', '/api/v2/roles', '/api/v2/system', '/api/v2/users', '/batch', '/bulk', '/delete-multiple', '/docs', '/favicon.ico', '/health', '/login', '/logout', '/metrics', '/openapi.json', '/redoc', '0', 'API', 'API_ACCESS', 'DELETE', 'ERROR', 'PATCH', 'POST', 'PUT', 'UNKNOWN', 'anonymous', 'application/json', 'body_data', 'content-length', 'content-type', 'content_length', 'content_type', 'count', 'delete', 'error', 'exception_message', 'exception_type', 'ids', 'is_superuser', 'permission', 'query_params', 'role', 'unknown', 'user_id', 'username', '删除', '操作', '认证失败']

@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\schemas\users.py
+# hypothesis_version: 6.148.8
+
+['123456', 'admin', 'admin@qq.com', 'nick_name', 'role_ids', '新密码', '旧密码', '昵称', '部门ID']

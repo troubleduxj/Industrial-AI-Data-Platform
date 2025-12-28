@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\services\ai\health_scoring.py
+# hypothesis_version: 6.148.8
+
+[0.0, 0.01, 0.05, 0.1, 0.2, 0.25, 0.3, 0.5, 0.7, 0.8, 0.9, 0.95, 1.0, 24.0, 40.0, 60.0, 80.0, 90.0, 100.0, 720.0, 100, 150, 200, 250, 300, 375, 400, 500, 'A-优秀', 'B-良好', 'C-一般', 'D-较差', 'F-危险', 'anomaly', 'dimension_scores', 'error', 'grade', 'grade_code', 'performance', 'total_score', 'trend', 'uptime', 'weights', '上升', '下降', '平稳', '性能指标为空']

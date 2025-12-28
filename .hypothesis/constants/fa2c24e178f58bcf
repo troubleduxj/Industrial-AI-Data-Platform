@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\error_logger.py
+# hypothesis_version: 6.148.8
+
+[1000, '***REDACTED***', '...[TRUNCATED]', 'CRITICAL', 'ERROR', 'INFO', 'WARNING', 'api_version', 'auth', 'authorization', 'business_logic', 'business_rule', 'client_info', 'client_ip', 'code', 'context', 'cookie', 'credential', 'critical_errors', 'date_range', 'description', 'details', 'end', 'endpoint_errors', 'error_by_endpoint', 'error_by_type', 'error_by_user', 'error_category', 'error_code', 'error_counts', 'error_data', 'error_details', 'error_message', 'error_trends', 'error_type', 'error_types', 'event_type', 'headers', 'ip', 'key', 'method', 'most_common_errors', 'password', 'path', 'private', 'query_params', 'referer', 'request_id', 'request_info', 'secret', 'security', 'session', 'start', 'timestamp', 'token', 'total_errors', 'traceback', 'unknown', 'url', 'user-agent', 'user_agent', 'user_id', 'v1', 'validation', 'validation_errors']

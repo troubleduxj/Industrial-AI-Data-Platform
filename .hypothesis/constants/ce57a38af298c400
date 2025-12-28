@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\ai_engine\decision_engine\rule_runtime.py
+# hypothesis_version: 6.148.8
+
+['action', 'actions', 'category_id', 'conditions', 'cooldown_seconds', 'description', 'enabled', 'model_id', 'name', 'prediction', 'priority', 'rule_id', 'rule_name', 'triggered_at']

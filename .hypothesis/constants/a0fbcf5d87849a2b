@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_core\ingestion\retry_manager.py
+# hypothesis_version: 6.148.8
+
+[0.1, 1.0, 2.0, 60.0, 100, 1000, 'T', 'attempt', 'by_source', 'context', 'error_message', 'error_statistics', 'error_type', 'error_types', 'exponential', 'exponential_jitter', 'fixed', 'linear', 'max_attempts', 'recent_errors', 'resolved', 'resolved_errors', 'retry_counts', 'source', 'timestamp', 'total_errors', 'unresolved_errors']

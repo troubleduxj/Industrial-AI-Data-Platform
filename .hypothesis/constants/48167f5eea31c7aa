@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\__init__.py
+# hypothesis_version: 6.148.8
+
+['*', '/', '/api', '/api/v1', '/api/v2/ai', '/docs', '/favicon.ico', '/health', '/metrics', '/openapi.json', '/redoc', 'AI监测 v2', 'DELETE', 'Device Monitor API', 'GET', 'MIT License', 'POST', 'PUT', 'api_base', 'description', 'docs', 'email', 'message', 'name', 'success', 'sync_on_startup', 'url', 'v1', 'version', '⏸️ AI模块未启用，跳过初始化', '✅ AI模块初始化完成', '✅ Swagger文档服务初始化完成', '✅ 启动时文档同步完成', '✅ 外部API服务初始化完成', '✅ 外部API服务已关闭', '✅ 工作流调度器启动完成', '✅ 工作流调度器已停止', '✅ 数据库初始化完成', '✅ 数据库连接已关闭', '✅ 权限系统性能优化完成', '健康检查', '健康检查 v2', '关闭外部API服务...', '关闭数据库连接...', '初始化Swagger文档服务...', '初始化外部API服务...', '初始化数据库...', '启动权限系统性能优化...', '应用关闭中...', '应用启动中...', '开发环境', '检查AI模块配置...', '检查工作流调度器配置...', '生产环境', '用户信息管理接口', '用户管理', '用户管理 v2', '用户认证相关接口', '系统健康状态检查接口', '系统健康状态检查接口 - v2版本', '系统管理', '系统配置和管理接口', '角色和权限管理接口', '角色管理', '认证', '设备信息管理接口', '设备管理', '🔚 应用关闭完成', '🚀 应用启动完成', '🚀 开始初始化AI模块...']

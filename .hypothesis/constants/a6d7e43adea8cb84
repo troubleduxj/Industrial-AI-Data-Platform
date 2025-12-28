@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\permission_decorators.py
+# hypothesis_version: 6.148.8
+
+['action', 'add_api', 'add_role', 'api_ids', 'assign_permission', 'assign_role', 'delete_role', 'id', 'modify_role', 'modify_user', 'name', 'refresh_api', 'remove_api', 'remove_permission', 'remove_role', 'role_id', 'role_ids', 'update_api', 'update_role', 'update_user', 'user_id', 'user_role_change', 'user_status_change', 'username']

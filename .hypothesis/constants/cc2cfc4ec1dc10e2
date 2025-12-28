@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v2\health.py
+# hypothesis_version: 6.148.8
+
+['/', '/version', '2025-01-06T00:00:00', 'api_version', 'basic_functionality', 'current_version', 'features', 'healthy', 'legacy_responses', 'status', 'supported_versions', 'timestamp', 'v1', 'v2', 'version_control', 'version_features', '健康检查 v2', '获取API版本信息', '获取系统健康状态 - v2版本']

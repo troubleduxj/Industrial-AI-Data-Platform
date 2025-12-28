@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\services\ai\data_loader.py
+# hypothesis_version: 6.148.8
+
+['bfill', 'data', 'ffill', 'fill_na', 'head', 'standard']

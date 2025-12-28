@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\services\documentation_sync_service.py
+# hypothesis_version: 6.148.8
+
+[-1000, 200, '# API变更日志\n\n', '### 修改\n\n', '### 删除\n\n', '### 新增\n\n', '---\n\n', '.', '/api/v2/', '/docs', '/health', '/openapi.json', '/redoc', '2.0.0', 'API文档变更通知', 'DELETE', 'GET', 'No versions found', 'PATCH', 'POST', 'PUT', 'added', 'api_hash', 'auto_sync', 'auto_sync disabled', 'backup_versions', 'change_type', 'changes', 'changes_count', 'current_endpoints', 'current_version', 'description', 'docs/api-v2', 'endpoints_count', 'error', 'excluded_paths', 'generate_changelog', 'hash', 'last_sync', 'method', 'methods', 'modified', 'name', 'no_changes', 'note', 'notification_webhook', 'path', 'r', 'reason', 'removed', 'rollback_timestamp', 'skipped', 'status', 'success', 'summary', 'sync_on_startup', 'tags', 'target_endpoints', 'target_version', 'timestamp', 'title', 'track_changes', 'utf-8', 'version', 'versions', 'w']

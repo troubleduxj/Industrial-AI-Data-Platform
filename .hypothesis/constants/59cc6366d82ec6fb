@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\auth_dependencies.py
+# hypothesis_version: 6.148.8
+
+['Bearer ', 'X-Token', 'dev', '使用开发模式令牌', '无效或已过期的访问令牌', '用户账户已被禁用', '缺少访问令牌', '认证失败', '需要超级管理员权限']

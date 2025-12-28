@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\security.py
+# hypothesis_version: 6.148.8
+
+[100, 400, 404, 1000, 1440, '/security/cleanup', '/security/config', '/security/enums', '/security/events', '/security/status', '/security/summary', '/security/threats', 'blocked_count', 'critical', 'event_types', 'healthy', 'input_validation', 'last_activity', 'middleware_config', 'rate_limiting', 'recent_events_count', 'request_count', 'security_headers', 'security_levels', 'status', 'timestamp', 'warning', '事件类型过滤', '安全级别过滤', '客户端IP过滤', '清理多少天前的数据', '获取最近多少分钟的事件', '返回事件数量限制', '返回威胁IP数量']

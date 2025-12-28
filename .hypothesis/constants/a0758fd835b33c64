@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\models\ai_monitoring.py
+# hypothesis_version: 6.148.8
+
+[0.0, 100, 200, 255, 'AI异常检测记录表', 'AI异常检测配置表', 'AI模型管理表', 'AI趋势预测表', 'archived', 'calculating', 'cancelled', 'completed', 'created', 'deployed', 'draft', 'error', 'failed', 'in_progress', 'pending', 'reviewed', 'running', 't_ai_anomaly_configs', 't_ai_anomaly_records', 't_ai_models', 't_ai_predictions', 'trained', 'training', '下次运行时间', '严重程度', '低', '准确率分数', '创建人ID', '创建时间', '处理人', '处理备注', '处理时间', '完成时间', '定时配置(JSON)', '开始时间', '异常分数', '异常类型/检测方法', '异常详情数据(JSON)', '执行进度(0-100)', '数据源', '数据过滤条件(JSON)', '是否启用', '是否定时分析', '是否已处理', '是否激活(当前使用的模型)', '更新人', '更新人ID', '更新时间', '检测时间', '模型参数(JSON)', '模型名称', '模型描述', '模型文件路径', '模型版本', '模型状态', '模型类型', '目标变量', '置信区间(JSON)', '训练完成时间', '训练数据信息', '设备名称', '设备编码', '评估指标(JSON)', '配置数据(JSON)', '错误信息', '预测参数(JSON)', '预测名称', '预测描述', '预测时间范围(小时)', '预测状态', '预测结果数据(JSON)']

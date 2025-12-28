@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v2\alarm_websocket.py
+# hypothesis_version: 6.148.8
+
+[1008, ',', '/connections', '/engine/refresh', '/engine/status', '/ws', 'JWT认证token', 'all', 'connected', 'connection_count', 'connections', 'device_types', 'message', 'ping', 'pong', 'subscribe', 'subscribed', 'subscribed_types', 'timestamp', 'type', '刷新报警规则缓存', '报警WebSocket', '报警WebSocket连接成功', '获取引擎状态成功', '获取报警WebSocket连接信息', '获取报警引擎状态', '获取连接信息成功', '规则缓存已刷新', '订阅的设备类型，逗号分隔']

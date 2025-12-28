@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_core\ingestion\validator.py
+# hypothesis_version: 6.148.8
+
+[1000000000000.0, 1000, '+00:00', '0', '1', 'Z', 'allow_null', 'bigint', 'bool', 'code', 'converted_value', 'data_type', 'default_value', 'double', 'enum', 'error_message', 'error_types', 'errors', 'false', 'float', 'int', 'invalid_count', 'invalid_signal_count', 'invalid_type', 'is_required', 'is_valid', 'max', 'min', 'name', 'no', 'off', 'on', 'original_value', 'out_of_range', 'pattern', 'result', 'signal_code', 'signal_results', 'string', 'timestamp', 'total', 'true', 'unit', 'unknown_signal', 'valid', 'valid_count', 'valid_rate', 'valid_signal_count', 'validation_rules', 'validator', 'validator_params', 'value_range', 'warnings', 'yes', '无法导入数据库模型，请手动设置信号定义']

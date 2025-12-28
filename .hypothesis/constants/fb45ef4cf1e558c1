@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_core\ingestion\adapters\base_adapter.py
+# hypothesis_version: 6.148.8
+
+[0.0, '+00:00', '/', 'DataPoint', 'Z', 'asset_code', 'connection_count', 'data', 'error', 'error_count', 'good', 'is_running', 'last_error_message', 'last_error_time', 'last_success_time', 'metadata', 'name', 'protocol', 'quality', 'reconnecting', 'reconnection_count', 'running', 'signals', 'source', 'start_time', 'starting', 'statistics', 'status', 'stopped', 'stopping', 'success_count', 'success_rate', 'timestamp', 'total_bytes_received', 'unknown', 'uptime_seconds', 'utf-8', 'value', '连接失败', '配置不能为空']

@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\services\ai\feature_extraction.py
+# hypothesis_version: 6.148.8
+
+[-0.1, 0.0, 1e-10, 0.1, 1.0, 'avg_change', 'avg_change_rate', 'freq_', 'max_change', 'max_change_rate', 'min_change', 'scipy未安装，跳过偏度和峰度计算', 'stat_', 'ts_', 'volatility', '上升', '下降', '平稳', '数据为空，无法提取特征', '数据点太少，无法进行FFT分析', '未知', '移除NaN后数据为空']

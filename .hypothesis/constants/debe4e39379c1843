@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\settings\config.py
+# hypothesis_version: 6.148.8
+
+[1000, 5432, 6041, 6379, 8001, '%Y-%m-%d %H:%M:%S', '.env', '.env.dev', '.env.prod', '0.1.0', '123456', 'APP_ENV', 'Asia/Shanghai', 'CELERY_', 'Description', 'DeviceMonitor', 'HS256', 'INFO', 'POSTGRES_', 'REDIS_', 'TDENGINE_', 'aerich.models', 'app.models.admin', 'app.models.alarm', 'app.models.audit_log', 'app.models.device', 'app.models.email', 'app.models.system', 'app.models.workflow', 'app/logs', 'apps', 'class', 'connections', 'console', 'credentials', 'database', 'default', 'default_connection', 'dev', 'device_monitor', 'disable', 'engine', 'handlers', 'host', 'ignore', 'json', 'level', 'localhost', 'loggers', 'max_queries', 'maxsize', 'minsize', 'models', 'password', 'port', 'postgres', 'propagate', 'root', 'ssl', 'taosdata', 'test_db', 'timeout', 'timezone', 'tortoise', 'use_tz', 'user', 'version', '是否为外部TDengine服务器', '最大重试次数', '连接池大小', '连接超时时间（秒）']

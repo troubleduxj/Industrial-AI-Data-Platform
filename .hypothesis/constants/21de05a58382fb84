@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\schemas\base.py
+# hypothesis_version: 6.148.8
+
+[100, 200, 400, 500, 'OK', 'T', 'code', 'data', 'msg', 'page', 'page_size', 'timestamp', 'total', 'total_pages', '删除失败的数量', '删除失败的项目列表', '失败项目的ID', '失败项目的名称', '成功删除的数量', '成功删除的项目列表', '成功删除项目的ID', '成功删除项目的名称', '是否强制删除（仅部分资源支持）', '用户友好的失败原因', '要删除的ID列表']

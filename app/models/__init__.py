@@ -7,3 +7,6 @@ from .alarm import *
 from .notification import *
 from .email import *
 from .workflow import *
+
+# 工业AI数据平台升级模型
+from .platform_upgrade import *

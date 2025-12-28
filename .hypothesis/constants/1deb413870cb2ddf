@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\middlewares.py
+# hypothesis_version: 6.148.8
+
+[1000, 1024, ',', '/api/v2/audit-logs', '/batch_import', 'Authorization', 'Bearer ', 'PATCH', 'POST', 'PUT', 'batch_data', 'body', 'code', 'content-length', 'created_at', 'data', 'default', 'devices', 'filename', 'http', 'ignore', 'method', 'module', 'msg', 'path', 'raw_data', 'request_args', 'response_body', 'response_time', 'status', 'summary', 'token', 'type', 'updated_at', 'user_id', 'username', 'utf-8', '数据库连接不可用，跳过审计日志记录']

@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\unified_logger.py
+# hypothesis_version: 6.148.8
+
+[1000, '%Y-%m-%d %H:%M:%S', '***', 'access_token', 'api_key', 'attempt_number', 'auth', 'category', 'component', 'credential', 'data', 'data_count', 'data_points', 'data_size_bytes', 'delay_ms', 'details', 'duration_ms', 'entity_id', 'error', 'error_message', 'event_data', 'event_name', 'exception', 'function', 'has_error', 'has_metadata', 'has_performance', 'ip_address', 'key', 'level', 'line', 'logger', 'logs', 'max_attempts', 'message', 'metadata', 'module', 'outcome', 'password', 'performance', 'phase', 'records_processed', 'records_stored', 'secret', 'status', 'structured_data', 'success', 'task_name', 'timestamp', 'token', 'unified_logger', 'unknown', 'user_id', 'utf-8']

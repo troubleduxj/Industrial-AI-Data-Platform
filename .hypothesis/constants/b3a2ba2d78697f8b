@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\security_monitor.py
+# hypothesis_version: 6.148.8
+
+[500, 10000, ',', '127.0.0.1', 'User-Agent', 'X-Forwarded-For', 'X-Real-IP', 'attack_type', 'blocked_count', 'critical', 'event_type', 'event_types', 'high', 'input_data', 'ip', 'last_activity', 'level', 'level_distribution', 'limit', 'low', 'malicious_content', 'medium', 'message', 'permission_denied', 'rate_limit_exceeded', 'recent_events_count', 'request_count', 'suspicious_request', 'threat_score', 'timestamp', 'top_threat_ips', 'total_events', 'unique_ips', 'unknown', 'unusual_activity', 'window', 'xss_attack_detected']

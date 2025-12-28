@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_core\realtime\websocket_server.py
+# hypothesis_version: 6.148.8
+
+['active_connections', 'alert', 'asset_data', 'asset_id', 'connected', 'connected_at', 'connection', 'connections', 'data', 'good', 'last_activity', 'quality', 'status', 'subscribed_assets', 'timestamp', 'total_subscriptions', 'type', 'user_id', '新连接已建立']

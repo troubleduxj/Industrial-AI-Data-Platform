@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\ai_module\loader.py
+# hypothesis_version: 6.148.8
+
+['AI模块已加载，跳过', 'numpy', 'pandas', 'scipy', 'sklearn', '⏸️ AI模块未启用，跳过加载', '✅ AI服务注册完成 (当前为占位符)', '✅ AI模块加载成功', '✅ AI模块已卸载', '✅ AI路由注册完成', '健康评分', '健康评分启用，需要: numpy', '异常检测', '智能分析', '检查AI模块依赖...', '注册AI服务...', '注册AI路由...', '特征提取', '趋势预测', '🗑️ 卸载AI模块...', '🚀 开始加载AI模块...']

@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\redis_cache.py
+# hypothesis_version: 6.148.8
+
+[300, 1000, '0', '0B', '20', '5', '6379', 'Hello Redis!', 'REDIS_DB', 'REDIS_HOST', 'REDIS_PASSWORD', 'REDIS_PORT', 'REDIS_SOCKET_TIMEOUT', 'Redis缓存初始化成功', 'Redis缓存已关闭', 'Redis连接已关闭', '_', '__main__', 'auth_*', 'connected_clients', 'connection', 'db', 'default_ttl', 'device', 'device_*', 'device_monitor:', 'device_stats_*', 'device_type_*', 'error', 'failed', 'health_check_test', 'healthy', 'host', 'json', 'key_prefix', 'localhost', 'max_connections', 'menu_*', 'message', 'ok', 'password', 'permission', 'permission_*', 'pickle', 'port', 'read_write', 'redis_version', 'response_time_ms', 'retry_on_timeout', 'role', 'role_*', 'socket_timeout', 'status', 'test', 'test_key', 'timestamp', 'total_keys', 'unhealthy', 'unknown', 'used_memory', 'used_memory_human', 'user', 'user_*', 'utf-8', '开始缓存预热...', '缓存预热完成']

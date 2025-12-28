@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\cache.py
+# hypothesis_version: 6.148.8
+
+[1800, 3600, 6379, 'REDIS_DB', 'REDIS_HOST', 'REDIS_PASSWORD', 'REDIS_PORT', 'Redis连接初始化成功', '__await__', '__call__', 'localhost', 'perm', 'role_perms', 'user_roles']

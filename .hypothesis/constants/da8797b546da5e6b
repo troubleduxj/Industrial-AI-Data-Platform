@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v1\dashboard\dashboard.py
+# hypothesis_version: 6.148.8
+
+[500, '#52c41a', '#ff4d4f', '/', '/charts', '1h', '24h', '30d', '7d', 'collection_trend', 'colors', 'count', 'data', 'device_trend', 'device_type', 'device_types', 'generated_at', 'id', 'labels', 'last_updated', 'offline_devices', 'online_devices', 'overview', 'recent_data_points', 'total_devices', '图表类型', '在线设备', '离线设备', '获取仪表板数据', '获取仪表板数据成功', '获取图表数据', '获取图表数据成功']

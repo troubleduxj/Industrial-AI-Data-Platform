@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v3\security.py
+# hypothesis_version: 6.148.8
+
+[100, '/action-types', '/audit-logs', '/audit-statistics', '/check-permission', '/login', '/logout', '/permissions', '/refresh', '/roles', '/security', '/security-events', 'Authorization', 'Bearer ', 'MLOps工程师', 'bearer', 'data', 'description', 'has_permission', 'key', 'message', 'name', 'reason', 'success', 'timestamp', '事件类型', '事件级别', '令牌刷新成功', '令牌类型', '刷新令牌', '刷新令牌无效或已过期', '原因', '只读用户', '只读访问权限', '可以创建和管理AI模型', '可以管理资产和执行预测', '可以部署和激活模型', '安全管理', '密码', '开始时间', '拥有所有权限', '操作类型', '数据科学家', '是否有权限', '是否超级用户', '权限映射', '权限检查完成', '查询安全事件', '查询审计日志', '查询成功', '检查权限', '每页大小', '状态', '用户ID', '用户信息', '用户名', '用户登出', '用户登录', '登出成功', '登录成功', '系统管理员', '结束时间', '获取审计统计', '获取平台角色列表', '获取操作类型列表', '获取操作类型成功', '获取权限成功', '获取用户权限', '获取统计成功', '获取角色列表成功', '角色列表', '认证失败', '访问令牌', '资源ID', '资源类型', '过期时间（秒）', '运营人员', '需要管理员权限', '页码', '风险等级']

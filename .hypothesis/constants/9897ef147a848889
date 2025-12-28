@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v1\devices\welding_daily_report.py
+# hypothesis_version: 6.148.8
+
+[400, 500, 1000, '/detail', '/summary', '2025-01-24', 'welding', '报告日期，格式：YYYY-MM-DD', '每页记录数，不提供则返回所有数据', '焊机日报统计', '获取焊机日报汇总数据', '获取焊机日报详情数据', '设备类型必须为welding', '设备类型，固定为welding', '设备编码，可选', '页码，从1开始，不提供则返回所有数据']

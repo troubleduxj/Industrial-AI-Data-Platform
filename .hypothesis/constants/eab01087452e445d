@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\services\ai\inference_service.py
+# hypothesis_version: 6.148.8
+
+[0.0, 0.8, 0.95, 1.0, 100, '-prediction_time', 'actual_value', 'algorithm', 'anomaly_score', 'arima', 'asset_id', 'category', 'confidence', 'confidence_intervals', 'default', 'error', 'forecast_steps', 'forecast_values', 'id', 'input_data', 'is_anomaly', 'isolation_forest', 'joblib未安装，无法加载模型', 'lower', 'model_id', 'model_version', 'model_version_id', 'predict_proba', 'predicted_value', 'prediction', 'prediction_details', 'prediction_time', 'prod', 'storage_path', 'success', 'target_time', 'tolist', 'upper', 'version', 'xgboost', '已清除所有预测器缓存', '无法从输入数据提取特征', '模型存储模块未安装，使用本地文件路径', '模型未加载', '缺少 asset_id']

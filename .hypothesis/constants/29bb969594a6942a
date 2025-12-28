@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_core\ingestion\dual_write_config.py
+# hypothesis_version: 6.148.8
+
+['categories', 'category_code', 'category_id', 'enabled', 'enabled_categories', 'fail_on_old_error', 'global', 'last_verify_result', 'last_verify_time', 'verify_enabled', 'write_to_new', 'write_to_old', '双写模式已全局启用', '双写模式已全局禁用', '双写配置已保存到数据库', '双写配置已重置', '数据库模块不可用，使用默认配置']

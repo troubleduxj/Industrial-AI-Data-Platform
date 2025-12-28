@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\tdengine_config.py
+# hypothesis_version: 6.148.8
+
+[200, 1000, 6041, '3', '30', '6041', 'SHOW DATABASES;', 'SHOW STABLES;', 'SHOW TABLES;', 'TDENGINE_DATABASE', 'TDENGINE_EXTERNAL', 'TDENGINE_HOST', 'TDENGINE_MAX_RETRIES', 'TDENGINE_PASSWORD', 'TDENGINE_PORT', 'TDENGINE_SERVERS_', 'TDENGINE_TIMEOUT', 'TDENGINE_USER', '_HOST', 'current_database', 'data', 'database', 'database_exists', 'databases_count', 'default_server', 'description', 'error', 'error_message', 'export_time', 'false', 'health_status', 'host', 'is_default', 'is_external', 'is_healthy', 'last_check', 'last_updated', 'localhost', 'main', 'name', 'password', 'port', 'response_time_ms', 'root', 'server_name', 'server_version', 'servers', 'stables_count', 'tables_count', 'tags', 'taosdata', 'test_db', 'timeout', 'true', 'user', '主TDengine服务器']

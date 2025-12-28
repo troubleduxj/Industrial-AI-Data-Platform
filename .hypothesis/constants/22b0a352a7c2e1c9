@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\device_maintenance_permissions.py
+# hypothesis_version: 6.148.8
+
+[200, 401, 403, 500, 1000, 'body', 'device_type', 'record_id', 'request', 'user_id', '无法获取请求对象', '未认证用户', '用户不存在', '维修记录不存在']

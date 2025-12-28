@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_v2\metadata\asset_category_service.py
+# hypothesis_version: 6.148.8
+
+['AssetCategory', 'asset_count', 'category_code', 'category_id', 'category_name', 'code', 'id', 'is_active', 'signal_count', 'tdengine_database']

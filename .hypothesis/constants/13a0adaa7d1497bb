@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v2\api_classification.py
+# hypothesis_version: 6.148.8
+
+['/audit', '/auto-map', '/optimize', '/reorganize', '/report', '/sync-endpoints', 'API分类审计完成', 'API分类管理报告生成完成', 'api_endpoint_mapping', 'api_endpoint_sync', 'audit', 'auto_map', 'error', 'name', 'overall_success', 'reorganize', 'report', 'result', 'step', 'steps_completed', 'steps_failed', 'summary', '一键优化API分类系统', '同步V2端点', '审计API分类', '审计API分类匹配情况', '生成优化报告', '生成分类管理报告', '自动映射API到分组', '自动映射端点到分组', '重新组织API分类结构', '重新组织分类结构']

@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\controllers\alarm.py
+# hypothesis_version: 6.148.8
+
+[400, 500, 1000, '-start_time', 'UNKNOWN', 'active_alarms', 'alarm_code', 'alarm_duration_sec', 'alarm_end_time', 'alarm_message', 'alarm_solution', 'alarm_time', 'avg_duration', 'context', 'created_at', 'device', 'duration_sec', 'id', 'items', 'page', 'page_size', 'prod_code', 'resolved_alarms', 'solution', 'total', 'total_alarms', 'total_pages', 'updated_at', '查询报警历史数据失败', '获取报警统计信息失败', '设备类型参数为空', '请选择设备类型']

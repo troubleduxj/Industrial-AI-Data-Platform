@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\schemas\menus.py
+# hypothesis_version: 6.148.8
+
+[100, 9999, '/', '/system/user', 'BaseMenu', 'Layout', '^/[a-zA-Z0-9/_-]*$', '^[a-zA-Z0-9/_-]+$', 'after', 'button', 'catalog', 'menu', 'name', 'ph:user-list-bold', '根菜单路径必须以/开头', '用户管理', '菜单名称不能为空']

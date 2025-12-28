@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\ai_engine\feature_hub\lineage_tracker.py
+# hypothesis_version: 6.148.8
+
+['FeatureLineage', '_', 'calculation_config', 'calculation_logic', 'category', 'category_code', 'created_at', 'dependencies', 'feature_name', 'filters', 'function', 'is_active', 'metadata', 'name', 'original_config', 'source_signal', 'source_signals', 'updated_at', 'view_name', 'window', '数据库模型未配置', '数据库模型未配置，跳过保存', '数据库模型未配置，跳过删除', '特征名称和源信号不能为空']

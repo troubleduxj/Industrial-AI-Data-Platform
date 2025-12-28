@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v2\device_fields.py
+# hypothesis_version: 6.148.8
+
+[100, ')', '-data_timestamp', 'alarm_threshold', 'code', 'column_meta', 'data', 'data_range', 'description', 'device_code', 'device_name', 'device_type', 'device_type_code', 'device_type_name', 'display_config', 'field_category', 'field_code', 'field_group', 'field_name', 'field_type', 'fields', 'group_order', 'id', 'is_active', 'is_default_visible', 'is_monitoring_key', 'last_row(', 'monitoring_fields', 'realtime_data', 'sort_order', 'tdengine_creds', 'unit', '批量获取设备实时数据及配置', '未找到任何设备', '获取所有激活的设备类型的监测关键字段配置', '获取所有设备类型的监测关键字段', '获取所有设备类型的监测关键字段成功', '获取设备实时数据及字段配置', '获取设备类型的监测关键字段', '设备数量不能超过 100 个', '设备类型代码', '设备编码', '设备编码列表不能为空']

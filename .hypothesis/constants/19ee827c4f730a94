@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\schemas\response.py
+# hypothesis_version: 6.148.8
+
+[200, 'ListData[T]', 'T', '响应数据', '响应时间戳', '响应消息', '响应状态码', '当前页码', '总记录数', '总页数', '操作成功', '数据列表', '每页数量']

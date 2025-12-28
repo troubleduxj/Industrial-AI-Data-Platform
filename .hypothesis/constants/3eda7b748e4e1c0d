@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v3\identity.py
+# hypothesis_version: 6.148.8
+
+['/identity/providers', 'OAuth2回调', 'OAuth2认证失败', 'OAuth2认证成功', 'authorize_url', 'code', 'display_name', 'email', 'groups', 'id', 'ldap', 'local_user', 'name', 'oauth2', 'password', 'priority', 'provider', 'redirect_uri', 'sub', 'synced_roles', 'user_info', 'username', '优先级', '创建新的身份提供商配置', '创建身份提供商', '删除身份提供商', '删除身份提供商配置', '回调重定向URI', '处理OAuth2授权回调', '外部认证', '密码（LDAP认证）', '按启用状态筛选', '按类型筛选', '授权码', '授权码（OAuth2认证）', '提供商名称', '提供商类型: ldap, oauth2', '提供商配置', '无法获取授权URL', '是否启用', '更新身份提供商', '更新身份提供商配置', '状态参数', '用户名（LDAP认证）', '组到角色映射', '获取OAuth2授权URL', '获取OAuth2提供商的授权URL', '获取所有身份提供商配置', '获取指定身份提供商的详细配置', '获取身份提供商列表', '获取身份提供商详情', '认证失败，请检查凭据', '认证成功', '通过外部身份提供商进行认证', '重定向URI', '重定向URI（OAuth2认证）']

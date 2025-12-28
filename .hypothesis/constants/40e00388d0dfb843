@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v3\migration.py
+# hypothesis_version: 6.148.8
+
+[100, 400, 500, '-started_at', '/data-comparison', '/execute', '/migration', '/records', '/rollback', '/status', '/switch-architecture', '/validate', 'Schema同步完成', 'completed_at', 'data', 'device_fields', 'device_types', 'devices', 'dry_run', 'error', 'estimated', 'failed', 'failed_records', 'fields', 'full', 'id', 'match', 'message', 'migrated_records', 'migration_name', 'migration_type', 'new_count', 'old_count', 'progress', 'records', 'skipped_records', 'source_table', 'started_at', 'status', 'success', 'target_table', 'timestamp', 'total', 'total_records', '回滚失败', '回滚完成', '数据迁移', '架构切换完成', '模拟运行完成', '获取数据对比成功', '获取迁移状态成功', '获取迁移记录成功', '迁移执行完成', '验证完成']

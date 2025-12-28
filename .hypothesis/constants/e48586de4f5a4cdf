@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\schemas\login.py
+# hypothesis_version: 6.148.8
+
+['123456', 'admin', 'bearer', 'exp', 'is_superuser', 'user_id', 'username', '令牌类型', '刷新令牌', '刷新令牌过期时间（ISO格式）', '刷新令牌过期时间（秒）', '密码', '用户名称', '访问令牌', '访问令牌过期时间（ISO格式）', '访问令牌过期时间（秒）']

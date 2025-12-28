@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\versioning.py
+# hypothesis_version: 6.148.8
+
+[400, '/api/', '2025-01-06T00:00:00', 'API-Version', 'Deprecation', 'Sunset', 'TBD', 'Warning', '^/api/(v\\d+)/', '^/api/v\\d+/', 'api_version', 'code', 'headers', 'message', 'success', 'timestamp', 'true', 'v', 'v1', 'v2']

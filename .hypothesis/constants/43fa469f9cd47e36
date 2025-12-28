@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v1\avatar\avatar.py
+# hypothesis_version: 6.148.8
+
+[100, 500, '/generate/{username}', 'Cache-Control', 'Content-Disposition', 'image/svg+xml', '头像尺寸', '生成用户头像']

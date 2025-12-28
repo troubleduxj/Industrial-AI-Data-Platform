@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_core\ingestion\consistency_verifier.py
+# hypothesis_version: 6.148.8
+
+[0.0, 0.0001, 0.95, 0.99, 1.0, 100, 1000, ' ORDER BY ts', ', ', 'ConsistencyReport', 'TDengine客户端不可用，返回空数据', '__dict__', '__record__', 'asset_code', 'category_code', 'check_time', 'consistency_rate', 'created_at', 'critical', 'data', 'error', 'exists', 'field', 'healthy', 'id', 'issues_found', 'key', 'matched_count', 'mismatched_count', 'mismatches', 'missing_in_new', 'missing_in_old', 'new_structure_count', 'new_value', 'old_structure_count', 'old_value', 'recommendation', 'signals', 'status', 'summary', 'time_range_hours', 'timestamp', 'total_records', 'ts', 'updated_at', 'warning', '存在少量不一致，建议检查不匹配记录', '数据一致性良好，可以考虑关闭双写模式']

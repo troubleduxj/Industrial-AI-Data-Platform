@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\security_middleware.py
+# hypothesis_version: 6.148.8
+
+[100, 300, 400, 429, 500, '(--|#)', '(\\bAND\\b.*=.*)', '(\\bOR\\b.*=.*)', ',', '/api/v1/auth/login', '/api/v1/users', '/api/v2/auth/login', '/api/v2/users', '127.0.0.1', '1; mode=block', '::1', '<embed[^>]*>', '<iframe[^>]*>', '<object[^>]*>', '<script[^>]*>', 'DENY', 'Permissions-Policy', 'Referrer-Policy', 'User-Agent', 'X-Forwarded-For', 'X-Frame-Options', 'X-Real-IP', 'X-XSS-Protection', 'attack_type', 'client_ip', 'code', 'default_limit', 'details', 'enable_rate_limiting', 'event_type', 'is_valid', 'javascript:', 'limit', 'malicious_content', 'message', 'method', 'nosniff', 'on\\w+\\s*=', 'path', 'referer', 'sql_injection', 'success', 'timestamp', 'unknown', 'user-agent', 'user_agent', 'whitelist_ips', 'window', 'window_size', 'x-forwarded-for', 'xss', '请求包含非法内容', '请求参数包含非法内容', '请求头包含非法内容', '请求过于频繁，请稍后再试']

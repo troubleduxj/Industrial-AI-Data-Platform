@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\services\device_maintenance_permission_service.py
+# hypothesis_version: 6.148.8
+
+[200, 300, '***', '****', 'admin', 'applicant_dept', 'applicant_phone', 'auth', 'check_department', 'completed', 'delete', 'details', 'error', 'key', 'password', 'read', 'secret', 'time_range_days', 'token', 'update', '创建维修记录', '删除维修记录', '只能访问自己创建的维修记录', '已完成的维修记录不允许删除', '数据清理失败', '更新维修记录', '更新设备字段配置', '查看维修统计', '查看维修记录', '查看设备字段配置', '生成维修单号', '管理员', '设备维护']

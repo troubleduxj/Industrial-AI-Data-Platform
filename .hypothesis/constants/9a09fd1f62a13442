@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\controllers\system.py
+# hypothesis_version: 6.148.8
+
+[404, '...', '3600', 'AI_ASSISTANT_ENABLED', 'AI助手启用状态', 'INFO', 'LOG_LEVEL', 'Node-RED API基础URL', 'Node-RED服务API的基础URL', 'boolean', 'dict_type', 'int', 'sort_order', 'string', 'true', '全球化语言按钮显示', '历史数据默认查询间隔', '字典类型不存在', '应用日志输出级别', '控制AI助手是否在前端显示', '日志级别', '用于控制某个功能的开关', '示例功能开关', '系统主题颜色按钮显示']

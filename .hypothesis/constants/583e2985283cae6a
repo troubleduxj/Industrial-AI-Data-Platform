@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\services\data_query_service.py
+# hypothesis_version: 6.148.8
+
+[100, 400, 404, 500, 1000, 'aggregation_info', 'aggregation_methods', 'aggregation_type', 'ai_analysis', 'code', 'column_meta', 'data', 'data_model', 'default', 'desc', 'device_code', 'device_id', 'end_time', 'execution_time_ms', 'failed', 'filters', 'generated_sql', 'group_by', 'head', 'interval', 'methods', 'model_code', 'model_info', 'model_name', 'page', 'page_size', 'prod_code', 'query', 'realtime', 'returned_rows', 'row_count_sql', 'sql', 'start_time', 'statistics', 'status', 'succ', 'success', 'total', 'total_pages', 'total_rows', 'transformed', 'ts', 'version', 'window_end', 'window_start']

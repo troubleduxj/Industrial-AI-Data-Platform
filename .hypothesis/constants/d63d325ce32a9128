@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\services\ai\anomaly_detection.py
+# hypothesis_version: 6.148.8
+
+[0.0, 0.1, 1.4826, 3.0, 100, 'anomalies', 'anomaly_score', 'combined', 'details', 'detected_by', 'detection_count', 'detection_window', 'deviation', 'expected_value', 'if_score', 'if_severity', 'index', 'is_anomaly', 'isolation_forest', 'method', 'methods', 'score', 'severity', 'severity_code', 'stat_score', 'stat_severity', 'statistical', 'value', 'z_score', '严重', '中等', '危险', '数据无变化，无法检测异常', '数据点太少（<10），无法使用孤立森林', '数据点太少，无法进行异常检测', '数据点少于窗口大小，使用全局检测', '有效数据点太少', '正常', '轻微']

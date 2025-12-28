@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v2\notification_config.py
+# hypothesis_version: 6.148.8
+
+[100, 404, '/{config_id}', '08:00', '22:00', 'channels', 'email', 'email_template_id', 'enabled', 'end_time', 'id', 'is_enabled', 'limit', 'max_per_hour', 'max_retries', 'notification_type', 'offset', 'page', 'page_size', 'rate_limit', 'remark', 'retry_config', 'retry_interval', 'silent_period', 'site', 'sms', 'start_time', 'type_name', 'updated_at', '更新失败', '更新成功', '更新通知发送配置', '根据类型获取配置', '获取失败', '获取成功', '获取通知发送配置列表', '获取通知发送配置详情', '通知发送配置', '通知类型', '配置不存在']

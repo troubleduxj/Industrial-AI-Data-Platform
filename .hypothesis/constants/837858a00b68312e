@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\security_config.py
+# hypothesis_version: 6.148.8
+
+[100, 300, 31536000, '.env', '/api/v1/auth/login', '/api/v1/users', '/api/v2/auth/login', '/api/v2/users', '127.0.0.1', '1; mode=block', '::1', 'CSP策略（支持API文档CDN）', 'DENY', 'ENVIRONMENT', 'HSTS最大年龄（秒）', 'Permissions-Policy', 'Referrer-Policy', 'SECURITY_', 'WARNING', 'X-Frame-Options', 'X-XSS-Protection', 'allowed_html_tags', 'b', 'blockquote', 'br', 'code', 'default_limit', 'development', 'em', 'enable_rate_limiting', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'i', 'ignore', 'li', 'limit', 'login_rate_limit', 'nosniff', 'ol', 'p', 'path_limits', 'pre', 'strong', 'u', 'ul', 'whitelist_ips', 'window', 'window_size', '允许的HTML标签', '启用HSTS', '启用SQL注入防护', '启用XSS防护', '启用内容安全策略', '启用安全头', '启用安全日志', '启用输入清理', '启用输入验证', '启用频率限制', '安全日志级别', '用户API限制时间窗口（秒）', '用户API频率限制', '登录接口限制时间窗口（秒）', '登录接口频率限制', '频率限制时间窗口（秒）', '频率限制白名单IP', '默认频率限制（每分钟请求数）']

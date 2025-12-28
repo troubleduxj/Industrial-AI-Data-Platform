@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v2\data_query.py
+# hypothesis_version: 6.148.8
+
+[100, 200, 1000, '+00:00', '-is_default', '/data', '/models/list', '/query/realtime', '/query/statistics', 'API_ERROR', 'Z', 'code', 'data', 'desc', 'description', 'device_type_code', 'end_time', 'error_code', 'error_type', 'fields_count', 'generated_sql', 'id', 'is_default', 'message', 'meta', 'model_code', 'model_info', 'model_name', 'model_type', 'page', 'page_size', 'selected_fields', 'start_time', 'success', 'total', 'version', '分组字段', '开始时间', '排序字段', '排序方向 (asc/desc)', '数据查询', '是否应用数据转换', '查询实时数据', '查询统计数据', '模型代码', '模型类型', '每页记录数', '结束时间', '获取可用数据模型列表', '设备类型代码', '设备编码', '页码', '预览数据模型', '预览记录数', '额外筛选条件']

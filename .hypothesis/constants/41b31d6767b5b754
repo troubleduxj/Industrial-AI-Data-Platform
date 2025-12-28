@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\ai_engine\model_storage\minio_storage.py
+# hypothesis_version: 6.148.8
+
+['.h5', '.joblib', '.onnx', '.pkl', 'application/x-hdf5', 'content_type', 'etag', 'file_path', 'last_modified', 'models/', 'size_bytes']

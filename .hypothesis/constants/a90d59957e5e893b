@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v2\mock_data.py
+# hypothesis_version: 6.148.8
+
+[100, 404, '-created_at', '-priority', '/active/list', '/batch-delete', '/mock-data', '/{mock_id}', '/{mock_id}/hit', '/{mock_id}/toggle', 'HTTP方法筛选', 'Mock数据不存在', 'Mock数据管理', 'delay', 'deleted_count', 'enabled', 'id', 'items', 'method', 'page', 'page_size', 'response_code', 'response_data', 'total', 'url_pattern', '切换Mock启用状态', '创建Mock数据', '创建Mock数据成功', '删除Mock数据', '启用', '启用状态筛选', '批量删除Mock数据', '搜索关键词(名称/URL)', '更新Mock数据', '更新Mock数据成功', '每页数量', '禁用', '获取Mock数据列表', '获取Mock数据列表成功', '获取Mock数据详情', '获取Mock数据详情成功', '获取所有启用的Mock规则', '记录Mock命中', '记录失败（不影响Mock功能）', '记录成功', '页码']

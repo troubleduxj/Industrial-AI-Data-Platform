@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v3\predictions.py
+# hypothesis_version: 6.148.8
+
+[100, 168, 200, 400, 404, 500, 503, 1000, '-prediction_time', '/assets/{asset_id}', '/batch', '/history', '/{prediction_id}', 'AI推理服务不可用', 'AI推理服务未配置', 'AI模型注册中心未配置', 'actual_recorded_at', 'actual_value', 'algorithm', 'anomaly_score', 'asset', 'asset_code', 'asset_id', 'code', 'confidence', 'count', 'created_at', 'details', 'error', 'id', 'input_data', 'is_anomaly', 'model', 'model_name', 'model_version', 'model_version_id', 'name', 'predicted_value', 'prediction_details', 'prediction_id', 'prediction_time', 'predictions', 'prod', 'results', 'success', 'success_count', 'target_time', 'total', 'version', '实际值', '开始时间', '执行AI预测', '批量执行AI预测', '是否异常', '更新成功', '更新预测的实际值', '最大返回条数', '查询最近N小时', '模型ID', '每页数量', '结束时间', '获取成功', '获取资产的预测历史', '获取预测历史', '获取预测详情', '资产ID', '资产ID列表', '部分资产不存在', '页码', '预测执行成功']

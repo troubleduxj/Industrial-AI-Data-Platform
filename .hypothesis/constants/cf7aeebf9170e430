@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v2\system_health.py
+# hypothesis_version: 6.148.8
+
+[500, 503, '/health', '/modules/ai/config', '/system', 'AI模块未启用', 'AI资源监控器不可用', 'ai_module_status', 'anomaly_detection', 'avg_latency', 'cpu_percent', 'cpu_usage', 'details', 'enabled', 'feature_extraction', 'features', 'health_scoring', 'healthy', 'max_cpu_percent', 'max_memory_mb', 'memory_usage', 'module_enabled', 'module_loaded', 'percent', 'qps', 'resources', 'smart_analysis', 'status', 'system_memory', 'timestamp', 'trend_prediction', 'usage', 'worker_threads', '系统健康 v2', '系统运行正常']

@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v2\system_params.py
+# hypothesis_version: 6.148.8
+
+[100, 201, 204, '-created_at', '/batch', '/cached/{param_key}', '/{param_id}', 'DUPLICATE_KEY', 'EMPTY_LIST', 'SYSTEM_PARAM', 'config', 'created_at', 'default', 'description', 'id', 'ids', 'is_active', 'is_editable', 'is_system', 'param_key', 'param_name', 'param_type', 'param_value', 'search', 'system_param', 'system_params', 'updated_at', '从缓存获取系统配置', '创建系统参数', '删除系统参数', '参数ID', '参数值', '参数名称', '参数类型', '参数键', '参数键已存在', '批量删除系统参数', '批量删除系统参数时发生系统错误', '描述', '搜索关键词', '是否允许前端编辑', '是否启用', '是否系统内置', '更新系统参数', '每页数量', '系统内置参数不允许删除', '系统参数ID列表不能为空', '系统参数不存在', '系统参数创建成功', '系统参数删除成功', '系统参数更新成功', '缓存中未找到该配置', '获取系统参数列表', '获取系统参数列表成功', '获取系统参数详情', '获取系统参数详情成功', '获取缓存配置成功', '页码']

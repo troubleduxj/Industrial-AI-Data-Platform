@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\database.py
+# hypothesis_version: 6.148.8
+
+['DatabaseManager', 'SELECT version()', 'Tortoise ORM 初始化成功', 'client_encoding', 'close_database', 'connection_pool_free', 'connection_pool_size', 'database_version', 'default', 'disable', 'error', 'execute_command', 'execute_many', 'execute_query', 'get_database', 'get_db_connection', 'healthy', 'initialize_database', 'status', 'unhealthy', 'utf8', '数据库连接已关闭', '数据库连接池初始化成功', '数据库连接池未初始化']

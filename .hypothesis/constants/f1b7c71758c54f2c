@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\ai_engine\decision_engine\audit_logger.py
+# hypothesis_version: 6.148.8
+
+[100, 1000, '-trigger_time', 'actions_executed', 'asset_id', 'conditions_snapshot', 'created_at', 'error_message', 'failed', 'id', 'partial', 'prediction_id', 'result', 'rule_id', 'rule_name', 'success', 'success_rate', 'total', 'trigger_data', 'trigger_time']

@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\ai_engine\inference\prediction_store.py
+# hypothesis_version: 6.148.8
+
+[0.0, 0.5, 100, 200, ' AND ', '-prediction_time', '1=1', '6041', 'NULL', 'TDENGINE_DATABASE', 'TDENGINE_HOST', 'TDENGINE_PASSWORD', 'TDENGINE_PORT', 'TDENGINE_USER', '^[a-z][a-z0-9_]*$', '_', 'actual_value', 'anomaly_score', 'asset_code', 'asset_id', 'code', 'confidence', 'data', 'id', 'is_anomaly', 'localhost', 'model_id', 'model_version', 'model_version_id', 'postgresql', 'pred_', 'predicted_value', 'prediction_details', 'prediction_time', 'root', 'table already exists', 'taosdata', 'target_time', 'tdengine', 'test_db', 'ts', '类别编码不能为空', '类别编码必须是字符串', '资产编码不能为空', '资产编码必须是字符串']

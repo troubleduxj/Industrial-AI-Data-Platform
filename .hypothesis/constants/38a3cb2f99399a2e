@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\schemas\__init__.py
+# hypothesis_version: 6.148.8
+
+['ApiCreate', 'ApiUpdate', 'BaseDept', 'BaseMenu', 'BaseRole', 'BaseUser', 'BatchImportResult', 'CredentialsSchema', 'DeptCreate', 'DeptUpdate', 'DeviceBatchImport', 'DeviceCreate', 'DeviceFieldCreate', 'DeviceFieldResponse', 'DeviceFieldUpdate', 'DeviceQuery', 'DeviceRealtimeQuery', 'DeviceResponse', 'DeviceStatistics', 'DeviceStatusSummary', 'DeviceType', 'DeviceTypeCreate', 'DeviceTypeResponse', 'DeviceTypeUpdate', 'DeviceUpdate', 'Fail', 'JWTOut', 'JWTPayload', 'MenuCreate', 'MenuType', 'MenuUpdate', 'RoleCreate', 'RoleUpdate', 'RoleUpdateMenusApis', 'Success', 'SuccessExtra', 'SysConfigCreate', 'SysConfigInDB', 'SysConfigUpdate', 'SysDictDataCreate', 'SysDictDataInDB', 'SysDictDataUpdate', 'SysDictTypeCreate', 'SysDictTypeInDB', 'SysDictTypeUpdate', 'UpdatePassword', 'UserCreate', 'UserUpdate']

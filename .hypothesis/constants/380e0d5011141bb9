@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_v2\timeseries\schema_manager.py
+# hypothesis_version: 6.148.8
+
+['-', '-execution_time', '-version', '.', '1.0', 'BIGINT', 'BOOL', 'DOUBLE', 'FLOAT', 'INT', 'NCHAR(100)', 'NCHAR(64)', 'TIMESTAMP', '_', 'added', 'asset_code', 'asset_id', 'bigint', 'bool', 'change_details', 'change_type', 'code', 'create', 'data_type', 'double', 'error', 'execution_status', 'execution_time', 'float', 'int', 'name', 'removed', 'signals', 'stable_name', 'string', 'success', 'timestamp', 'ts', 'unchanged', 'update', 'version', '版本不存在', '类别不存在']

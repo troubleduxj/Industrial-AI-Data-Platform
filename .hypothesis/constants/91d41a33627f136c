@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_v2\metadata\signal_definition_service.py
+# hypothesis_version: 6.148.8
+
+['SignalDefinition', 'category_id', 'default', 'id', 'is_active', 'is_default_visible', 'sort_order']

@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\schemas\roles.py
+# hypothesis_version: 6.148.8
+
+['0', '1', 'V1 API权限ID列表（已弃用）', 'V2系统API权限ID列表', 'action', 'admin', 'api_ids', 'example', 'menu_ids', 'replace', 'sys_api_ids', 'user_ids', '父角色ID，用于创建子角色', '用户ID列表', '管理员', '管理员角色', '系统API权限ID列表', '菜单权限ID列表']

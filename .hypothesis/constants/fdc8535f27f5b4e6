@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_core\ingestion\dual_writer.py
+# hypothesis_version: 6.148.8
+
+[100, 10000, 'NULL', 'asset_code', 'category_code', 'data_snapshot', 'error_count', 'error_message', 'error_type', 'id', 'new', 'new_errors', 'new_failures', 'new_success', 'new_success_rate', 'new_write_error', 'new_write_success', 'old', 'old_errors', 'old_failures', 'old_success', 'old_success_rate', 'old_write_error', 'old_write_success', 'resolved', 'success', 'target', 'timestamp', 'total_writes', 'ts']

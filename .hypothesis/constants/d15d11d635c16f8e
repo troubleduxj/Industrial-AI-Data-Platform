@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_core\ingestion\adapters\mqtt_adapter.py
+# hypothesis_version: 6.148.8
+
+[1.0, 1000000000000.0, 1000, 1883, '#', '+', '+00:00', '/', 'MQTT host 不能为空', 'MQTT port 必须是正整数', 'MQTT topics 不能为空', 'Z', '__aexit__', 'asset_code', 'clean_session', 'client_id', 'connected', 'data', 'device_id', 'events', 'good', 'host', 'keepalive', 'localhost', 'messages', 'metadata', 'mqtt', 'password', 'port', 'protocol', 'publish', 'qos', 'quality', 'reconnect_attempts', 'reconnect_interval', 'signals', 'status', 'telemetry', 'time', 'timestamp', 'topic', 'topics', 'ts', 'username', 'utf-8', 'value', 'values', '消息解析失败']

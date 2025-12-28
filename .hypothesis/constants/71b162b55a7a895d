@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\celery_app.py
+# hypothesis_version: 6.148.8
+
+['APP_ENV', '__main__', 'app.services.ai', 'dev', 'device_monitor']

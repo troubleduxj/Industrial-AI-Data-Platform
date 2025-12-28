@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v3\websocket.py
+# hypothesis_version: 6.148.8
+
+['/ws', '/ws/broadcast', '/ws/push/alert', '/ws/stats', 'JWT认证令牌', 'WebSocket使用开发模式令牌', 'action', 'asset_data', 'asset_id', 'asset_ids', 'asset_ids不能为空', 'connection_stats', 'created_at', 'dev', 'error', 'get_subscriptions', 'good', 'message', 'ping', 'pong', 'push_stats', 'recipients', 'subscribe', 'subscribe_response', 'subscribed_assets', 'subscription_stats', 'subscription_type', 'subscriptions', 'success', 'timestamp', 'type', 'unsubscribe', 'unsubscribe_response', 'unsubscribed_count', '广播消息', '推送告警', '推送资产数据', '无效的JSON格式', '获取WebSocket连接统计', '认证失败']

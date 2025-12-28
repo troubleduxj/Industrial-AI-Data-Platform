@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v1\devices\__init__.py
+# hypothesis_version: 6.148.8
+
+['/alarm', '/data', 'devices_router', '焊机日报统计', '设备报警', '设备数据', '设备模块', '设备类型管理', '通用设备数据']

@@ -12,6 +12,7 @@ TORTOISE_ORM = {
                 "app.models.alarm",
                 "app.models.email",
                 "app.models.workflow",
+                "app.models.platform_upgrade",  # 工业AI数据平台升级模型
                 "aerich.models"
             ],
             "default_connection": "default"

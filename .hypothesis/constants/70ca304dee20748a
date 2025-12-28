@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v2\email_server.py
+# hypothesis_version: 6.148.8
+
+[404, 587, '-id', '-is_default', '/{server_id}', '/{server_id}/test', 'From', 'Subject', 'To', 'created_at', 'encryption', 'failed', 'from_email', 'from_name', 'host', 'id', 'is_default', 'is_enabled', 'last_test_result', 'last_test_time', 'limit', 'name', 'offset', 'page', 'page_size', 'plain', 'port', 'remark', 'ssl', 'success', 'test_status', 'tls', 'username', 'utf-8', '创建失败', '创建成功', '创建邮件服务器配置', '删除失败', '删除成功', '删除邮件服务器配置', '搜索关键词', '是否启用', '更新失败', '更新成功', '更新邮件服务器配置', '服务器配置不存在', '测试失败', '测试成功', '测试成功，邮件已发送', '测试收件邮箱', '测试邮件服务器连接', '获取失败', '获取成功', '获取邮件服务器列表', '获取邮件服务器详情', '邮件服务器测试', '邮件服务器配置']

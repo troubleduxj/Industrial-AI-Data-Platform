@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\services\sql_builder.py
+# hypothesis_version: 6.148.8
+
+[100, 400, 999, 10000, '!=', '%Y-%m-%d %H:%M:%S.%f', "'", "''", '<', '<=', '<>', '=', '>', '>=', 'ORDER BY prod_code', 'ORDER BY ts DESC', '\\', '\\\\', '^[a-zA-Z0-9_]+$', '^\\d+[smhd]$', 'aggregation_method', 'aggregation_methods', 'ai_analysis', 'alter', 'asc', 'avg', 'between', 'code', 'count', 'create', 'database', 'delete', 'desc', 'device', 'device_code', 'device_id', 'drop', 'exec', 'execute', 'field_code', 'first', 'id', 'in', 'insert', 'interval', 'is_tag', 'last', 'like', 'max', 'methods', 'min', 'prod_code', 'row_count_sql', 'script', 'select_columns', 'sql', 'stable', 'statistics', 'sum', 'tag', 'tdengine_column', 'tdengine_database', 'tdengine_stable', 'truncate', 'ts', 'update']

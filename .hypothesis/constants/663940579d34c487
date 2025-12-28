@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\services\platform_security_service.py
+# hypothesis_version: 6.148.8
+
+[200, 403, 1000, ',', '0', 'HIGH', 'LOGIN', 'LOGOUT', 'MEDIUM', 'SENSITIVE_OPERATION', 'UNKNOWN', 'X-Forwarded-For', 'X-Real-IP', 'access_token', 'activate', 'admin', 'ai_model', 'asset', 'asset_category', 'bearer', 'create', 'data_scientist', 'delete', 'deploy', 'engineer', 'error', 'expires_in', 'feature_view', 'id', 'is_sensitive', 'is_superuser', 'mlops', 'mlops_engineer', 'operation', 'operator', 'ops', 'permissions', 'predict', 'prediction', 'read', 'reason', 'refresh_token', 'roles', 'scientist', 'signal_definition', 'token_type', 'unknown', 'update', 'user', 'user-agent', 'user_id', 'username', 'viewer', '已授权', '权限拒绝', '用户不存在', '用户账户已被禁用', '认证失败', '认证服务暂时不可用', '超级用户权限']

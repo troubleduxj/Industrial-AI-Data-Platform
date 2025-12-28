@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\ai_engine\model_storage\local_storage.py
+# hypothesis_version: 6.148.8
+
+[1024, '*', 'base_path', 'created_at', 'data/ai_models', 'file_path', 'full_path', 'models/', 'modified_at', 'rb', 'size_bytes', 'total_files', 'total_size_bytes', 'total_size_mb', 'wb']

@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\schemas\mock_data.py
+# hypothesis_version: 6.148.8
+
+[100, 200, 500, 599, 10000, 'DELETE', 'GET', 'HEAD', 'HTTP响应状态码', 'HTTP方法', 'Mock规则名称', 'OPTIONS', 'PATCH', 'POST', 'PUT', 'URL匹配模式', 'URL匹配模式，支持通配符', 'method', '优先级', '优先级(数字越大越优先)', '启用状态', '响应数据', '延迟时间(ms)', '是否启用', '要删除的Mock ID列表', '规则描述']

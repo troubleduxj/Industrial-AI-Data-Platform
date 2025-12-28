@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\schemas\api_groups.py
+# hypothesis_version: 6.148.8
+
+[100, 500, '分组ID', '分组代码', '分组名称', '分组描述', '创建时间', '更新时间', '该分组下的API数量']

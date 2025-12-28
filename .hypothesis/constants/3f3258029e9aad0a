@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\schemas\welding_daily_report.py
+# hypothesis_version: 6.148.8
+
+['2025-01-24', 'welding', '产品编码', '创建时间', '备注', '总气体消耗(升)', '总焊丝消耗(kg)', '总焊接时长(秒)', '总能耗(kWh)', '总记录数', '报告日期', '操作员', '日报详情列表', '更新时间', '气体消耗(升)', '焊丝消耗(kg)', '焊接时长(秒)', '焊缝长度(米)', '班次', '缺陷数量', '能耗(kWh)', '记录ID', '设备类型，固定为welding', '质量评分', '返工次数']

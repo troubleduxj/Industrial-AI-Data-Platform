@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_core\realtime\push_service.py
+# hypothesis_version: 6.148.8
+
+[0.0, 0.01, 1.0, 'alert', 'alert_updates', 'alert消息缺少alert字段', 'asset_data', 'asset_data_updates', 'asset_data消息缺少data字段', 'asset_id', 'bad', 'channel', 'connection', 'data', 'details', 'event', 'good', 'last_push_time', 'message', 'model_id', 'prediction', 'prediction_updates', 'quality', 'redis_connected', 'running', 'system', 'timestamp', 'timestamp格式无效', 'total_failed', 'total_pushed', 'type', 'uncertain', 'utf-8', '实时推送服务已停止', '实时推送服务已启动', '已订阅Redis数据更新通道', '推送服务已在运行', '缺少timestamp字段', '缺少type字段']

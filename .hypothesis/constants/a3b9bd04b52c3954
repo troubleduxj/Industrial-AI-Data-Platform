@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\services\ai\sklearn_trainer.py
+# hypothesis_version: 6.148.8
+
+[0.01, 0.05, 0.15, 0.8, 1.0, 100, 'Fitting model...', 'IsolationForest', 'LinearRegression', 'LogisticRegression', 'accuracy', 'algorithm', 'anomaly_count', 'anomaly_rate', 'confusion_matrix', 'f1_score', 'feature_cols', 'hyperparameters', 'label', 'loss', 'mse', 'precision', 'predict_proba', 'r2', 'recall', 'target', 'target_col', 'training_history', 'weighted']

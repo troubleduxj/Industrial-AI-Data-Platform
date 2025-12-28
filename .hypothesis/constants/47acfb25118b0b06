@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\response_formatter_v2.py
+# hypothesis_version: 6.148.8
+
+[200, 201, 207, 400, 401, 403, 404, 409, 422, 500, 1000, '/api/v2/auth/login', '/api/v2/docs', '/api/v2/support', 'AUTHENTICATION_ERROR', 'Access forbidden', 'BAD_REQUEST', 'Bad request', 'COMPONENT_ERROR', 'CONFLICT', 'FORBIDDEN', 'NOT_FOUND', 'Partial success', 'Resource conflict', 'Resource not found', 'UNKNOWN_ERROR', 'Unauthorized access', 'VALIDATION_ERROR', 'Validation failed', 'ValidationError', 'code', 'component', 'data', 'details', 'error', 'errors', 'failure_count', 'field', 'help', 'json', 'links', 'login', 'message', 'meta', 'model_dump', 'page', 'page_size', 'permissions', 'request_id', 'self', 'start_time', 'stats', 'status', 'success', 'success_count', 'suggestion', 'support', 'total_count', 'traceId', 'type', 'unknown', 'v2', 'value', '请提供有效的认证凭据', '请检查输入数据格式是否正确']

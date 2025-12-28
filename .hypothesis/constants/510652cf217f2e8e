@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\models\notification.py
+# hypothesis_version: 6.148.8
+
+[200, 500, '-created_at', '-publish_time', 'all', 'info', 'models.Notification', 'notification', 'system', 't_sys_notification', 'user_id', 'user_notifications', '内容', '创建人ID', '创建时间', '发布时间', '发送范围', '是否删除', '是否发布', '是否已读', '来源ID', '来源类型', '标题', '用户ID', '用户通知状态表', '目标用户ID列表', '目标角色ID列表', '系统通知表', '跳转链接', '过期时间', '通知', '通知类型', '通知级别', '阅读时间']

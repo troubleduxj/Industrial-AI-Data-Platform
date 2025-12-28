@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\services\auth\__init__.py
+# hypothesis_version: 6.148.8
+
+['AuthenticationResult', 'IdentityManager', 'IdentityProvider', 'IdentityProviderType', 'LDAPProvider', 'OAuth2Provider', 'UserInfo', 'identity_manager']

@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v2\audit_logs.py
+# hypothesis_version: 6.148.8
+
+[100, 200, 400, '-created_at', '/{log_id}', 'action_type', 'audit_log', 'audit_logs', 'created_at', 'id', 'ip_address', 'method', 'module', 'path', 'raw', 'request_data', 'resource_id', 'resource_type', 'response_data', 'response_time', 'status', 'success', 'summary', 'unknown', 'user_agent', 'username', '审计日志不存在', '模块筛选', '每页数量', '用户名筛选', '获取审计日志列表', '获取审计日志详情', '获取审计日志详情成功', '请求方法筛选', '页码']

@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v3\__init__.py
+# hypothesis_version: 6.148.8
+
+['/asset-categories', '/assets', '/feature-views', '/predictions', 'AI预测 v3', 'v3_router', '安全管理 v3', '实时推送 v3', '审计日志 v3', '性能监控 v3', '数据迁移 v3', '数据采集 v3', '模型存储 v3', '特征工程 v3', '资产管理 v3', '资产类别管理 v3']

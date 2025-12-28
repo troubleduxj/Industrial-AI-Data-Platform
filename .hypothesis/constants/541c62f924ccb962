@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\api_changelog.py
+# hypothesis_version: 6.148.8
+
+[' breaking', ' 🚨', ' 🚨 破坏性变更', '# API变更日志\n\n', '# API变更日志\n\n暂无变更记录。\n', '/api/v1/*', '/api/v2/*', '/api/v2/health', '/api/v2/users', '2025-01-06T00:00:00', '</body></html>', '</div>', 'ALL', 'GET', 'added', 'breaking_change', 'change_type', 'changed', 'date', 'deprecated', 'fixed', 'migration_guide', 'r', 'removed', 'security', 'utf-8', 'v', 'v1', 'v1版本接口已弃用，建议迁移到v2版本', 'v2', 'version', 'w', '本文档记录了API的所有变更历史。\n\n']

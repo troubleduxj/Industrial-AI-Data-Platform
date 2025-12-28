@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\controllers\device.py
+# hypothesis_version: 6.148.8
+
+[300, 400, 404, 500, 600, '-created_at', 'alarm_history', 'count', 'default', 'device_code', 'device_model', 'device_name', 'device_type', 'error', 'error_type', 'is_locked', 'maintenance_plans', 'maintenance_records', 'message', 'process_executions', 'processes', 'repair_records', 'stack_trace', 'team', 'team_name', 'updated_at', '切换锁定状态失败', '开始执行班组统计查询', '更新设备失败', '获取班组统计失败', '获取设备类型统计失败', '设备不存在']

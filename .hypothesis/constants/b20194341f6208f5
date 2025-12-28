@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\ai_engine\decision_engine\action_executor.py
+# hypothesis_version: 6.148.8
+
+[0.1, 100, 200, 300, 500, 1000, 'AI预测触发工单', 'GET', 'POST', 'Webhook URL未配置', 'action', 'action_config', 'action字段缺失', 'ai_prediction', 'alert', 'alert_id', 'alert_message', 'assignee', 'channel', 'channels', 'dingtalk', 'email', 'error', 'headers', 'httpx未安装，使用模拟Webhook', 'id', 'level', 'message', 'method', 'normal', 'notification', 'prediction', 'priority', 'recipients', 'response_text', 'results', 'rule_id', 'rule_name', 'simulated', 'sms', 'status_code', 'success', 'template_id', 'timeout', 'title', 'triggered_at', 'unknown', 'url', 'url字段缺失', 'warning', 'webhook', 'wechat', 'workorder', 'workorder_id', '{', '}', '动作数据无效', '未注册的渠道', '规则触发告警', '规则触发通知']

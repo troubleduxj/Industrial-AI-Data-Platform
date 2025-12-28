@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\settings\ai_settings.py
+# hypothesis_version: 6.148.8
+
+[100, 1024, './data/ai_models', 'AI_MAX_CPU_PERCENT', 'AI_MAX_MEMORY_MB', 'AI_MODELS_PATH', 'AI_MODULE_ENABLED', 'AI_WORKER_THREADS', 'anomaly_detection', 'feature_extraction', 'health_scoring', 'ignore', 'smart_analysis', 'trend_prediction', 'utf-8', '是否启用AI监测模块']

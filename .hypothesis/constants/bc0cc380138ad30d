@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\__init__.py
+# hypothesis_version: 6.148.8
+
+['/v1', '/v2', '/v3', 'api_router']

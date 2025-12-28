@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v2\user_notifications.py
+# hypothesis_version: 6.148.8
+
+[404, '%Y-%m-%d %H:%M:%S.%f', '-publish_time', '/read-all', '/unread-count', '/{notification_id}', 'content', 'default', 'id', 'is_deleted', 'is_read', 'level', 'limit', 'link_url', 'notification_type', 'offset', 'page', 'page_size', 'publish_time', 'read_time', 'title', 'total', 'unread_count', '全部标记已读', '全部标记已读成功', '删除通知', '删除通知失败', '删除通知成功', '搜索关键词', '是否已读', '标记已读成功', '标记通知已读', '用户ID', '用户通知', '获取我的通知', '获取未读数量成功', '获取未读通知数量', '获取通知列表失败', '获取通知列表成功', '通知不存在', '通知类型']

@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\response.py
+# hypothesis_version: 6.148.8
+
+[200, 400, '操作失败', '操作成功']

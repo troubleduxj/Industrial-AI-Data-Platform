@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\ai_engine\model_storage\storage_backend.py
+# hypothesis_version: 6.148.8
+
+[8192, '.h5', '.joblib', '.onnx', '.pkl', 'StorageResult', 'checksum', 'created_at', 'error', 'file_path', 'size_bytes', 'success', 'unknown']

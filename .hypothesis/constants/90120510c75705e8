@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v1\base\base.py
+# hypothesis_version: 6.148.8
+
+['/access_token', '/update_password', '/userapi', '/userinfo', '/usermenu', 'avatar', 'created_at', 'email', 'id', 'is_active', 'is_superuser', 'last_login', 'roles', 'updated_at', 'username', '修改密码', '修改成功', '旧密码验证错误！', '查看用户API', '查看用户信息', '查看用户菜单', '获取token']

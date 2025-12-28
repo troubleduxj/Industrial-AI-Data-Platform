@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\permission_events.py
+# hypothesis_version: 6.148.8
+
+[200, '/permission/change', 'API权限变更后清除所有权限缓存', 'SYSTEM', 'api_id', 'api_ids', 'changes', 'details', 'event_type', 'new_status', 'old_status', 'permission', 'role_id', 'role_ids', 'role_status_changed', 'success', 'system', 'timestamp', 'user_id', 'user_role_assigned', 'user_role_removed', 'user_status_changed', '权限管理']

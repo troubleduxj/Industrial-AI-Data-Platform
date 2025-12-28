@@ -1,0 +1,86 @@
+# Industrial AI Data Platform - Docker Compose Development Override
+# 开发环境配置覆盖
+
+version: '3.8'
+
+services:
+  # ===========================================
+  # 后端API服务 - 开发模式
+  # ===========================================
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    environment:
+      - APP_ENV=development
+      - DEBUG=true
+      - WORKERS=1
+      - RELOAD=true
+    volumes:
+      # 挂载源代码实现热重载
+      - ./app:/app/app:ro
+      - ./ai_engine:/app/ai_engine:ro
+      - ./platform_core:/app/platform_core:ro
+      - ./platform_v2:/app/platform_v2:ro
+      - ./tests:/app/tests:ro
+      - ./run.py:/app/run.py:ro
+    command: uvicorn run:app --host 0.0.0.0 --port 8000 --reload
+
+  # ===========================================
+  # 前端Web服务 - 开发模式
+  # ===========================================
+  frontend:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    environment:
+      - NODE_ENV=development
+
+  # ===========================================
+  # PostgreSQL - 开发配置
+  # ===========================================
+  postgres:
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+
+  # ===========================================
+  # TDengine - 开发配置
+  # ===========================================
+  tdengine:
+    ports:
+      - "6041:6041"
+      - "6030:6030"
+
+  # ===========================================
+  # Redis - 开发配置
+  # ===========================================
+  redis:
+    ports:
+      - "6379:6379"
+
+  # ===========================================
+  # MinIO - 开发配置
+  # ===========================================
+  minio:
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+
+  # ===========================================
+  # 禁用生产环境的Celery服务
+  # ===========================================
+  celery-worker:
+    profiles:
+      - celery
+
+  celery-beat:
+    profiles:
+      - celery

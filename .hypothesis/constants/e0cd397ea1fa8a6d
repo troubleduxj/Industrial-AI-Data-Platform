@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_core\realtime\subscription_manager.py
+# hypothesis_version: 6.148.8
+
+['alert', 'all', 'asset_data', 'prediction', 'total_assets', 'total_subscriptions', 'total_users']

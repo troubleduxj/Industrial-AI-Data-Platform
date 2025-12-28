@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\services\auth\identity_provider.py
+# hypothesis_version: 6.148.8
+
+['UserInfo', 'attributes', 'authenticated_at', 'config', 'display_name', 'email', 'enabled', 'error_code', 'error_message', 'external_id', 'groups', 'ldap', 'local', 'name', 'oauth2', 'priority', 'provider_name', 'provider_type', 'role_mapping', 'saml', 'success', 'user_info', 'username']

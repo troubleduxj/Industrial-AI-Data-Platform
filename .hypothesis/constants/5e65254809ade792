@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v2\email_template.py
+# hypothesis_version: 6.148.8
+
+[404, '-id', '/types', '/{template_id}', 'alarm', 'announcement', 'code', 'content', 'created_at', 'custom', 'id', 'is_enabled', 'is_system', 'label', 'limit', 'model_dump', 'name', 'offset', 'page', 'page_size', 'remark', 'subject', 'task', 'template_type', 'value', 'variables', '任务提醒', '创建失败', '创建成功', '创建邮件模板', '删除失败', '删除成功', '删除邮件模板', '报警通知', '搜索关键词', '是否启用', '更新失败', '更新成功', '更新邮件模板', '模板不存在', '模板代码已存在', '模板类型', '系统公告', '系统预设模板不能删除', '自定义', '获取失败', '获取成功', '获取模板类型列表', '获取邮件模板列表', '获取邮件模板详情', '邮件模板', '预览失败', '预览成功', '预览邮件模板']

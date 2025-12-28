@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\models\base.py
+# hypothesis_version: 6.148.8
+
+['isoformat', 'login_date', '创建时间', '更新时间']

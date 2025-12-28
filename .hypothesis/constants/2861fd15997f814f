@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v2\dynamic_models.py
+# hypothesis_version: 6.148.8
+
+[422, '/cache', '/cache/stats', '/dynamic-models', '/fields-info', '/generate', '/validate', 'ValidationError', '[动态模型API] 获取缓存统计', 'all', 'cached', 'cleared', 'fields', 'fields_count', 'model_class_name', 'model_code', 'valid', 'validated_data', '动态模型', '动态模型生成成功', '数据验证通过', '是否使用缓存', '模型代码', '模型代码（不传则清除所有缓存）', '模型版本', '模型版本（不传则使用激活版本）', '清除模型缓存', '生成动态Pydantic模型', '获取模型字段信息', '获取模型字段信息成功', '获取缓存统计', '获取缓存统计成功', '验证数据']

@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_core\ingestion\adapters\http_adapter.py
+# hypothesis_version: 6.148.8
+
+[1000000000000.0, 1000, '+00:00', '.', 'GET', 'HTTP url 不能为空', 'HTTP响应中缺少资产编码', 'HTTP客户端未初始化', 'PATCH', 'POST', 'PUT', 'Z', 'asset_code', 'auth', 'basic', 'body', 'code', 'data', 'data_path', 'device_id', 'good', 'headers', 'http', 'id', 'json', 'metadata', 'method', 'params', 'password', 'poll_interval', 'poll_interval 必须大于0', 'protocol', 'quality', 'raw', 'response_format', 'retry_count', 'retry_delay', 'signals', 'time', 'timeout', 'timeout 必须大于0', 'timestamp', 'ts', 'type', 'url', 'username', 'value', 'values', 'verify_ssl']

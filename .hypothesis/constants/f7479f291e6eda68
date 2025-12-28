@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\ai_engine\feature_hub\feature_store.py
+# hypothesis_version: 6.148.8
+
+[1000, ' AND ', '*', ',\n    ', ', ', 'BIGINT', 'BOOL', 'DOUBLE', 'FLOAT', 'INT', 'NCHAR', 'NULL', 'TDengine客户端未配置，返回空结果', '_', 'asset_code', 'asset_code NCHAR(64)', 'asset_id', 'asset_id BIGINT', 'avg', 'category_code', 'count', 'derivative', 'devicemonitor', 'diff', 'duplicated column', 'feat', 'first', 'function', 'last', 'max', 'min', 'name', 'output_type', 'percentile', 'source_signal', 'spread', 'stddev', 'sum', 'timestamp', 'ts', 'ts TIMESTAMP', 'view_name', '没有新特征需要添加', '特征名称不能为空', '特征名称必须是字符串', '特征配置列表不能为空', '类别编码不能为空', '类别编码必须是字符串', '视图名称不能为空', '视图名称必须是字符串']

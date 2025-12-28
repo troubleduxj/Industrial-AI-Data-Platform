@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\schemas\device_field.py
+# hypothesis_version: 6.148.8
+
+[28.3, 150.5, 100, '#1890ff', '1号焊机', 'A', 'WELD_MACHINE', 'WM001', 'WM002', 'WM003', 'color', 'data_collection', 'default', 'description', 'device_code', 'device_codes', 'device_name', 'device_type', 'device_type_code', 'display_config', 'example', 'field_category', 'field_code', 'field_name', 'field_type', 'float', 'icon', 'id', 'is_active', 'is_monitoring_key', 'items', 'monitoring_fields', 'online', 'page', 'page_size', 'preset_current', 'preset_voltage', 'realtime_data', 'sort_order', 'status', 'total', 'total_pages', 'unit', '⚡', '分组排序顺序', '单位', '字段ID', '字段代码', '字段分类', '字段描述', '字段显示名称', '实时数据', '当前页码', '总数', '总页数', '是否为监测关键字段', '是否启用', '是否默认显示', '显示配置', '显示顺序', '每页数量', '焊机预设电流值', '监测字段配置', '设备名称', '设备数据列表', '设备状态筛选', '设备类型代码', '设备类型筛选', '设备编码', '设备编码列表', '页码', '预设电流']

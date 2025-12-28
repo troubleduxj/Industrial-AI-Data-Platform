@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v2\notifications.py
+# hypothesis_version: 6.148.8
+
+[404, '-created_at', '/{notification_id}', 'all', 'announcement', 'content', 'created_at', 'expire_time', 'id', 'info', 'is_published', 'level', 'limit', 'link_url', 'notification_type', 'offset', 'page', 'page_size', 'publish_time', 'scope', 'target_roles', 'target_users', 'title', '内容', '创建通知', '创建通知失败', '创建通知成功', '删除通知', '删除通知失败', '删除通知成功', '发布通知', '发布通知失败', '发布通知成功', '搜索关键词', '撤回通知', '撤回通知失败', '撤回通知成功', '是否发布', '更新通知', '更新通知失败', '更新通知成功', '标题', '目标用户', '目标角色', '类型', '级别', '范围', '获取通知列表', '获取通知列表失败', '获取通知详情', '获取通知详情失败', '获取通知详情成功', '跳转链接', '过期时间', '通知不存在', '通知管理', '通知类型']

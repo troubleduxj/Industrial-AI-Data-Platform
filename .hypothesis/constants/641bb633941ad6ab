@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\ai_engine\decision_engine\rule_parser.py
+# hypothesis_version: 6.148.8
+
+['AND', 'Action', 'Condition', 'ConditionGroup', 'OR', 'Rule', 'actions', 'actions不能为空', 'actions必须是列表', 'alert', 'between', 'category_id', 'channels', 'conditions', 'contains', 'cooldown_seconds', 'critical', 'description', 'enabled', 'enabled必须是布尔值', 'ends_with', 'eq', 'error', 'field', 'gt', 'gte', 'in', 'info', 'level', 'lt', 'lte', 'model_id', 'name', 'name必须是非空字符串', 'ne', 'not_in', 'notification', 'operator', 'priority', 'priority必须是整数', 'rule_id', 'rule_id必须是非空字符串', 'rules', 'starts_with', 'type', 'url', 'value', 'warning', 'webhook', 'workorder']

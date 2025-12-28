@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v1\devices\device_types.py
+# hypothesis_version: 6.148.8
+
+[100, '/types', '/types/{type_code}', 'created_at', 'description', 'device_count', 'field_count', 'field_name', 'id', 'is_active', 'sort_order', 'tdengine_stable_name', 'type_code', 'type_name', 'updated_at', '创建设备类型', '删除设备字段', '删除设备类型', '是否包含统计数据', '是否激活状态筛选', '更新设备字段', '更新设备类型', '每页数量', '添加设备字段', '类型名称搜索', '类型编码搜索', '获取设备类型列表', '获取设备类型字段列表', '获取设备类型详情', '设备字段创建成功', '设备字段删除成功', '设备字段更新成功', '设备类型创建成功', '设备类型删除成功', '设备类型更新成功', '页码']

@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\schemas\depts.py
+# hypothesis_version: 6.148.8
+
+['id', '备注', '排序', '是否激活', '父部门ID', '研发中心', '部门名称']

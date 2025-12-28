@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\permissions.py
+# hypothesis_version: 6.148.8
+
+[300, 401, 403, '/api/v2/apis/batch', '/api/v2/menus/batch', '/api/v2/roles/batch', '/api/v2/users/batch', 'DELETE', 'api', 'api:batch_delete', 'batch_delete', 'created_by', 'current_user', 'dept', 'dept:batch_delete', 'dept_id', 'dict_data', 'dict_type', 'error_code', 'exclude_system_items', 'is_system', 'menu', 'menu:batch_delete', 'message', 'only_dept_items', 'only_own_items', 'reason', 'request', 'role', 'role:batch_delete', 'system_param', 'user', 'user:batch_delete', '只能删除本部门的项目', '只能删除自己创建的项目', '未认证用户', '系统内置项不允许删除']

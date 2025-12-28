@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\pagination.py
+# hypothesis_version: 6.148.8
+
+[100, 'end_index', 'has_next', 'has_prev', 'items', 'limit', 'offset', 'page', 'page_size', 'start_index', 'total', 'total_pages', '每页数量', '页码']

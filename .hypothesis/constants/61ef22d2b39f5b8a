@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v2\api_groups.py
+# hypothesis_version: 6.148.8
+
+[100, 201, 204, '-id', '/all', '/batch', '/{group_id}', '/{group_id}/apis', '0%', 'API ID列表', 'API不存在或不属于该分组', 'API分组ID列表不能为空', 'API分组不存在', 'API分组创建成功', 'API分组删除成功', 'API分组更新成功', 'API分组部分更新成功', 'DUPLICATE_GROUP_CODE', 'EMPTY_LIST', 'GROUP_IN_USE', 'NO_UPDATE_FIELDS', 'api', 'api_count', 'api_group', 'api_groups', 'api_id', 'api_method', 'api_name', 'api_path', 'apis', 'body', 'created_at', 'description', 'group_code', 'group_id', 'group_name', 'id', 'ids', 'not_found_ids', 'removed_from_group', 'search', 'success_rate', 'total_count', 'updated_at', 'updated_count', '从分组移除API', '分组下还有API，无法删除', '分组代码', '分组代码已存在', '分组名称', '分组描述', '创建API分组', '删除API分组', '批量删除API分组', '批量添加API到分组', '搜索关键词', '更新API分组', '每页数量', '至少需要提供一个要更新的字段', '获取API分组列表', '获取API分组列表成功', '获取API分组详情', '获取API分组详情成功', '获取分组下的API列表', '获取所有API分组', '获取所有API分组成功', '获取所有分组（不分页）', '部分更新API分组', '页码']

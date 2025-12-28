@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\crud.py
+# hypothesis_version: 6.148.8
+
+['CreateSchemaType', 'ModelType', 'Total', 'UpdateSchemaType', 'created_at', 'id', 'model_dump', 'updated_at']

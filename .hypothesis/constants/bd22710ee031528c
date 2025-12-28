@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\query_optimizer.py
+# hypothesis_version: 6.148.8
+
+[0.0, 1.0, 100, 300, 1024, 'ModelType', 'avg_time', 'category', 'created_at', 'expired_keys', 'failed_calls', 'field', 'foreign_key', 'frequent_query', 'inf', 'is_active', 'max_time', 'memory_usage_mb', 'min_time', 'reason', 'related_model', 'status', 'success_calls', 'table', 'total_calls', 'total_keys', 'total_time', 'type', 'updated_at', 'valid_keys', '外键字段建议添加索引以提高关联查询性能']

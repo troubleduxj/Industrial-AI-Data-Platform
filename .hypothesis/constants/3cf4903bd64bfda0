@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\controllers\welding_daily_report.py
+# hypothesis_version: 6.148.8
+
+[0.0, ' AND prod_code = $2', ' ORDER BY prod_code', 'created_at', 'defect_count', 'energy_consumed_kwh', 'gas_consumed_liter', 'id', 'notes', 'operator', 'prod_code', 'quality_score', 'report_date', 'rework_count', 'shift', 'total', 'total_duration', 'total_energy', 'total_gas', 'total_wire', 'updated_at', 'weld_length_m', 'welding_duration_sec', 'wire_consumed_kg']

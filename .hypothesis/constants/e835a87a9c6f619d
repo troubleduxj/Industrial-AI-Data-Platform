@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\services\permission_service.py
+# hypothesis_version: 6.148.8
+
+['*', '/', '/*', '0', '01', '1', '2', '3', '4', '5', 'active', 'all', 'component', 'custom', 'dept', 'dept_and_children', 'dept_ids', 'description', 'icon', 'id', 'is_cache', 'is_frame', 'menu_type', 'name', 'none', 'order_num', 'parent_id', 'path', 'perms', 'query', 'role_key', 'role_name', 'roles', 'scope', 'self', 'status', 'user_ids', 'visible', '{', '}', '拥有批量操作权限', '权限检查失败', '用户不存在', '用户账户已被禁用', '超级用户权限']

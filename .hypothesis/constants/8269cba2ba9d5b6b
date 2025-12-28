@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\tdengine_connector.py
+# hypothesis_version: 6.148.8
+
+[', ', '.', '/rest/sql', 'DESCRIBE', 'POST', 'SELECT', 'SHOW DATABASES;', 'USE ', 'data', 'database', 'database_exists', 'databases_count', 'description', 'error', 'error_message', 'healthy', 'host', 'is_external', 'last_check', 'message', 'response_time_ms', 'root', 'server_version', 'status', 'taosdata', 'test_db', 'unhealthy', '直接连接的TDengine服务器']

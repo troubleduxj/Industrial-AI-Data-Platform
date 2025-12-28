@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\celery_config.py
+# hypothesis_version: 6.148.8
+
+['10/m', 'ai_evaluation', 'ai_training', 'queue', 'rate_limit']

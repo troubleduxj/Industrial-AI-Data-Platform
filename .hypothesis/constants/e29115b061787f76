@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\batch_delete_decorators.py
+# hypothesis_version: 6.148.8
+
+[401, 403, 500, ':', 'PERMISSION_DENIED', 'allowed_count', 'allowed_items', 'api', 'batch_delete', 'current_user', 'denied_count', 'denied_items', 'dept', 'details', 'dict_data', 'dict_type', 'error_code', 'item', 'menu', 'message', 'permission', 'reason', 'request', 'role', 'system_param', 'user', '权限不足', '权限检查过程中发生系统错误', '用户未认证', '请联系管理员分配相应的批量删除权限']

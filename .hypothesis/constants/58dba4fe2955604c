@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\ai_engine\model_registry\registry.py
+# hypothesis_version: 6.148.8
+
+['-created_at', '-version', 'archived', 'deployed', 'draft', 'prod', 'staging']

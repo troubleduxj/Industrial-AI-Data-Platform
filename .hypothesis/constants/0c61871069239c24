@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v1\devices\alarm.py
+# hypothesis_version: 6.148.8
+
+[100, 200, 400, 500, '%Y-%m-%d', '%Y-%m-%d %H:%M:%S', '/list', '/statistics', 'items', 'page', 'page_size', 'total', 'total_pages', '开始时间不能大于结束时间', '查询成功', '查询报警历史数据失败', '查询报警统计信息失败', '查询设备报警历史失败: {}', '查询设备报警历史成功，返回{}条记录', '查询设备报警统计信息失败: {}', '查询设备报警统计信息成功', '每页数量', '获取设备报警历史列表', '获取设备报警统计信息', '设备类型，当前支持：welding', '设备编号', '页码']

@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\services\ai\prediction.py
+# hypothesis_version: 6.148.8
+
+[0.0, 0.3, 1.0, 100, 'alpha', 'arima', 'confidence_interval', 'inf', 'intercept', 'linear_regression', 'lower', 'mae', 'mape', 'method', 'moving_average', 'predictions', 'rmse', 'slope', 'steps', 'success', 'tolist', 'upper', 'window', '数据点太少', '有效数据点太少']

@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\core\optimized_crud.py
+# hypothesis_version: 6.148.8
+
+[1.0, 100, 300, 600, '-created_at', 'CreateSchemaType', 'ModelType', 'UpdateSchemaType', 'avg_time', 'cache_performance', 'count', 'hit_rate', 'id', 'max_time', 'memory_usage_mb', 'order', 'page', 'page_size', 'prefetch', 'query', 'recommendations', 'search', 'select', 'slow_queries', 'success_calls', 'success_rate', 'timestamp', 'total_calls', 'total_keys', 'valid_keys', '系统性能良好，无需特别优化']

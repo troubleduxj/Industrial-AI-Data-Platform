@@ -125,12 +125,12 @@ async def get_device_processes(
         # 转换为响应格式
         data = []
         for process in processes:
-            device_info = await process.device
+            asset = await process.device
             process_data = {
                 "id": process.id,
                 "device_id": process.device_id,
-                "device_code": device_info.device_code,
-                "device_name": device_info.device_name,
+                "device_code": asset.device_code,
+                "device_name": asset.device_name,
                 "process_name": process.process_name,
                 "process_code": process.process_code,
                 "process_version": process.process_version,
@@ -216,14 +216,14 @@ async def get_device_process(
         except DoesNotExist:
             return formatter.not_found("工艺不存在", "process")
         
-        device_info = await process.device
+        asset = await process.device
         
         process_data = {
             "id": process.id,
             "device_id": process.device_id,
-            "device_code": device_info.device_code,
-            "device_name": device_info.device_name,
-            "device_type": device_info.device_type,
+            "device_code": asset.device_code,
+            "device_name": asset.device_name,
+            "device_type": asset.device_type,
             "process_name": process.process_name,
             "process_code": process.process_code,
             "process_version": process.process_version,
@@ -477,15 +477,15 @@ async def get_process_executions(
         # 转换为响应格式
         data = []
         for execution in executions:
-            device_info = await execution.device
+            asset = await execution.device
             process_info = await execution.process
             
             execution_data = {
                 "id": execution.id,
                 "device_id": execution.device_id,
                 "process_id": execution.process_id,
-                "device_code": device_info.device_code,
-                "device_name": device_info.device_name,
+                "device_code": asset.device_code,
+                "device_name": asset.device_name,
                 "process_name": process_info.process_name,
                 "process_code": process_info.process_code,
                 "execution_code": execution.execution_code,

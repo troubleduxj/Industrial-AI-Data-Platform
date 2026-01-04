@@ -202,7 +202,6 @@ import ViewToggle from '@/components/common/ViewToggle.vue'
 
 import { formatDate } from '@/utils'
 import statisticsV2Api from '@/api/statistics-v2'
-import { deviceDataApi } from '@/api/device-v2'
 
 defineOptions({ name: '焊接时长统计' })
 
@@ -603,7 +602,7 @@ async function handleQuery() {
     console.log('查询参数:', params)
 
     // 调用真实API
-    const response = await deviceDataApi.getWeldTimeStatistics(params)
+    const response = await statisticsV2Api.getWeldingTimeStatistics(params)
 
     if (response && Array.isArray(response)) {
       statisticsData.value = response

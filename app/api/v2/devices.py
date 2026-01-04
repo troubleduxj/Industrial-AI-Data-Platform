@@ -1690,15 +1690,15 @@ async def get_realtime_monitoring(
         # 转换为响应格式
         data = []
         for item in monitoring_data:
-            device_info = await item.device
+            asset = await item.device
             # 从 metrics JSON 字段中提取数据，如果不存在则使用默认值
             metrics = item.metrics or {}
             data.append({
                 "id": item.id,
                 "device_id": item.device_id,
-                "device_code": device_info.device_code,
-                "device_name": device_info.device_name,
-                "device_type": device_info.device_type,
+                "device_code": asset.device_code,
+                "device_name": asset.device_name,
+                "device_type": asset.device_type,
                 "voltage": metrics.get("voltage"),
                 "current": metrics.get("current"),
                 "power": metrics.get("power"),
@@ -2657,10 +2657,10 @@ class ConnectionManagerV2:
             "query": query,
         }
 
-        device_info = (
+        asset_info = (
             device_code or f"{len(device_codes) if device_codes else 0}个指定设备" if device_codes else "全部设备"
         )
-        logger.info(f"WebSocket V2连接已建立，设备类型: {type_code or 'welding'}，设备编号: {device_info}")
+        logger.info(f"WebSocket V2连接已建立，设备类型: {type_code or 'welding'}，设备编号: {asset_info}")
 
     def disconnect(self, websocket: WebSocket):
         """断开WebSocket连接"""
@@ -2668,19 +2668,19 @@ class ConnectionManagerV2:
             self.active_connections.remove(websocket)
         
         type_code = None
-        device_info = "未知"
+        asset_info = "未知"
         
         if websocket in self.device_subscriptions:
             subscription = self.device_subscriptions[websocket]
             type_code = subscription.get("type_code")
             device_code = subscription.get("device_code")
             device_codes = subscription.get("device_codes")
-            device_info = (
+            asset_info = (
                 device_code or f"{len(device_codes) if device_codes else 0}个指定设备" if device_codes else "全部设备"
             )
             del self.device_subscriptions[websocket]
 
-        logger.info(f"WebSocket V2连接已断开，设备类型: {type_code or 'welding'}，设备编号: {device_info}")
+        logger.info(f"WebSocket V2连接已断开，设备类型: {type_code or 'welding'}，设备编号: {asset_info}")
 
     async def send_personal_message(self, message: str, websocket: WebSocket):
         """发送个人消息"""

@@ -441,7 +441,7 @@ import {
   EyeOutline
 } from '@vicons/ionicons5'
 import { dataModelApi } from '@/api/v2/data-model'
-import { deviceTypeApi } from '@/api/device-v2'
+import { deviceTypeApi } from '@/api/device-shared'
 import { systemV2Api } from '@/api/system-v2'
 // Note: Ensure this component exists in the same directory or update path
 import SchemaDiffModal from './components/SchemaDiffModal.vue'

@@ -116,7 +116,7 @@ import {
   NCard, NForm, NFormItem, NInput, NSelect, NDatePicker, NButton, NSpace, 
   NGrid, NGi, NDivider, NSpin, useMessage
 } from 'naive-ui'
-import { assetApi } from '@/api/v3/platform'
+import { assetApi } from '@/api/v4/assets'
 import { DynamicAssetForm } from '@/components/platform'
 
 const router = useRouter()

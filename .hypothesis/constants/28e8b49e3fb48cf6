@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_core\signal\models.py
+# hypothesis_version: 6.148.8
+
+['SignalDefinitionDTO', 'aggregation_method', 'alarm_threshold', 'category_id', 'code', 'created_at', 'data_type', 'default', 'display_config', 'field_group', 'float', 'id', 'is_active', 'is_alarm_enabled', 'is_default_visible', 'is_feature', 'is_realtime', 'is_stored', 'name', 'sort_order', 'unit', 'updated_at', 'validation_rules', 'value_range']

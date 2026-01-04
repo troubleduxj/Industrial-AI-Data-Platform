@@ -192,12 +192,12 @@ class DeviceDataController(CRUDBase[DeviceInfo, DeviceRealTimeDataCreate, dict])
         # 构建查询条件
         conditions = []
         table_name = None
-        device_info = None
+        asset = None
 
         if device_code:
             # 验证设备编号是否存在
-            device_info = await DeviceInfo.filter(device_code=device_code).first()
-            if not device_info:
+            asset = await DeviceInfo.filter(device_code=device_code).first()
+            if not asset:
                 logger.warning(f"❌ 设备编号 {device_code} 不存在，无法查询历史数据")
                 return 0, []
             
@@ -212,7 +212,7 @@ class DeviceDataController(CRUDBase[DeviceInfo, DeviceRealTimeDataCreate, dict])
             ]
             # 默认使用第一个，如果没有找到合适的，将在后续逻辑中处理
             table_name = potential_table_names[0]
-            logger.info(f"✅ 设备信息: device_code={device_code}, device_type={device_info.device_type}, 待验证表名={potential_table_names}")
+            logger.info(f"✅ 设备信息: device_code={device_code}, device_type={asset.device_type}, 待验证表名={potential_table_names}")
         else:
             logger.warning("❌ 未提供设备编号，无法查询历史数据")
             return 0, []  # 设备编号是必须的
@@ -259,8 +259,8 @@ class DeviceDataController(CRUDBase[DeviceInfo, DeviceRealTimeDataCreate, dict])
             target_table = None
             
             # 1. 优先尝试从设备类型配置中获取超级表名
-            if device_info and device_info.device_type:
-                device_type_obj = await DeviceType.filter(type_code=device_info.device_type).first()
+            if asset and asset.device_type:
+                device_type_obj = await DeviceType.filter(type_code=asset.device_type).first()
                 if device_type_obj and device_type_obj.tdengine_stable_name:
                     # 使用反引号包裹表名，防止大小写问题
                     target_table = f"`{device_type_obj.tdengine_stable_name}`"
@@ -639,7 +639,7 @@ class DeviceDataController(CRUDBase[DeviceInfo, DeviceRealTimeDataCreate, dict])
                                         device_data_map[device_code_val] = row_dict
 
                     # 辅助函数：从 TDengine 结果中提取字段值
-                    def get_field_value(row_data, field_name):
+                    def get_signal_value(row_data, field_name):
                         if field_name in row_data:
                             return row_data.get(field_name)
                         last_row_field = f"last_row({field_name})"
@@ -674,12 +674,12 @@ class DeviceDataController(CRUDBase[DeviceInfo, DeviceRealTimeDataCreate, dict])
                                     logger.debug(f"提取字段: {field_name} = {val}")
                             
                             # 提取时间戳
-                            ts_value = get_field_value(row_data, "ts")
+                            ts_value = get_signal_value(row_data, "ts")
                             ts_formatted = str(ts_value) if ts_value else None
 
                             # 构建设备数据
                             # 优先从TDengine获取device_name，如果没有则使用PostgreSQL中的设备名称
-                            tdengine_device_name = get_field_value(row_data, "device_name") or get_field_value(row_data, "name")
+                            tdengine_device_name = get_signal_value(row_data, "device_name") or get_signal_value(row_data, "name")
                             device_data = {
                                 "device_code": device.device_code,
                                 "device_name": tdengine_device_name or device.device_name or "",
@@ -869,7 +869,7 @@ class DeviceDataController(CRUDBase[DeviceInfo, DeviceRealTimeDataCreate, dict])
 
                 if is_valid_td_data:
 
-                    def get_field_value(row_data, field_name):
+                    def get_signal_value(row_data, field_name):
                         return row_data.get(field_name) or row_data.get(f"last_row({field_name})")
 
                     # 动态提取所有字段（除了特殊字段）
@@ -891,9 +891,9 @@ class DeviceDataController(CRUDBase[DeviceInfo, DeviceRealTimeDataCreate, dict])
                             val = self._round_value(val)
                             data_fields[field_name] = val
                     
-                    ts_value = get_field_value(row_data, "ts")
+                    ts_value = get_signal_value(row_data, "ts")
                     # 从TDengine的device_name标签获取设备名称，如果没有则使用PostgreSQL中的设备名称
-                    tdengine_name = get_field_value(row_data, "device_name") or get_field_value(row_data, "name") or device.device_name or ""
+                    tdengine_name = get_signal_value(row_data, "device_name") or get_signal_value(row_data, "name") or device.device_name or ""
 
                     device_data = {
                         "device_code": device.device_code,

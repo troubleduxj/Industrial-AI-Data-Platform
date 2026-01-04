@@ -120,23 +120,23 @@ class DynamicModelService:
             if not field_code:
                 continue
             
-            # 查询字段定义
-            device_field = await DeviceField.filter(
+            # 查询信号定义
+            signal_definition = await DeviceField.filter(
                 device_type_code=data_model.device_type_code,
                 field_code=field_code,
                 is_active=True
             ).first()
             
-            if not device_field:
-                logger.warning(f"[动态模型] 字段不存在: {field_code}，跳过")
+            if not signal_definition:
+                logger.warning(f"[动态模型] 信号定义不存在: {field_code}，跳过")
                 continue
             
             # 生成字段定义
-            field_def = self._build_field_definition(device_field, field_config)
+            field_def = self._build_field_definition(signal_definition, field_config)
             field_definitions[field_code] = field_def
             
             # 生成验证器（如果需要）
-            validators = self._build_field_validators(device_field, field_config)
+            validators = self._build_field_validators(signal_definition, field_config)
             if validators:
                 field_validators_dict[field_code] = validators
         
@@ -172,29 +172,29 @@ class DynamicModelService:
     
     def _build_field_definition(
         self,
-        device_field: DeviceField,
+        signal_definition: DeviceField,
         field_config: Dict[str, Any]
     ) -> tuple:
         """
         构建单个字段的定义
         
         Args:
-            device_field: 设备字段模型
+            signal_definition: 信号定义模型
             field_config: 字段配置（从 selected_fields 中获取）
         
         Returns:
             字段定义元组: (type, Field(...))
         """
         # 1. 确定字段类型
-        field_type_str = device_field.field_type.lower()
+        field_type_str = signal_definition.field_type.lower()
         python_type = self.TYPE_MAPPING.get(field_type_str, str)
         
         # 2. 确定是否必填
-        is_required = field_config.get('is_required', device_field.is_required)
+        is_required = field_config.get('is_required', signal_definition.is_required)
         
         # 3. 构建 Field 参数
         field_kwargs = {
-            'description': device_field.description or device_field.field_name,
+            'description': signal_definition.description or signal_definition.field_name,
         }
         
         # 添加别名
@@ -203,7 +203,7 @@ class DynamicModelService:
         
         # 添加默认值
         if not is_required:
-            default_value = device_field.default_value
+            default_value = signal_definition.default_value
             if default_value is not None:
                 try:
                     # 尝试转换默认值类型
@@ -221,8 +221,8 @@ class DynamicModelService:
                 field_kwargs['default'] = None
         
         # 添加数据范围（用于生成 ge, le 验证）
-        if device_field.data_range:
-            data_range = device_field.data_range
+        if signal_definition.data_range:
+            data_range = signal_definition.data_range
             if isinstance(data_range, dict):
                 if 'min' in data_range and python_type in (int, float):
                     field_kwargs['ge'] = data_range['min']
@@ -237,14 +237,14 @@ class DynamicModelService:
     
     def _build_field_validators(
         self,
-        device_field: DeviceField,
+        signal_definition: DeviceField,
         field_config: Dict[str, Any]
     ) -> List[callable]:
         """
         构建字段验证器
         
         Args:
-            device_field: 设备字段模型
+            signal_definition: 信号定义模型
             field_config: 字段配置
         
         Returns:
@@ -256,24 +256,24 @@ class DynamicModelService:
         # 可以添加更复杂的验证逻辑
         
         # 2. 报警阈值验证（可选，记录警告但不阻止）
-        if device_field.alarm_threshold:
+        if signal_definition.alarm_threshold:
             def check_alarm_threshold(cls, value):
                 """检查报警阈值"""
                 if value is None:
                     return value
                 
-                threshold = device_field.alarm_threshold
+                threshold = signal_definition.alarm_threshold
                 if isinstance(threshold, dict):
                     if 'warning' in threshold and isinstance(value, (int, float)):
                         if value >= threshold['warning']:
                             logger.warning(
-                                f"[动态模型] 字段 '{device_field.field_code}' 超过警告阈值: "
+                                f"[动态模型] 信号 '{signal_definition.field_code}' 超过警告阈值: "
                                 f"{value} >= {threshold['warning']}"
                             )
                     if 'critical' in threshold and isinstance(value, (int, float)):
                         if value >= threshold['critical']:
                             logger.error(
-                                f"[动态模型] 字段 '{device_field.field_code}' 超过严重阈值: "
+                                f"[动态模型] 信号 '{signal_definition.field_code}' 超过严重阈值: "
                                 f"{value} >= {threshold['critical']}"
                             )
                 
@@ -282,7 +282,7 @@ class DynamicModelService:
             validators.append(check_alarm_threshold)
         
         # 3. 自定义验证规则（JSON 格式）
-        if device_field.validation_rule:
+        if signal_definition.validation_rule:
             # TODO: 实现自定义验证规则解析
             pass
         
@@ -324,28 +324,28 @@ class DynamicModelService:
             if not field_code:
                 continue
             
-            # 查询字段定义
-            device_field = await DeviceField.filter(
+            # 查询信号定义
+            signal_definition = await DeviceField.filter(
                 device_type_code=data_model.device_type_code,
                 field_code=field_code
             ).first()
             
-            if not device_field:
+            if not signal_definition:
                 continue
             
             # 构建字段信息
             field_info = {
                 'field_code': field_code,
-                'field_name': device_field.field_name,
-                'field_type': device_field.field_type,
-                'unit': device_field.unit,
-                'description': device_field.description,
-                'is_required': field_config.get('is_required', device_field.is_required),
+                'field_name': signal_definition.field_name,
+                'field_type': signal_definition.field_type,
+                'unit': signal_definition.unit,
+                'description': signal_definition.description,
+                'is_required': field_config.get('is_required', signal_definition.is_required),
                 'alias': field_config.get('alias'),
                 'weight': field_config.get('weight', 1.0),
-                'data_range': device_field.data_range,
-                'alarm_threshold': device_field.alarm_threshold,
-                'display_config': device_field.display_config,
+                'data_range': signal_definition.data_range,
+                'alarm_threshold': signal_definition.alarm_threshold,
+                'display_config': signal_definition.display_config,
             }
             
             fields_info.append(field_info)

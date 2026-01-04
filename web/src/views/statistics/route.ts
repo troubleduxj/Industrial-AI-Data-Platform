@@ -15,7 +15,7 @@ const route: RouteRecordRaw = {
   children: [
     {
       name: 'OnlineRate',
-      path: '/statistics/online-rate',
+      path: 'online-rate',
       component: () => import('./online-rate/index.vue'),
       meta: {
         title: '在线率',
@@ -25,7 +25,7 @@ const route: RouteRecordRaw = {
     },
     {
       name: 'WeldTime',
-      path: '/statistics/weld-time',
+      path: 'weld-time',
       component: () => import('./weld-time/index.vue'),
       meta: {
         title: '焊接时长',
@@ -35,7 +35,7 @@ const route: RouteRecordRaw = {
     },
     {
       name: 'WeldingReport',
-      path: '/statistics/welding-report',
+      path: 'welding-report',
       component: () => import('./welding-report/index.vue'),
       meta: {
         title: '焊机日报',
@@ -45,7 +45,7 @@ const route: RouteRecordRaw = {
     },
     {
       name: 'WeldRecord',
-      path: '/statistics/weld-record',
+      path: 'weld-record',
       component: () => import('./weld-record/index.vue'),
       meta: {
         title: '焊接记录',

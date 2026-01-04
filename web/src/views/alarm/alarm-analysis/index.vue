@@ -133,7 +133,7 @@ import CommonPage from '@/components/page/CommonPage.vue'
 import QueryBarItem from '@/components/page/QueryBarItem.vue'
 import * as echarts from 'echarts'
 import { alarmApi } from '@/api/alarm-shared'
-import { deviceTypeApi } from '@/api/device-v2'
+import { categoryApi } from '@/api/v4/categories'
 
 // 查询参数
 const dateRange = ref(null)
@@ -164,9 +164,13 @@ const deviceTypes = ref([])
 // 加载设备类型数据
 const loadDeviceTypes = async () => {
   try {
-    const response = await deviceTypeApi.list({ page_size: 100 })
+    const response = await categoryApi.getList({ page_size: 100 })
     if (response.data) {
-      deviceTypes.value = response.data
+      const items = Array.isArray(response.data) ? response.data : (response.data.items || [])
+      deviceTypes.value = items.map((type) => ({
+        type_name: type.name,
+        type_code: type.code,
+      }))
     }
   } catch (error) {
     console.error('Failed to load device types', error)

@@ -19,7 +19,7 @@ const route: RouteRecordRaw = {
   },
   children: [
     {
-      path: '/process/process-card',
+      path: 'process-card',
       name: 'ProcessCard',
       component: () => import('./process-card/index.vue'),
       meta: {

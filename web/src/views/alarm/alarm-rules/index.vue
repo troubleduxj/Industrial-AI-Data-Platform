@@ -311,7 +311,7 @@ import CommonPage from '@/components/page/CommonPage.vue'
 import QueryBarItem from '@/components/page/QueryBarItem.vue'
 import TheIcon from '@/components/icon/TheIcon.vue'
 import { alarmRulesApi, AlarmLevelOptions, ThresholdTypeOptions } from '@/api/alarm-rules'
-import { deviceApi } from '@/api/device-v2'
+import { assetApi } from '@/api/v4/assets'
 
 const props = defineProps({
   deviceTypeCode: {
@@ -529,19 +529,17 @@ const loadDevices = async (deviceTypeCode) => {
   deviceLoading.value = true
   try {
     const params = {
-      device_type: deviceTypeCode,
+      category_code: deviceTypeCode,
       page: 1,
-      page_size: 100 // 修正：后端限制最大100
+      page_size: 100
     }
     
-    const res = await deviceApi.list(params)
-    if (res.success && res.data) {
-      const items = res.data.items || res.data || []
-      deviceOptions.value = items.map((item) => ({
-        label: `${item.device_name} (${item.device_code})`,
-        value: item.device_code,
-      }))
-    }
+    const res = await assetApi.getList(params)
+    const items = res.data?.items || res.data || []
+    deviceOptions.value = items.map((item) => ({
+      label: `${item.name} (${item.code})`,
+      value: item.code,
+    }))
   } catch (error) {
     console.error('加载设备失败:', error)
     message.error('加载设备列表失败')
@@ -640,7 +638,9 @@ const handleAdd = () => {
   
   // 如果有预设的设备类型（如嵌入模式），加载相关选项
   if (formData.device_type_code) {
-    loadFields(formData.device_type_code)
+    const selectedOption = deviceTypeOptions.value.find(opt => opt.value === formData.device_type_code)
+    const categoryId = selectedOption?.id
+    if (categoryId) loadFields(categoryId)
     loadDevices(formData.device_type_code)
   }
   

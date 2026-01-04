@@ -30,7 +30,10 @@
           <n-select v-model:value="formData.industry" :options="industryOptions" placeholder="请选择行业" />
         </n-form-item>
         <n-form-item label="图标" path="icon">
-          <n-input v-model:value="formData.icon" placeholder="请输入图标名称" />
+          <IconPicker v-model:value="formData.icon" />
+        </n-form-item>
+        <n-form-item label="颜色" path="color">
+          <n-color-picker v-model:value="formData.color" :show-alpha="false" />
         </n-form-item>
         <n-form-item label="描述" path="description">
           <n-input v-model:value="formData.description" type="textarea" placeholder="请输入描述" />
@@ -48,7 +51,9 @@
 import { ref, reactive, onMounted, h } from 'vue'
 import { NButton, NSpace, NTag, useMessage, useDialog } from 'naive-ui'
 import { AddOutline } from '@vicons/ionicons5'
-import { platformApi } from '@/api/v3/platform'
+import { categoryApi } from '@/api/v4'
+import IconPicker from '@/components/icon/IconPicker.vue'
+import TheIcon from '@/components/icon/TheIcon.vue'
 
 const message = useMessage()
 const dialog = useDialog()
@@ -91,6 +96,13 @@ const industryOptions = [
 
 const columns = [
   { title: 'ID', key: 'id', width: 80 },
+  { 
+    title: '图标', 
+    key: 'icon', 
+    width: 60, 
+    align: 'center',
+    render: row => row.icon ? h(TheIcon, { icon: row.icon, size: 20, color: row.color }) : '-' 
+  },
   { title: '类别名称', key: 'name' },
   { title: '类别编码', key: 'code' },
   { title: '行业', key: 'industry', render: row => h(NTag, { type: 'info' }, () => row.industry) },
@@ -117,7 +129,7 @@ const columns = [
 const loadCategories = async () => {
   loading.value = true
   try {
-    const res = await platformApi.getAssetCategories()
+    const res = await assetCategoryApi.getList()
     categories.value = res.data || []
   } catch (error) {
     message.error('加载资产类别失败')
@@ -128,13 +140,13 @@ const loadCategories = async () => {
 
 const handleCreate = () => {
   modalTitle.value = '新建资产类别'
-  Object.assign(formData, { id: null, name: '', code: '', industry: '', icon: '', description: '' })
+  Object.assign(formData, { id: null, name: '', code: '', industry: '', icon: '', color: '#1890ff', description: '' })
   showModal.value = true
 }
 
 const handleEdit = (row) => {
   modalTitle.value = '编辑资产类别'
-  Object.assign(formData, row)
+  Object.assign(formData, { ...row, color: row.color || '#1890ff' })
   showModal.value = true
 }
 
@@ -143,10 +155,10 @@ const handleSubmit = async () => {
   submitting.value = true
   try {
     if (formData.id) {
-      await platformApi.updateAssetCategory(formData.id, formData)
+      await assetCategoryApi.update(formData.id, formData)
       message.success('更新成功')
     } else {
-      await platformApi.createAssetCategory(formData)
+      await assetCategoryApi.create(formData)
       message.success('创建成功')
     }
     showModal.value = false
@@ -161,14 +173,14 @@ const handleSubmit = async () => {
 const handleDelete = (row) => {
   dialog.warning({
     title: '确认删除',
-    content: `确定要删除资产类别 "${row.name}" 吗？`,
-    positiveText: '确定',
-    negativeText: '取消',
-    onPositiveClick: async () => {
-      try {
-        await platformApi.deleteAssetCategory(row.id)
-        message.success('删除成功')
-        loadCategories()
+    content: '确定要删除该资产类别吗？删除后不可恢复。',
+      positiveText: '确定',
+      negativeText: '取消',
+      onPositiveClick: async () => {
+        try {
+          await categoryApi.delete(row.id)
+          message.success('删除成功')
+          loadCategories()
       } catch (error) {
         message.error('删除失败')
       }

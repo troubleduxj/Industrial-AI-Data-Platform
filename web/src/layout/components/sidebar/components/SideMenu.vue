@@ -15,11 +15,13 @@
 <script setup>
 import { usePermissionStore, useAppStore } from '@/store'
 import { renderCustomIcon, renderIcon, isExternal } from '@/utils'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const curRoute = useRoute()
 const permissionStore = usePermissionStore()
 const appStore = useAppStore()
+const { t, te } = useI18n()
 
 const activeKey = computed(() => curRoute.meta?.activeMenu || curRoute.name)
 
@@ -46,7 +48,7 @@ function resolvePath(basePath, path) {
 
 function getMenuItem(route, basePath = '') {
   let menuItem = {
-    label: (route.meta && route.meta.title) || route.name,
+    label: getTitle(route),
     key: route.name,
     path: resolvePath(basePath, route.path),
     icon: getIcon(route.meta),
@@ -64,7 +66,7 @@ function getMenuItem(route, basePath = '') {
     const singleRoute = visibleChildren[0]
     menuItem = {
       ...menuItem,
-      label: singleRoute.meta?.title || singleRoute.name,
+      label: getTitle(singleRoute),
       key: singleRoute.name,
       path: resolvePath(menuItem.path, singleRoute.path),
       icon: getIcon(singleRoute.meta),
@@ -86,6 +88,182 @@ function getMenuItem(route, basePath = '') {
       .sort((a, b) => a.order - b.order)
   }
   return menuItem
+}
+
+const segmentMap = {
+  'system': 'menu.system.title',
+  'user': 'menu.user.title',
+  'role': 'menu.role.title',
+  'menu': 'menu.menu.title',
+  'dept': 'menu.dept.title',
+  'api': 'menu.api.title',
+  'dict': 'menu.dict.title',
+  'device': 'menu.device_management.title',
+  'device-monitor': 'menu.device_monitoring.title',
+  'ai-monitor': 'menu.ai_monitoring.title',
+  'flow-settings': 'menu.workflow.title',
+  'data-model': 'menu.data_model.title',
+  'statistics': 'menu.statistics.title',
+  'alarm': 'menu.alarm.title',
+   'notification': 'menu.notification.title',
+   'users': 'menu.user.title',
+   'roles': 'menu.role.title',
+   'logs': 'menu.auditlog.title',
+   'alerts': 'menu.alarm.title',
+   'monitoring': 'menu.device_monitoring.title',
+   'departments': 'menu.dept.title',
+   'groups': 'menu.dept.title',
+   'permissions': 'menu.role.title',
+ }
+ 
+ const nameMap = {
+  'System': 'menu.system.title',
+  'User': 'menu.user.title',
+  'Role': 'menu.role.title',
+  'Menu': 'menu.menu.title',
+  'Dept': 'menu.dept.title',
+  'Api': 'menu.api.title',
+  'Dict': 'menu.dict.title',
+  'Device': 'menu.device_management.title',
+  'DeviceManagement': 'menu.device_management.title',
+  'DeviceMonitor': 'menu.device_monitoring.title',
+  'DeviceMonitoring': 'menu.device_monitoring.title',
+  'Workflow': 'menu.workflow.title',
+  'FlowSettings': 'menu.workflow.title',
+  'AiMonitor': 'menu.ai_monitoring.title',
+  'DataModel': 'menu.data_model.title',
+  'Statistics': 'menu.statistics.title',
+  'BaseInfo': 'menu.baseinfo.title',
+  'Type': 'menu.type.title',
+  'Monitor': 'menu.monitor.title',
+  'History': 'menu.history.title',
+  'Alarm': 'menu.alarm.title',
+  'Notification': 'menu.notification.title',
+  'Reports': 'menu.reports.title',
+  'Dashboard': 'menu.dashboard.title',
+  'System Management': 'menu.system.title',
+  'User Management': 'menu.user.title',
+  'Role Management': 'menu.role.title',
+  'Menu Management': 'menu.menu.title',
+  'Department Management': 'menu.dept.title',
+  'API Management': 'menu.api.title',
+  'Dict Management': 'menu.dict.title',
+  'Device Management': 'menu.device_management.title',
+  'Device Monitoring': 'menu.device_monitoring.title',
+  'Data Model': 'menu.data_model.title',
+  'Flow Orchestration': 'menu.workflow.title',
+  'Alarm Center': 'menu.alarm.title',
+  'Report Center': 'menu.reports.title',
+   'Logs': 'menu.auditlog.title',
+   'Alerts': 'menu.alarm.title',
+   'Monitoring': 'menu.device_monitoring.title',
+   'Departments': 'menu.dept.title',
+   'Groups': 'menu.dept.title',
+   'Permissions': 'menu.role.title',
+   
+   // V5 High Level Maps
+   'Overview': 'menu.overview.title',
+   'Assets': 'menu.assets.title',
+   'Signals': 'menu.signals.title',
+   'Data Ingestion': 'menu.data_ingestion.title',
+   'Data Flow': 'menu.data_flow.title',
+   'Analytics & AI': 'menu.analytics_ai.title',
+   'Alerts & Rules': 'menu.alerts_rules.title',
+   'Dashboards & Apps': 'menu.dashboards_apps.title',
+   'Data Management': 'menu.data_management.title',
+   'Security & Access': 'menu.security_access.title',
+   'Platform Admin': 'menu.platform_admin.title',
+   
+   // V5 Detailed Items
+   'Registry': 'menu.asset_registry.title',
+   'Hierarchy': 'menu.asset_hierarchy.title',
+   'Maintenance': 'menu.asset_maintenance.title',
+   'Tag Manage': 'menu.tag_manage.title',
+   'Tag Management': 'menu.tag_manage.title',
+   'Real_time Data': 'menu.real_time_data.title',
+   'Real-time Data': 'menu.real_time_data.title',
+   'Real Time Data': 'menu.real_time_data.title',
+   'Computed Tags': 'menu.computed_tags.title',
+   'Pipelines': 'menu.pipelines.title',
+   'Quality Rules': 'menu.quality_rules.title',
+   'Flow Designer': 'menu.flow_designer.title',
+   'Stream Process': 'menu.stream_process.title',
+   'Stream Processing': 'menu.stream_processing.title',
+   'Data Routing': 'menu.data_routing.title',
+   'Model Registry': 'menu.model_registry.title',
+   'Training Jobs': 'menu.training_jobs.title',
+   'Inference Services': 'menu.inference_services.title',
+   'Notebooks': 'menu.notebooks.title',
+   'Alert Definitions': 'menu.alert_definitions.title',
+   'Notify Channels': 'menu.notify_channels.title',
+   'Incident Management': 'menu.incident_management.title',
+   'On-call Shedules': 'menu.on_call_schedules.title',
+   'On-call Schedules': 'menu.on_call_schedules.title',
+   'Dashbords': 'menu.dashboards.title',
+   'Dashboards': 'menu.dashboards.title',
+   'App Builder': 'menu.app_builder.title',
+   'Industrial Apps': 'menu.industrial_apps.title',
+   'Schema Registry': 'menu.schema_registry.title',
+   'Metadata Store': 'menu.metadata_store.title',
+   'Storage Polices': 'menu.storage_policies.title',
+   'Storage Policies': 'menu.storage_policies.title',
+   
+   // V5 Adapter Names
+   'AssetExplorer': 'menu.asset_explorer.title',
+   'AssetTypes': 'menu.asset_types.title',
+   'AssetModels': 'menu.asset_models.title',
+   'AssetRelations': 'menu.asset_relations.title',
+   'DigitalTwin': 'menu.digital_twin.title',
+   'MaintenanceApp': 'menu.maintenance_app.title',
+ }
+ 
+ function getTitle(route) {
+  // 1. Try route.meta.title as a key (if it is a key)
+  if (route.meta?.title && te(route.meta.title)) return t(route.meta.title)
+  
+  // 2. Try generated key from name: menu.<name>.title
+  if (route.name) {
+    // 2.1 Try name map
+    if (nameMap[route.name] && te(nameMap[route.name])) return t(nameMap[route.name])
+    
+    // 2.2 Try generated key
+    const key = `menu.${route.name.toLowerCase()}.title`
+    if (te(key)) return t(key)
+  }
+
+  // 3. Try generated key from path
+  if (route.path) {
+    // 过滤掉 index 和空段
+    const segments = route.path.split('/').filter(s => s && s.toLowerCase() !== 'index')
+    
+    if (segments.length > 0) {
+      const lastSegment = segments[segments.length - 1].toLowerCase()
+      
+      // 3.1 尝试映射表
+      if (segmentMap[lastSegment] && te(segmentMap[lastSegment])) {
+        return t(segmentMap[lastSegment])
+      }
+
+      // 3.2 尝试替换连字符为下划线 (e.g. data-model -> data_model)
+      const snakeSegment = lastSegment.replace(/-/g, '_')
+      const snakeKey = `menu.${snakeSegment}.title`
+      if (te(snakeKey)) return t(snakeKey)
+
+      // 3.3 尝试原始片段
+      const lastKey = `menu.${lastSegment}.title`
+      if (te(lastKey)) return t(lastKey)
+    }
+  }
+  
+  // 4. Fallback with Debug Log
+  const fallbackTitle = route.meta?.title || route.name
+  console.warn('SideMenu Translation Failed:', {
+    name: route.name,
+    path: route.path,
+    metaTitle: route.meta?.title,
+    fallback: fallbackTitle
+  })
+  return fallbackTitle
 }
 
 function getIcon(meta) {

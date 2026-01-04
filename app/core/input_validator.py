@@ -248,11 +248,11 @@ class InputValidator:
         self.errors.clear()
         
         for field_name, rules in self.rules.items():
-            field_value = data.get(field_name)
+            signal_value = data.get(field_name)
             
             for rule in rules:
-                if not rule.validate(field_value):
-                    self.errors.append(rule.get_error_detail(field_value))
+                if not rule.validate(signal_value):
+                    self.errors.append(rule.get_error_detail(signal_value))
         
         # 记录验证错误日志
         if self.errors and self.request:

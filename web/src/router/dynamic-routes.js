@@ -6,6 +6,7 @@
 import { useUserStore } from '@/store/modules/user'
 import { useEnhancedPermissionStore } from '@/store/modules/permission'
 import { basicRoutes, asyncRoutes, vueModules, NOT_FOUND_ROUTE, EMPTY_ROUTE } from './routes'
+import { generateAssetRoutes } from './asset-routes'
 
 /**
  * 动态路由管理器类
@@ -78,11 +79,21 @@ class DynamicRouteManager {
       const accessRoutes = await permissionStore.generateRoutes()
       console.log('生成的权限路由数量:', accessRoutes.length)
 
+      // 生成资产动态路由
+      console.log('生成资产动态路由...')
+      let assetRoutes = []
+      try {
+        assetRoutes = await generateAssetRoutes()
+        console.log('生成的资产路由数量:', assetRoutes.length)
+      } catch (error) {
+        console.error('生成资产路由失败:', error)
+      }
+
       // 获取API权限
       await permissionStore.getAccessApis()
 
       // 添加权限路由到路由器
-      this.addAccessRoutes(accessRoutes)
+      this.addAccessRoutes([...accessRoutes, ...assetRoutes])
 
       // 添加静态异步路由
       this.addAsyncRoutes()

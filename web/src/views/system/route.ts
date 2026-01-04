@@ -15,7 +15,7 @@ const route: RouteRecordRaw = {
   children: [
     {
       name: 'User',
-      path: '/system/user',
+      path: 'user',
       component: () => import('./user/index.vue'),
       meta: {
         title: '用户管理',
@@ -25,7 +25,7 @@ const route: RouteRecordRaw = {
     },
     {
       name: 'Role',
-      path: '/system/role',
+      path: 'role',
       component: () => import('./roleV2/index.vue'),
       meta: {
         title: '角色管理',
@@ -35,7 +35,7 @@ const route: RouteRecordRaw = {
     },
     {
       name: 'Menu',
-      path: '/system/menu',
+      path: 'menu',
       component: () => import('./menu/index.vue'),
       meta: {
         title: '菜单管理',
@@ -45,7 +45,7 @@ const route: RouteRecordRaw = {
     },
     {
       name: 'Dept',
-      path: '/system/dept',
+      path: 'dept',
       component: () => import('./dept/index.vue'),
       meta: {
         title: '部门管理',
@@ -55,7 +55,7 @@ const route: RouteRecordRaw = {
     },
     {
       name: 'Api',
-      path: '/system/api',
+      path: 'api',
       component: () => import('./api/index.vue'),
       meta: {
         title: 'API管理',
@@ -65,7 +65,7 @@ const route: RouteRecordRaw = {
     },
     {
       name: 'ApiGroups',
-      path: '/system/api/groups',
+      path: 'api/groups',
       component: () => import('./api/groups/index.vue'),
       meta: {
         title: 'API分组管理',
@@ -75,7 +75,7 @@ const route: RouteRecordRaw = {
     },
     {
       name: 'DictType',
-      path: '/system/dict',
+      path: 'dict',
       component: () => import('./dict/DictType/index.vue'),
       meta: {
         title: '字典类型',
@@ -85,7 +85,7 @@ const route: RouteRecordRaw = {
     },
     {
       name: 'DictData',
-      path: '/system/dict/data',
+      path: 'dict/data',
       component: () => import('./dict/DictData/index.vue'),
       meta: {
         title: '字典数据',
@@ -96,7 +96,7 @@ const route: RouteRecordRaw = {
 
     {
       name: 'SystemParam',
-      path: '/system/param',
+      path: 'param',
       component: () => import('./param/index.vue'),
       meta: {
         title: '系统参数',
@@ -106,7 +106,7 @@ const route: RouteRecordRaw = {
     },
     {
       name: 'AuditLog',
-      path: '/system/auditlog',
+      path: 'auditlog',
       component: () => import('./auditlog/index.vue'),
       meta: {
         title: '审计日志',
@@ -117,7 +117,7 @@ const route: RouteRecordRaw = {
 
     {
       name: 'ComponentManagement',
-      path: '/system/components',
+      path: 'components',
       component: () => import('./components/index.vue'),
       meta: {
         title: '组件管理',

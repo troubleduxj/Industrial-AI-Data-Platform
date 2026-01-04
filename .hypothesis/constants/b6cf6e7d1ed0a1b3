@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v1\devices\websocket.py
+# hypothesis_version: 6.148.8
+
+[100, 1008, 2000, 10000, ',', '/realtime-data/ws', 'JWT认证token', 'data', 'dev', 'device_code', 'device_codes', 'device_type', 'error', 'message', 'ping', 'query', 'realtime_data', 'timestamp', 'type', 'type_code', 'user_id', 'welding', '使用开发模式认证', '全部设备', '无效的Token', '每次推送数据量', '登录已过期', '认证失败：用户不存在', '认证失败：缺少token', '设备WebSocket', '设备数量超过限制（最大100个）', '设备类型代码，不提供则订阅所有类型', '设备类型代码，不提供则默认为焊接设备', '设备编号列表，逗号分隔，用于订阅指定设备', '设备编号，不提供则订阅所有设备']

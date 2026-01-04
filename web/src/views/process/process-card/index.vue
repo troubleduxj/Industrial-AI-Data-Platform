@@ -35,7 +35,7 @@ import QueryBarItem from '@/components/page/QueryBarItem.vue'
 
 import { renderIcon } from '@/utils'
 import { useRouter } from 'vue-router'
-import deviceV2Api from '@/api/device-v2'
+import { processApi } from '@/api/v2/processes'
 
 defineOptions({ name: '工艺卡片管理' })
 
@@ -274,10 +274,10 @@ const handleSave = async () => {
     modalLoading.value = true
 
     if (modalAction.value === 'add') {
-      await deviceV2Api.processes.create(modalForm.value)
+      await processApi.create(modalForm.value)
       window.$message?.success('新建工艺成功')
     } else {
-      await deviceV2Api.processes.update(modalForm.value.id, modalForm.value)
+      await processApi.update(modalForm.value.id, modalForm.value)
       window.$message?.success('编辑工艺成功')
     }
 
@@ -300,7 +300,7 @@ const getProcesses = async () => {
     page_size: pagination.value.pageSize,
   }
   try {
-    const response = await deviceV2Api.processes.list(params)
+    const response = await processApi.list(params)
     console.log('工艺列表API v2响应数据:', response)
 
     if (response && response.data) {

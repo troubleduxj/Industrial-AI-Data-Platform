@@ -151,42 +151,42 @@ const generateSubModulesFromRoutes = () => {
   const subModuleConfigs = {
     // 设备维护模块
     'repair-records': {
-      title: '维修记录',
-      description: '管理设备维修记录，支持故障报修、维修过程跟踪和维修历史查询',
+      title: t('menu.repair_records.title'),
+      description: t('menu.repair_records.description'),
       icon: 'material-symbols:build-circle',
       permission: 'repair-records',
     },
     'maintenance-dashboard': {
-      title: '维护看板',
-      description: '设备维护状态总览，实时监控设备健康度和维护任务',
+      title: t('menu.maintenance_dashboard.title'),
+      description: t('menu.maintenance_dashboard.description'),
       icon: 'material-symbols:dashboard',
       permission: 'maintenance-dashboard',
     },
 
     // 设备管理模块
     baseinfo: {
-      title: '设备信息管理',
-      description: '管理设备基本信息，包括设备档案、参数配置等',
+      title: t('menu.baseinfo.title'),
+      description: t('menu.baseinfo.description'),
       icon: 'material-symbols:info',
       permission: 'baseinfo',
     },
     type: {
-      title: '设备分类管理',
-      description: '管理设备类型和分类，定义设备属性模板',
+      title: t('menu.type.title'),
+      description: t('menu.type.description'),
       icon: 'material-symbols:category',
       permission: 'type',
     },
 
     // 设备监测模块
     monitor: {
-      title: '设备实时监测',
-      description: '实时监控设备运行状态和关键参数',
+      title: t('menu.monitor.title'),
+      description: t('menu.monitor.description'),
       icon: 'material-symbols:monitor',
       permission: 'monitor',
     },
     history: {
-      title: '历史数据查询',
-      description: '查询和分析设备历史运行数据',
+      title: t('menu.history.title'),
+      description: t('menu.history.description'),
       icon: 'material-symbols:history',
       permission: 'history',
     },
@@ -233,58 +233,58 @@ const generateSubModulesFromRoutes = () => {
 
     // 监测看板模块
     'dashboard-weld': {
-      title: '焊机监测看板',
-      description: '焊机设备的实时监测看板',
+      title: t('menu.dashboard_weld.title'),
+      description: t('menu.dashboard_weld.description'),
       icon: 'material-symbols:dashboard',
       permission: 'dashboard-weld',
     },
     'dashboard-test': {
-      title: '测试看板',
-      description: '系统测试和调试看板',
+      title: t('menu.dashboard_test.title'),
+      description: t('menu.dashboard_test.description'),
       icon: 'material-symbols:bug-report',
       permission: 'dashboard-test',
     },
     'dashboard-cut': {
-      title: '切割机监测看板',
-      description: '切割机设备的实时监测看板',
+      title: t('menu.dashboard_cut.title'),
+      description: t('menu.dashboard_cut.description'),
       icon: 'material-symbols:content-cut',
       permission: 'dashboard-cut',
     },
 
     // 系统管理模块
     user: {
-      title: '用户管理',
-      description: '管理系统用户账号和基本信息',
+      title: t('menu.user.title'),
+      description: t('menu.user.description'),
       icon: 'material-symbols:person',
       permission: 'user',
     },
     role: {
-      title: '角色管理',
-      description: '管理用户角色和权限分配',
+      title: t('menu.role.title'),
+      description: t('menu.role.description'),
       icon: 'material-symbols:admin-panel-settings',
       permission: 'role',
     },
     menu: {
-      title: '菜单管理',
-      description: '管理系统菜单结构和权限',
+      title: t('menu.menu.title'),
+      description: t('menu.menu.description'),
       icon: 'material-symbols:menu',
       permission: 'menu',
     },
     api: {
-      title: 'API管理',
-      description: '管理系统API接口权限',
+      title: t('menu.api.title'),
+      description: t('menu.api.description'),
       icon: 'material-symbols:api',
       permission: 'api',
     },
     dept: {
-      title: '部门管理',
-      description: '管理组织架构和部门信息',
+      title: t('menu.dept.title'),
+      description: t('menu.dept.description'),
       icon: 'material-symbols:corporate-fare',
       permission: 'dept',
     },
     auditlog: {
-      title: '审计日志',
-      description: '查看系统操作审计日志',
+      title: t('menu.auditlog.title'),
+      description: t('menu.auditlog.description'),
       icon: 'material-symbols:history-edu',
       permission: 'auditlog',
     },

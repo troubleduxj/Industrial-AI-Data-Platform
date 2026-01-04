@@ -228,8 +228,25 @@ export const useAIModuleStore = defineStore('aiModule', {
           throw new Error(response.message || '获取配置失败')
         }
       } catch (error: any) {
-        console.error('获取AI模块配置失败:', error)
-        this.error = error.message || '未知错误'
+        console.warn('获取AI模块配置失败，使用默认配置:', error.message)
+        // 清除错误状态，因为我们使用了 fallback
+        this.error = null
+        // 添加 fallback 配置
+        this.config = {
+          enabled: false,
+          features: {
+            feature_extraction: false,
+            anomaly_detection: false,
+            trend_prediction: false,
+            health_scoring: false,
+            smart_analysis: false
+          },
+          resources: {
+            max_memory_mb: 512,
+            max_cpu_percent: 50,
+            worker_threads: 2
+          }
+        }
       } finally {
         this.loading = false
       }

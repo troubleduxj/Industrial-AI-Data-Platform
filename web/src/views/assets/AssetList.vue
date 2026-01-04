@@ -67,7 +67,7 @@ import {
   NPopconfirm, useMessage
 } from 'naive-ui'
 import { SearchOutline, AddOutline, CreateOutline, TrashOutline, EyeOutline } from '@vicons/ionicons5'
-import { assetApi } from '@/api/v3/platform'
+import { assetApi } from '@/api/v4/assets'
 import { useSignalDefinitions } from '@/components/platform/composables/useSignalDefinitions'
 
 const router = useRouter()

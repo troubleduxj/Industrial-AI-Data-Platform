@@ -4,8 +4,8 @@
       <Icon icon="tdesign:system-sum" class="logo-icon" />
     </div>
     <div v-show="!appStore.collapsed" ml-3 mr-8 max-w-150 flex-shrink-0 class="title-container">
-      <h2 class="main-title">DeviceMonitor</h2>
-      <p class="sub-title">设备智能监测平台</p>
+      <h2 class="main-title">IADP</h2>
+      <p class="sub-title">Industrial-AI-Data-Platform</p>
     </div>
   </router-link>
 </template>

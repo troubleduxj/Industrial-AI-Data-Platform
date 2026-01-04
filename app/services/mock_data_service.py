@@ -16,7 +16,7 @@ class MockDataService:
     
     def __init__(self):
         """初始化模拟数据服务"""
-        self.device_types = [
+        self.asset_categories = [
             {"id": 1, "name": "温度传感器", "code": "TEMP_SENSOR", "description": "温度监测设备"},
             {"id": 2, "name": "湿度传感器", "code": "HUMIDITY_SENSOR", "description": "湿度监测设备"},
             {"id": 3, "name": "压力传感器", "code": "PRESSURE_SENSOR", "description": "压力监测设备"},
@@ -32,14 +32,14 @@ class MockDataService:
     def _generate_mock_devices(self):
         """生成模拟设备数据"""
         device_id = 1
-        for device_type in self.device_types:
+        for asset_category in self.asset_categories:
             for i in range(3):  # 每种类型生成3个设备
                 device = {
                     "id": device_id,
-                    "name": f"{device_type['name']}-{i+1:02d}",
-                    "device_id": f"{device_type['code']}_{device_id:03d}",
-                    "type_id": device_type["id"],
-                    "type_name": device_type["name"],
+                    "name": f"{asset_category['name']}-{i+1:02d}",
+                    "device_id": f"{asset_category['code']}_{device_id:03d}",
+                    "type_id": asset_category["id"],
+                    "type_name": asset_category["name"],
                     "status": random.choice(["online", "offline", "warning"]),
                     "location": f"区域{random.randint(1, 5)}-{random.randint(1, 10)}号位置",
                     "last_update": datetime.now() - timedelta(minutes=random.randint(1, 30))
@@ -47,18 +47,18 @@ class MockDataService:
                 self.devices.append(device)
                 device_id += 1
     
-    async def get_device_types(self) -> List[Dict[str, Any]]:
-        """获取设备类型列表"""
-        logger.info("返回模拟设备类型数据")
-        return self.device_types
+    async def get_asset_categories(self) -> List[Dict[str, Any]]:
+        """获取资产类别列表"""
+        logger.info("返回模拟资产类别数据")
+        return self.asset_categories
     
-    async def get_devices(self, page: int = 1, page_size: int = 20, device_type: Optional[str] = None) -> Dict[str, Any]:
+    async def get_devices(self, page: int = 1, page_size: int = 20, asset_category: Optional[str] = None) -> Dict[str, Any]:
         """获取设备列表（分页）"""
         devices = self.devices.copy()
         
-        # 过滤设备类型
-        if device_type and device_type != "全部":
-            devices = [d for d in devices if d["type_name"] == device_type]
+        # 过滤资产类别
+        if asset_category and asset_category != "全部":
+            devices = [d for d in devices if d["type_name"] == asset_category]
         
         # 分页
         total = len(devices)
@@ -125,7 +125,7 @@ class MockDataService:
             "service": "mock_data_service",
             "timestamp": datetime.now().isoformat(),
             "device_count": len(self.devices),
-            "device_type_count": len(self.device_types)
+            "asset_category_count": len(self.asset_categories)
         }
 
 

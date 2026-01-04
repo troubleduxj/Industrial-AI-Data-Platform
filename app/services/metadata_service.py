@@ -1,6 +1,16 @@
 """
-元数据管理服务
-提供设备字段定义、数据模型、字段映射的业务逻辑
+元数据管理服务 (Legacy - V2 API兼容层)
+
+提供设备字段定义、数据模型、字段映射的业务逻辑。
+此服务使用旧的命名规范(DeviceField, DeviceType等)，主要用于V2 API兼容。
+
+对于V4 API，请使用:
+- platform_core.asset - 资产管理
+- platform_core.signal - 信号定义管理
+- platform_core.metadata - 元数据注册表
+- app.services.platform_services - 统一服务适配层
+
+Requirements: 7.1 - 保留API层薄封装
 """
 
 from typing import List, Optional, Dict, Any, Tuple
@@ -26,7 +36,11 @@ logger = logging.getLogger(__name__)
 
 
 class MetadataService:
-    """元数据管理服务"""
+    """
+    元数据管理服务 (Legacy)
+    
+    注意: 此服务用于V2 API兼容，新代码请使用platform_core模块。
+    """
     
     # =====================================================
     # 设备字段定义管理

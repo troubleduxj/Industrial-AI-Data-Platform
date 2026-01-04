@@ -2,6 +2,7 @@
 const Layout = () => import('@/layout/index.vue')
 
 export default {
+  name: 'NotificationCenterRoot',
   path: '/notification-center',
   component: Layout,
   redirect: '/notification-center/index',

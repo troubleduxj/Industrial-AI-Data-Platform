@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_core\asset\service.py
+# hypothesis_version: 6.148.8
+
+['category_id', 'code', 'error', 'maintenance', 'offline', 'online', 'status']

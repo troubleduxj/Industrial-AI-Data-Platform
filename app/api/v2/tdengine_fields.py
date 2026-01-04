@@ -38,16 +38,16 @@ def map_tdengine_type_to_field_type(tdengine_type: str) -> str:
     return type_mapping.get(tdengine_type.upper(), 'string')
 
 
-@router.get("/tdengine/stable-fields/{device_type_code}", summary="获取TDengine超级表字段列表")
+@router.get("/tdengine/stable-fields/{category_code}", summary="获取TDengine超级表字段列表")
 async def get_stable_fields(
     request: Request,
-    device_type_code: str,
+    category_code: str,
     current_user: User = DependAuth
 ):
     """
     从 TDengine 超级表中提取字段列表
     
-    - **device_type_code**: 设备类型代码
+    - **category_code**: 资产类别代码
     
     返回字段列表，包含：
     - field_code: 字段代码（列名）
@@ -59,20 +59,20 @@ async def get_stable_fields(
     try:
         formatter = create_formatter(request)
         
-        # 1. 获取设备类型信息
-        device_type = await DeviceType.get_or_none(type_code=device_type_code)
-        if not device_type:
-            return formatter.not_found(f"设备类型不存在: {device_type_code}")
+        # 1. 获取资产类别信息
+        asset_category = await DeviceType.get_or_none(type_code=category_code)
+        if not asset_category:
+            return formatter.not_found(f"资产类别不存在: {category_code}")
         
-        if not device_type.tdengine_stable_name:
-            return formatter.bad_request(f"设备类型 {device_type.type_name} 未配置 TDengine 超级表")
+        if not asset_category.tdengine_stable_name:
+            return formatter.bad_request(f"资产类别 {asset_category.type_name} 未配置 TDengine 超级表")
         
         # 2. 连接 TDengine 并查询超级表结构
         try:
             connector = TDengineConnector()
             
             # 查询超级表结构 - 使用完整的表名（数据库.表名）
-            stable_name = device_type.tdengine_stable_name
+            stable_name = asset_category.tdengine_stable_name
             # 如果表名不包含数据库前缀，添加数据库名
             if '.' not in stable_name:
                 stable_name = f"{connector.database}.{stable_name}"
@@ -116,13 +116,13 @@ async def get_stable_fields(
             
             await connector.close()
             
-            logger.info(f"成功提取 {device_type.type_name} 的 TDengine 字段: {len(fields)} 个")
+            logger.info(f"成功提取 {asset_category.type_name} 的 TDengine 字段: {len(fields)} 个")
             
             return formatter.success(
                 data={
-                    'device_type_code': device_type_code,
-                    'device_type_name': device_type.type_name,
-                    'stable_name': device_type.tdengine_stable_name,
+                    'category_code': category_code,
+                    'category_name': asset_category.type_name,
+                    'stable_name': asset_category.tdengine_stable_name,
                     'fields': fields,
                     'total': len(fields)
                 },
@@ -138,10 +138,10 @@ async def get_stable_fields(
         return formatter.internal_error(f"获取字段失败: {str(e)}")
 
 
-@router.get("/tdengine/field-suggestions/{device_type_code}", summary="获取字段配置建议")
+@router.get("/tdengine/field-suggestions/{category_code}", summary="获取字段配置建议")
 async def get_field_suggestions(
     request: Request,
-    device_type_code: str,
+    category_code: str,
     current_user: User = DependAuth
 ):
     """
@@ -157,17 +157,17 @@ async def get_field_suggestions(
         
         from app.models.device import DeviceField
         
-        # 1. 获取设备类型信息
-        device_type = await DeviceType.get_or_none(type_code=device_type_code)
-        if not device_type:
-            return formatter.not_found(f"设备类型不存在: {device_type_code}")
+        # 1. 获取资产类别信息
+        asset_category = await DeviceType.get_or_none(type_code=category_code)
+        if not asset_category:
+            return formatter.not_found(f"资产类别不存在: {category_code}")
         
-        if not device_type.tdengine_stable_name:
-            return formatter.bad_request(f"设备类型 {device_type.type_name} 未配置 TDengine 超级表")
+        if not asset_category.tdengine_stable_name:
+            return formatter.bad_request(f"资产类别 {asset_category.type_name} 未配置 TDengine 超级表")
         
-        # 2. 获取已配置的字段
+        # 2. 获取已配置的字段（使用ORM模型的device_type_code字段）
         configured_fields = await DeviceField.filter(
-            device_type_code=device_type_code,
+            device_type_code=category_code,
             is_active=True
         ).all()
         
@@ -187,7 +187,7 @@ async def get_field_suggestions(
             connector = TDengineConnector()
             
             # 查询超级表结构 - 使用完整的表名（数据库.表名）
-            stable_name = device_type.tdengine_stable_name
+            stable_name = asset_category.tdengine_stable_name
             # 如果表名不包含数据库前缀，添加数据库名
             if '.' not in stable_name:
                 stable_name = f"{connector.database}.{stable_name}"
@@ -295,9 +295,9 @@ async def get_field_suggestions(
         
         return formatter.success(
             data={
-                'device_type_code': device_type_code,
-                'device_type_name': device_type.type_name,
-                'stable_name': device_type.tdengine_stable_name,
+                'category_code': category_code,
+                'category_name': asset_category.type_name,
+                'stable_name': asset_category.tdengine_stable_name,
                 'matched_fields': matched_fields,
                 'missing_fields': missing_fields,
                 'extra_fields': extra_fields,
@@ -320,7 +320,7 @@ async def get_field_suggestions(
 from pydantic import BaseModel
 
 class SyncFieldsRequest(BaseModel):
-    device_type_code: str
+    category_code: str
     field_codes: List[str]
 
 @router.post("/tdengine/sync-fields", summary="同步TDengine字段到配置")
@@ -332,26 +332,26 @@ async def sync_fields(
     """
     同步 TDengine 字段到设备字段配置
     
-    - **device_type_code**: 设备类型代码
+    - **category_code**: 资产类别代码
     - **field_codes**: 要同步的字段代码列表
     """
     try:
         formatter = create_formatter(request)
-        device_type_code = sync_data.device_type_code
+        category_code = sync_data.category_code
         field_codes = sync_data.field_codes
         
         if not field_codes:
             return formatter.bad_request("请选择要同步的字段")
             
-        # 1. 获取设备类型
-        device_type = await DeviceType.get_or_none(type_code=device_type_code)
-        if not device_type:
-            return formatter.not_found(f"设备类型不存在: {device_type_code}")
+        # 1. 获取资产类别
+        asset_category = await DeviceType.get_or_none(type_code=category_code)
+        if not asset_category:
+            return formatter.not_found(f"资产类别不存在: {category_code}")
             
         # 2. 获取 TDengine 字段信息
         connector = TDengineConnector()
         try:
-            stable_name = device_type.tdengine_stable_name
+            stable_name = asset_category.tdengine_stable_name
             if '.' not in stable_name:
                 stable_name = f"{connector.database}.{stable_name}"
                 
@@ -388,9 +388,9 @@ async def sync_fields(
                 
             td_info = td_fields[code]
             
-            # 检查是否存在
+            # 检查是否存在（使用ORM模型的device_type_code字段）
             field = await DeviceField.get_or_none(
-                device_type_code=device_type_code,
+                device_type_code=category_code,
                 field_code=code
             )
             
@@ -400,9 +400,9 @@ async def sync_fields(
                 # await field.save()
                 updated_count += 1
             else:
-                # 创建新字段
+                # 创建新字段（使用ORM模型的device_type_code字段）
                 await DeviceField.create(
-                    device_type_code=device_type_code,
+                    device_type_code=category_code,
                     field_code=code,
                     field_name=code,  # 默认使用代码作为名称
                     field_type=td_info['field_type'],

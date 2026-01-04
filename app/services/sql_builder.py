@@ -28,7 +28,7 @@ class SQLBuilder:
     SQL 动态构建器 (Refactored)
     
     核心功能：
-    - 根据 DeviceType 和 DeviceField 配置动态生成 TDengine SQL
+    - 根据 AssetCategory 和 SignalDefinition 配置动态生成 TDengine SQL
     - 移除对 DeviceFieldMapping 的依赖
     - 仅支持 SELECT 查询 (只读模式)
     """
@@ -279,23 +279,24 @@ class SQLBuilder:
             'interval': interval
         }
     
-    async def _get_table_info(self, device_type_code: str) -> Dict[str, str]:
+    async def _get_table_info(self, category_code: str) -> Dict[str, str]:
         """
-        获取设备类型对应的 TDengine 表信息
+        获取资产类别对应的 TDengine 表信息
         """
-        device_type = await DeviceType.filter(type_code=device_type_code).first()
-        if not device_type:
-            raise APIException(code=400, message=f"设备类型不存在: {device_type_code}")
+        # 使用ORM模型的device_type_code字段（数据库字段名）
+        asset_category = await DeviceType.filter(type_code=category_code).first()
+        if not asset_category:
+            raise APIException(code=400, message=f"资产类别不存在: {category_code}")
             
-        if not device_type.tdengine_stable_name:
-            raise APIException(code=400, message=f"设备类型未配置超级表: {device_type_code}")
+        if not asset_category.tdengine_stable_name:
+            raise APIException(code=400, message=f"资产类别未配置超级表: {category_code}")
             
         return {
             "database": settings.TDENGINE_DATABASE, # 从配置获取数据库名
-            "stable": device_type.tdengine_stable_name
+            "stable": asset_category.tdengine_stable_name
         }
 
-    async def _get_identifier_mapping(self, device_type_code: str) -> Dict[str, Any]:
+    async def _get_identifier_mapping(self, category_code: str) -> Dict[str, Any]:
         """
         获取设备标识字段的映射信息
         """
@@ -315,14 +316,15 @@ class SQLBuilder:
         }
 
         for code in candidates:
+            # 使用ORM模型的device_type_code字段（数据库字段名）
             field = await DeviceField.filter(
-                device_type_code=device_type_code, 
+                device_type_code=category_code, 
                 field_code=code
             ).first()
             
             if field:
                 mapping = await DeviceFieldMapping.filter(
-                    device_type_code=device_type_code,
+                    device_type_code=category_code,
                     device_field_id=field.id
                 ).first()
                 
@@ -340,7 +342,7 @@ class SQLBuilder:
 
     async def _get_field_mappings(
         self,
-        device_type_code: str,
+        category_code: str,
         selected_fields: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
         """
@@ -348,16 +350,16 @@ class SQLBuilder:
         优先使用 DeviceFieldMapping 配置，如果不存在则默认使用 field_code 作为列名
         """
         field_mappings = []
-        table_info = await self._get_table_info(device_type_code)
+        table_info = await self._get_table_info(category_code)
         
         for field_config in selected_fields:
             field_code = field_config.get('field_code')
             if not field_code:
                 continue
             
-            # 验证字段是否存在且启用
+            # 验证字段是否存在且启用（使用ORM模型的device_type_code字段）
             field = await DeviceField.filter(
-                device_type_code=device_type_code,
+                device_type_code=category_code,
                 field_code=field_code,
                 is_active=True
             ).first()
@@ -369,7 +371,7 @@ class SQLBuilder:
             # 尝试查找自定义映射
             # 注意：通过外键关联查询字段映射
             mapping = await DeviceFieldMapping.filter(
-                device_type_code=device_type_code,
+                device_type_code=category_code,
                 device_field_id=field.id
             ).first()
             

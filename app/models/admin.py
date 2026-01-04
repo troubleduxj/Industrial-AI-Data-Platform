@@ -147,7 +147,7 @@ class Role(TimestampMixin, BaseModel):
 
 class Menu(TimestampMixin, BaseModel):
     # 基本信息
-    name = fields.CharField(max_length=20, description="菜单名称", index=True)
+    name = fields.CharField(max_length=100, description="菜单名称", index=True)
     path = fields.CharField(max_length=200, null=True, description="路由路径", index=True)
     component = fields.CharField(max_length=255, null=True, description="组件路径")
     

@@ -3,7 +3,7 @@
  * 用于动态菜单生成和资产类别数据缓存
  */
 import { defineStore } from 'pinia'
-import { assetCategoryApi } from '@/api/v3/platform'
+import { categoryApi as assetCategoryApi } from '@/api/v4/categories'
 
 export const useAssetCategoryStore = defineStore('assetCategory', {
   state: () => ({

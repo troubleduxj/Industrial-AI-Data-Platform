@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_core\signal\service.py
+# hypothesis_version: 6.148.8
+
+['aggregation_method', 'alarm_threshold', 'avg', 'bigint', 'bool', 'category_id', 'code', 'count', 'data_type', 'default', 'double', 'first', 'float', 'int', 'is_active', 'is_alarm_enabled', 'is_feature', 'is_realtime', 'is_stored', 'last', 'max', 'min', 'string', 'sum', '资产类别ID不能为空']

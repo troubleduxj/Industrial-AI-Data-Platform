@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\services\dynamic_model_service.py
+# hypothesis_version: 6.148.8
+
+[1.0, 400, 404, 'alarm_threshold', 'alias', 'bigint', 'bool', 'boolean', 'cached_keys', 'critical', 'data_range', 'datetime', 'decimal', 'default', 'description', 'device_type_code', 'display_config', 'double', 'field_code', 'field_name', 'field_type', 'fields', 'float', 'ge', 'int', 'integer', 'is_required', 'le', 'max', 'min', 'model_code', 'model_name', 'model_type', 'nchar', 'smallint', 'string', 'text', 'timestamp', 'tinyint', 'total_cached_models', 'total_fields', 'unit', 'varchar', 'version', 'warning', 'weight']

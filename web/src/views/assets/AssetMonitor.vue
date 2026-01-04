@@ -88,7 +88,7 @@ import { ref, computed, onMounted, onUnmounted, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import { NCard, NTag, NButton, NSpace, NSelect, NIcon, NSpin, NEmpty, useMessage } from 'naive-ui'
 import { RefreshOutline } from '@vicons/ionicons5'
-import { assetApi } from '@/api/v3/platform'
+import { assetApi } from '@/api/v4'
 import { useSignalDefinitions } from '@/components/platform/composables/useSignalDefinitions'
 
 const router = useRouter()

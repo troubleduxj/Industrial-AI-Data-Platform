@@ -184,7 +184,6 @@ import PermissionButton from '@/components/Permission/PermissionButton.vue'
 
 import { formatDate } from '@/utils'
 import statisticsV2Api from '@/api/statistics-v2'
-import { deviceDataApi } from '@/api/device-v2'
 import { apiV2Client } from '@/utils/api-v2-migration'
 
 defineOptions({ name: '焊接记录' })

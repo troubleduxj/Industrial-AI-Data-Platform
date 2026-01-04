@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\ai_engine\model\storage.py
+# hypothesis_version: 6.148.8
+
+['MINIO_ACCESS_KEY', 'MINIO_BUCKET', 'MINIO_ENDPOINT', 'MINIO_SECRET_KEY', 'MINIO_SECURE', 'MODEL_STORAGE_PATH', 'MODEL_STORAGE_TYPE', '_temp_dir', 'ai-models', 'data/ai_models', 'false', 'local', 'localhost:9000', 'minio', 'minioadmin', 'model_storage_', 'true', 'wb', '✅ 清理所有临时文件完成', '保存失败']

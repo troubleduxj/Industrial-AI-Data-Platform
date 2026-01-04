@@ -29,13 +29,12 @@
 
     <!-- 设备监控数据 -->
     <div v-if="showMonitoringData" class="monitoring-data">
-      <!-- 使用动态组件渲染 -->
-      <GroupedMonitoringData
-        v-if="monitoringFields && monitoringFields.length > 0"
-        :monitoring-fields="monitoringFields"
-        :realtime-data="device"
-        :loading="false"
-      />
+      <div v-if="monitoringFields && monitoringFields.length > 0" class="fields-grid">
+         <div v-for="field in monitoringFields" :key="field.key" class="data-row">
+            <span class="data-label">{{ field.label || field.name }}:</span>
+            <span class="data-value">{{ device[field.key] || device.data?.[field.key] || '-' }} {{ field.unit }}</span>
+         </div>
+      </div>
       <!-- 降级显示：硬编码数据 (仅当没有字段配置时显示) -->
       <div v-else class="data-row">
         <span class="data-label">⚡ 预设电流:</span>

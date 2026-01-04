@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_core\__init__.py
+# hypothesis_version: 6.148.8
+
+['3.0.0', 'asset', 'ingestion', 'metadata', 'realtime', 'signal', 'timeseries']

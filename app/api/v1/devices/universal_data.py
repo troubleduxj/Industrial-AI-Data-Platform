@@ -206,8 +206,8 @@ async def get_universal_realtime_data(
             device_name = None
             if device_code_val:
                 try:
-                    device_info = await DeviceInfo.get(device_code=device_code_val)
-                    device_name = device_info.device_name
+                    asset = await DeviceInfo.get(device_code=device_code_val)
+                    device_name = asset.device_name
                 except:
                     device_name = tags.get('name', device_code_val)
             
@@ -302,8 +302,8 @@ async def get_latest_data_by_type(
             device_name = None
             if device_code_val:
                 try:
-                    device_info = await DeviceInfo.get(device_code=device_code_val)
-                    device_name = device_info.device_name
+                    asset = await DeviceInfo.get(device_code=device_code_val)
+                    device_name = asset.device_name
                 except:
                     device_name = tags.get('name', device_code_val)
             

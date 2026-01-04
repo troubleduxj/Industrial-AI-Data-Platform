@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_core\asset\models.py
+# hypothesis_version: 6.148.8
+
+['AssetCategoryDTO', 'AssetDTO', 'asset_count', 'attributes', 'category', 'category_code', 'category_id', 'code', 'config', 'created_at', 'department', 'description', 'icon', 'id', 'industry', 'install_date', 'ip_address', 'is_active', 'is_locked', 'location', 'mac_address', 'manufacturer', 'model', 'name', 'offline', 'serial_number', 'status', 'tdengine_database', 'team', 'updated_at']

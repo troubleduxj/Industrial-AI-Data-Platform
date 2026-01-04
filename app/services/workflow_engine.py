@@ -452,18 +452,18 @@ class DeviceQueryNodeExecutor(NodeExecutor):
         logger.info(f"执行设备查询节点: {node.get('name', 'device_query')}")
         
         properties = node.get('properties', {})
-        device_type = properties.get('deviceType', '')
+        asset_category = properties.get('deviceType', '')  # 保持API兼容性，内部使用新命名
         device_id = properties.get('deviceId', '')
         query_fields = properties.get('queryFields', [])
         output_variable = properties.get('outputVariable', 'deviceData')
         
         # TODO: 集成实际的设备查询服务
-        logger.info(f"查询设备: type={device_type}, id={device_id}")
+        logger.info(f"查询设备: category={asset_category}, id={device_id}")
         
         # 模拟查询结果
         result = {
             'device_id': device_id,
-            'device_type': device_type,
+            'asset_category': asset_category,
             'status': 'online',
             'data': {}
         }

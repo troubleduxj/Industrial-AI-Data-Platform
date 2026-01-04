@@ -230,7 +230,7 @@ import { ref, onMounted, onBeforeUnmount, nextTick, type Ref } from 'vue'
 import * as echarts from 'echarts'
 import type { ECharts, EChartsOption } from 'echarts'
 import PermissionButton from '@/components/common/PermissionButton.vue'
-import { deviceDataApi } from '@/api/device-v2'
+import { deviceDataApi } from '@/api'
 import { useRouter } from 'vue-router'
 
 // ==================== 类型定义 ====================

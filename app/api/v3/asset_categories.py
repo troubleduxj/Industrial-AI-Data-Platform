@@ -125,6 +125,12 @@ async def create_asset_category(
         
         # 2. 创建类别
         tdengine_db = category_data.tdengine_database or "devicemonitor"
+        
+        # 处理颜色字段，存入config
+        config = category_data.config or {}
+        if category_data.color:
+            config["color"] = category_data.color
+            
         category = AssetCategory(
             code=category_data.code,
             name=category_data.name,
@@ -133,7 +139,7 @@ async def create_asset_category(
             icon=category_data.icon,
             tdengine_database=tdengine_db,
             tdengine_stable_prefix=f"raw_{category_data.code}",
-            config=category_data.config,
+            config=config,
             is_active=True,
             asset_count=0
         )

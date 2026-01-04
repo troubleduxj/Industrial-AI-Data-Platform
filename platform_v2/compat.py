@@ -4,16 +4,17 @@ Platform Compatibility Module - 向后兼容导入
 此模块提供从旧路径到新路径的兼容性映射。
 允许现有代码继续使用旧的导入路径。
 
+警告: platform_v2 模块已弃用，请使用 platform_core 代替。
+
 使用示例:
-    # 旧路径 (仍然有效)
-    from app.services.metadata_service import MetadataService
-    from app.services.tdengine_service import TDengineService
-    from app.services.schema_engine import schema_manager
+    # 旧路径 (已弃用)
+    from platform_v2.metadata import AssetCategoryService, SignalDefinitionService
+    from platform_v2.timeseries import TDengineClient, SchemaManager
     
     # 新路径 (推荐)
-    from platform.metadata import AssetCategoryService, SignalDefinitionService
-    from platform.timeseries import TDengineClient, SchemaManager
-    from platform.ingestion import DataValidator, DualWriter
+    from platform_core.metadata import AssetCategoryService, SignalDefinitionService
+    from platform_core.timeseries import TDengineClient, SchemaManager
+    from platform_core.ingestion import DataValidator, DualWriter
 """
 
 import warnings
@@ -40,23 +41,41 @@ def deprecated_import(old_path: str, new_path: str, obj: Any) -> Any:
     return obj
 
 
-# 路径映射表
+# 路径映射表 - 从旧路径到新的 platform_core 路径
 PATH_MAPPINGS = {
     # 元数据服务
-    "app.services.metadata_service.MetadataService": "platform.metadata.AssetCategoryService",
+    "platform_v2.metadata.AssetCategoryService": "platform_core.metadata.AssetCategoryService",
+    "platform_v2.metadata.SignalDefinitionService": "platform_core.metadata.SignalDefinitionService",
+    "platform_v2.metadata.MetadataRegistry": "platform_core.metadata.MetadataRegistry",
+    "platform_v2.metadata.metadata_registry": "platform_core.metadata.metadata_registry",
     
     # TDengine服务
-    "app.services.tdengine_service.TDengineService": "platform.timeseries.TDengineClient",
-    "app.services.tdengine_service.TDengineServiceManager": "platform.timeseries.TDengineClient",
+    "platform_v2.timeseries.TDengineClient": "platform_core.timeseries.TDengineClient",
+    "platform_v2.timeseries.get_tdengine_client": "platform_core.timeseries.get_tdengine_client",
     
-    # Schema引擎
-    "app.services.schema_engine.TDengineSchemaManager": "platform.timeseries.SchemaManager",
-    "app.services.schema_engine.SchemaVersionManager": "platform.timeseries.SchemaVersionManager",
-    "app.services.schema_engine.schema_manager": "platform.timeseries.schema_manager",
+    # Schema管理
+    "platform_v2.timeseries.SchemaManager": "platform_core.timeseries.SchemaManager",
+    "platform_v2.timeseries.SchemaVersionManager": "platform_core.timeseries.SchemaVersionManager",
+    "platform_v2.timeseries.schema_manager": "platform_core.timeseries.schema_manager",
+    "platform_v2.timeseries.schema_version_manager": "platform_core.timeseries.schema_version_manager",
+    
+    # 查询构建器
+    "platform_v2.timeseries.QueryBuilder": "platform_core.timeseries.QueryBuilder",
+    "platform_v2.timeseries.AggregateFunction": "platform_core.timeseries.AggregateFunction",
+    "platform_v2.timeseries.TimeInterval": "platform_core.timeseries.TimeInterval",
+    "platform_v2.timeseries.query": "platform_core.timeseries.query",
     
     # 数据采集
-    "platform_core.ingestion": "platform.ingestion",
-    "platform_core.realtime": "platform.realtime",
+    "platform_v2.ingestion": "platform_core.ingestion",
+    "platform_v2.realtime": "platform_core.realtime",
+    
+    # 旧的 app.services 路径
+    "app.services.metadata_service.MetadataService": "platform_core.metadata.AssetCategoryService",
+    "app.services.tdengine_service.TDengineService": "platform_core.timeseries.TDengineClient",
+    "app.services.tdengine_service.TDengineServiceManager": "platform_core.timeseries.TDengineClient",
+    "app.services.schema_engine.TDengineSchemaManager": "platform_core.timeseries.SchemaManager",
+    "app.services.schema_engine.SchemaVersionManager": "platform_core.timeseries.SchemaVersionManager",
+    "app.services.schema_engine.schema_manager": "platform_core.timeseries.schema_manager",
 }
 
 

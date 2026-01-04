@@ -94,7 +94,7 @@ class Connections(BaseSettings):
 
 
 class AppsModels(BaseSettings):
-    models: typing.List[str] = ["app.models.admin", "app.models.system", "app.models.device", "app.models.ai_monitoring", "app.models.audit_log", "app.models.alarm", "app.models.notification", "app.models.email", "app.models.workflow", "aerich.models"]
+    models: typing.List[str] = ["app.models.admin", "app.models.system", "app.models.device", "app.models.ai_monitoring", "app.models.audit_log", "app.models.alarm", "app.models.notification", "app.models.email", "app.models.workflow", "app.models.platform_upgrade", "aerich.models"]
     default_connection: str = "default"  # 使用"default"作为默认连接，与aerich_config.py保持一致
 
 

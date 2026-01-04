@@ -148,7 +148,7 @@
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useMessage } from 'naive-ui'
 import { SearchOutline, RefreshOutline, SettingsOutline } from '@vicons/ionicons5'
-import { platformApi } from '@/api/v3/platform'
+import { assetApi } from '@/api/v4/assets'
 import { useWebSocket, ConnectionState } from '@/utils/websocket'
 import { RealtimeChart, AlertNotification, PredictionDisplay, ConnectionStatus } from '@/components/realtime'
 

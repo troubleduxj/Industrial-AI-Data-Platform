@@ -197,11 +197,11 @@ const handleDelete = (row) => {
     positiveText: '确定',
     negativeText: '取消',
     onPositiveClick: async () => {
-      try {
-        await platformApi.deleteAIModel(row.id)
-        message.success('删除成功')
-        loadModels()
-      } catch (error) {
+        try {
+          await platformApi.delete(row.id)
+          message.success('删除成功')
+          loadModels()
+        } catch (error) {
         message.error('删除失败')
       }
     }

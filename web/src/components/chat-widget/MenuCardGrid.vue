@@ -88,11 +88,15 @@ const searchKeyword = ref('')
 
 // 扩展的菜单数据（包含更多功能）
 const extendedMenus = computed(() => [
-  ...chatWidgetStore.menuCards,
+  ...chatWidgetStore.menuCards.map(item => ({
+    ...item,
+    title: t(item.title),
+    description: t(item.description)
+  })),
   {
     id: 5,
-    title: '流程编排',
-    description: '自动化流程配置和管理',
+    title: t('menu.workflow.title'),
+    description: t('menu.workflow.description'),
     icon: 'ant-design:node-index-outlined',
     iconColor: '#722ed1',
     route: '/workflow',
@@ -101,8 +105,8 @@ const extendedMenus = computed(() => [
   },
   {
     id: 6,
-    title: '系统管理',
-    description: '用户权限和系统配置管理',
+    title: t('menu.system.title'),
+    description: t('menu.system.description'),
     icon: 'ant-design:setting-outlined',
     iconColor: '#13c2c2',
     route: '/system',
@@ -110,8 +114,8 @@ const extendedMenus = computed(() => [
   },
   {
     id: 7,
-    title: '报表中心',
-    description: '数据报表生成和导出',
+    title: t('menu.reports.title'),
+    description: t('menu.reports.description'),
     icon: 'ant-design:file-text-outlined',
     iconColor: '#fa541c',
     route: '/reports',
@@ -119,8 +123,8 @@ const extendedMenus = computed(() => [
   },
   {
     id: 8,
-    title: '日志审计',
-    description: '系统日志查看和审计',
+    title: t('menu.audit.title'),
+    description: t('menu.audit.description'),
     icon: 'ant-design:audit-outlined',
     iconColor: '#096dd9',
     route: '/audit',

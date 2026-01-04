@@ -203,7 +203,7 @@ import ViewToggle from '@/components/common/ViewToggle.vue'
 
 import { formatDate } from '@/utils'
 import statisticsV2Api from '@/api/statistics-v2'
-import deviceV2Api from '@/api/device-v2'
+import { categoryApi } from '@/api/v4' // 使用 V4 Category API 替代 deviceV2Api
 
 defineOptions({ name: '在线率统计' })
 
@@ -634,9 +634,17 @@ function initChart() {
  */
 async function loadDeviceTypes() {
   try {
-    const response = await deviceV2Api.deviceTypes.list()
-    if (response.data) {
-      deviceTypes.value = response.data
+    const response = await categoryApi.getList()
+    if (response.items) {
+      // 适配 V4 API 返回结构 (items -> data, name -> type_name, id/code -> type_code)
+      deviceTypes.value = response.items.map(item => ({
+        type_code: item.code || item.id,
+        type_name: item.name,
+        device_count: item.device_count // 假设 V4 返回了 device_count
+      }))
+    } else if (response.data) {
+        // 兼容 V2 结构
+        deviceTypes.value = response.data
     }
   } catch (err) {
     console.error('获取设备类型失败:', err)

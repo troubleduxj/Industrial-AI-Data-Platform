@@ -177,11 +177,16 @@ export const EMPTY_ROUTE = {
 const modules = import.meta.glob('@/views/**/route.{js,ts}', { eager: true })
 const asyncRoutes = []
 Object.keys(modules).forEach((key) => {
-  asyncRoutes.push(modules[key].default)
+  const mod = modules[key].default
+  if (Array.isArray(mod)) {
+    asyncRoutes.push(...mod)
+  } else {
+    asyncRoutes.push(mod)
+  }
 })
 
-// 加载 views 下每个模块的 index.vue 文件
-const vueModules = import.meta.glob('@/views/**/index.vue')
+// 加载 views 下所有 .vue 文件
+const vueModules = import.meta.glob('@/views/**/*.vue')
 
 // 调试：打印所有可用的模块路径
 console.log('📦 vueModules 可用模块数量:', Object.keys(vueModules).length)

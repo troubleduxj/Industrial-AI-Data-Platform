@@ -13,6 +13,7 @@ import { apiV2 } from '@/api/v2'
 import { authApi } from '@/api/system-v2'
 import { useUserStore } from '@/store/modules/user'
 import type { RouteRecordRaw } from 'vue-router'
+import { adaptToV5 } from './menu-adapter'
 
 // 使用动态导入Layout组件
 const Layout = () => import('@/layout/index.vue')
@@ -212,6 +213,9 @@ function buildRoutes(routes: BackendMenu[] = []): RouteRecordRaw[] {
           childPath = childPath.substring(1)
         }
 
+        // Merge meta from backend and adapter
+        const childMeta = e_child.meta || {}
+
         const routeInfo: RouteRecordRaw = {
           name: e_child.name,
           path: childPath,
@@ -223,6 +227,7 @@ function buildRoutes(routes: BackendMenu[] = []): RouteRecordRaw[] {
             keepAlive: e_child.keepalive,
             permissions: e_child.perms ? [e_child.perms] : [],
             isHidden: e_child.is_hidden,
+            ...childMeta // Allow overriding properties (like title)
           },
         }
 
@@ -290,7 +295,7 @@ export const useEnhancedPermissionStore = defineStore('enhancedPermission', () =
     apis: {
       data: null,
       timestamp: 0,
-      ttl: CACHE_CONFIG.API_TTL
+      ttl: CACHE_CONFIG.PERMISSION_TTL
     },
     permissions: {
       data: null,
@@ -364,6 +369,8 @@ export const useEnhancedPermissionStore = defineStore('enhancedPermission', () =
    * 检查缓存是否有效
    */
   const isCacheValid = (cacheKey: keyof CacheState): boolean => {
+    // Force refresh if version changed (simulated by key check logic wrapper if we were using localStorage directly)
+    // Here we just use the in-memory cache object.
     const cacheItem = cache[cacheKey]
     if (!cacheItem || !cacheItem.data) return false
 
@@ -429,18 +436,23 @@ export const useEnhancedPermissionStore = defineStore('enhancedPermission', () =
       console.log('✅ Shared API: enhancedPermissionStore.generateRoutes() - 使用 Shared Menu 类型')
 
       // 检查缓存
-      const cachedMenus = getCache<BackendMenu[]>('menus')
-      if (cachedMenus) {
-        console.log('使用缓存的菜单数据生成路由')
-        accessRoutes.value = buildRoutes(cachedMenus)
-        return accessRoutes.value
-      }
+      // FORCE DISABLE CACHE
+      // const cachedMenus = getCache<BackendMenu[]>('menus')
+      // if (cachedMenus) {
+      //   console.log('使用缓存的菜单数据生成路由')
+      //   accessRoutes.value = buildRoutes(cachedMenus)
+      //   return accessRoutes.value
+      // }
 
       console.log('从API获取菜单数据生成路由')
       const res = await apiV2.getUserMenu()
 
       if (res && res.data) {
-        // 缓存菜单数据
+        // 适配 V5 菜单结构
+        console.log('Adapting menus to V5 structure... (Disabled via DB Migration)')
+        // const adaptedMenus = adaptToV5(res.data)
+        
+        // 缓存菜单数据 (Use adapted menus)
         setCache('menus', res.data)
 
         // 构建路由
@@ -471,19 +483,23 @@ export const useEnhancedPermissionStore = defineStore('enhancedPermission', () =
       isLoadingMenus.value = true
 
       // 检查缓存
-      if (!forceRefresh) {
-        const cachedMenus = getCache<BackendMenu[]>('menus')
-        if (cachedMenus) {
-          console.log('使用缓存的菜单数据')
-          userMenus.value = cachedMenus
-          return cachedMenus
-        }
-      }
+      // FORCE DISABLE CACHE TO FIX MENU ADAPTER ISSUE
+      // if (!forceRefresh) {
+      //   const cachedMenus = getCache<BackendMenu[]>('menus')
+      //   if (cachedMenus) {
+      //     console.log('使用缓存的菜单数据')
+      //     userMenus.value = cachedMenus
+      //     return cachedMenus
+      //   }
+      // }
 
       console.log(`从API获取用户菜单 (强制刷新: ${forceRefresh})`)
       const res = await apiV2.getUserMenu()
 
       if (res && res.data) {
+        // 适配 V5 菜单结构
+        // const adaptedMenus = adaptToV5(res.data)
+        
         userMenus.value = res.data
 
         // 缓存菜单数据

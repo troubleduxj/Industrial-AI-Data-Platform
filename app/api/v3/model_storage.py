@@ -73,7 +73,7 @@ class StorageStatsResponse(BaseModel):
 def get_storage_service():
     """获取模型存储服务实例"""
     try:
-        from ai_engine.model_storage.model_storage_service import get_model_storage_service
+        from ai_engine.model import get_model_storage_service
         return get_model_storage_service()
     except ImportError:
         raise HTTPException(

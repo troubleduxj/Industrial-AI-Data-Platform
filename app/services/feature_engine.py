@@ -1367,7 +1367,7 @@ class FeatureManager:
         self._td_client = None
         
         # 集成特征存储和血缘追踪 (需求6.1, 6.5)
-        from ai_engine.feature_hub import FeatureStore, LineageTracker
+        from ai_engine.feature import FeatureStore, LineageTracker
         self.feature_store = FeatureStore(database)
         self.lineage_tracker = LineageTracker()
     

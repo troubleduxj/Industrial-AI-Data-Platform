@@ -317,7 +317,7 @@ const emit = defineEmits<Emits>()
 // Form ref and validation
 const formRef = ref<FormInst | null>(null)
 const message = useMessage()
-const { validateForm, checkDataIntegrity, formatValidationErrors } = useRepairValidation()
+const { validateForm, checkDataIntegrity, formatValidationErrors, businessRules } = useRepairValidation()
 
 // 表单缓存管理
 const { createFormManager, watchFormChanges, getDefaultFormData } = useFormCache()
@@ -515,17 +515,17 @@ const loadAllDevices = async () => {
   try {
     deviceLoading.value = true
     
-    // 动态导入设备API
-    const { default: deviceV2Api } = await import('@/api/device-v2')
+    // 动态导入设备API (使用V4)
+    const { assetApi } = await import('@/api/v4')
     
     // 先加载第一页数据
-    const response = await deviceV2Api.list({
+    const response = await assetApi.getList({
       page: 1,
       page_size: 100, // API限制最大为100
       status: 'active' // 只获取活跃设备
     })
     
-    if (response && response.success && response.data) {
+    if (response && (response.data || response.items)) {
       const devices = Array.isArray(response.data) ? response.data : (response.data.items || [])
       
       // 处理设备数据 - 为设备编号搜索
@@ -744,14 +744,14 @@ const handleDeviceNameSearch = (query) => {
       
       if (!query || query.length < 1) {
         // 显示前20个设备名称（从API数据中获取）
-        const { default: deviceV2Api } = await import('@/api/device-v2')
-        const response = await deviceV2Api.list({
+        const { assetApi } = await import('@/api/v4')
+        const response = await assetApi.getList({
           page: 1,
           page_size: 20,
           status: 'active'
         })
         
-        if (response && response.success && response.data) {
+        if (response && (response.data || response.items)) {
           const devices = Array.isArray(response.data) ? response.data : (response.data.items || [])
           deviceNameOptions.value = devices
             .filter(device => device.device_name || device.name)
@@ -764,15 +764,15 @@ const handleDeviceNameSearch = (query) => {
         }
       } else {
         // 搜索匹配的设备名称（从API搜索）
-        const { default: deviceV2Api } = await import('@/api/device-v2')
-        const response = await deviceV2Api.list({
+        const { assetApi } = await import('@/api/v4')
+        const response = await assetApi.getList({
           page: 1,
           page_size: 50,
           status: 'active',
           search: query // 使用API的搜索功能
         })
         
-        if (response && response.success && response.data) {
+        if (response && (response.data || response.items)) {
           const devices = Array.isArray(response.data) ? response.data : (response.data.items || [])
           const searchQuery = query.toLowerCase()
           

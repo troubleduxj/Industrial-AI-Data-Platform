@@ -60,7 +60,7 @@ import {
   NTabs, NTabPane, NEmpty, useMessage 
 } from 'naive-ui'
 import { RefreshOutline } from '@vicons/ionicons5'
-import { deviceTypeApi } from '@/api/device-v2'
+import { deviceTypeApi } from '@/api/device-shared'
 import FieldConfig from '@/views/metadata/fields/index.vue'
 import ModelConfig from '@/views/metadata/models/index.vue'
 import AlarmRules from '@/views/alarm/alarm-rules/index.vue'

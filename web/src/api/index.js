@@ -5,19 +5,15 @@ import deviceApis, {
   deviceTypeApi as deviceTypeApiV1,
   deviceDataApi as deviceDataApiV1,
 } from './device'
-// 导入V2版本的API
-import deviceV2Apis, {
-  deviceApi as deviceApiV2,
-  deviceTypeApi as deviceTypeApiV2,
-  deviceDataApi as deviceDataApiV2,
-} from './device-v2'
 // 导入系统管理V2版本的API
 import systemV2Apis from './system-v2'
+// 导入新的V4 API
+import { assetApi, categoryApi } from '@/api/v4'
 
-// 导出具名API模块 (优先使用V2版本)
-export const deviceApi = deviceApiV2
-export const deviceTypeApi = deviceTypeApiV2
-export const deviceDataApi = deviceDataApiV2
+// 导出具名API模块 (优先使用V4版本或兼容层)
+// 注意：deviceApiV2 等已被移除，请使用 assetApi 或 categoryApi
+export const deviceApi = assetApi
+export const deviceTypeApi = categoryApi
 export const systemV2Api = systemV2Apis
 
 // V1版本的API作为备用

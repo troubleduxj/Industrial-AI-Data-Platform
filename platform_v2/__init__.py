@@ -1,36 +1,43 @@
 """
-Platform Layer - 平台核心层
+Platform V2 Layer - 平台核心层 (已弃用)
 
-工业AI数据平台的核心平台层，提供以下功能模块：
+警告: 此模块已弃用，请使用 platform_core 代替。
 
-- metadata: 元数据管理（资产类别、信号定义）
-- timeseries: 时序数据服务（TDengine操作）
-- ingestion: 数据采集层（协议适配器、数据验证）
-- realtime: 实时推送服务（WebSocket）
+所有功能已迁移到 platform_core 模块：
+- platform_core.metadata: 元数据管理（资产类别、信号定义）
+- platform_core.timeseries: 时序数据服务（TDengine操作）
+- platform_core.ingestion: 数据采集层（协议适配器、数据验证）
+- platform_core.realtime: 实时推送服务（WebSocket）
+- platform_core.asset: 资产管理
+- platform_core.signal: 信号管理
 
-注意: 
-- 为避免与Python内置 platform 模块冲突，部分实现位于 platform_core
-- 此模块提供统一的导入接口，内部会代理到 platform_core
-
-使用示例:
-    from platform.metadata import AssetCategoryService
-    from platform.timeseries import TDengineClient
-    from platform.ingestion import DataValidator
-    from platform.realtime import ConnectionManager
+迁移指南:
+    # 旧路径 (已弃用)
+    from platform_v2.metadata import AssetCategoryService
+    from platform_v2.timeseries import TDengineClient
+    
+    # 新路径 (推荐)
+    from platform_core.metadata import AssetCategoryService
+    from platform_core.timeseries import TDengineClient
 """
+
+import warnings
 
 __version__ = "2.0.0"
 
-# 直接导入子模块
-from . import metadata
-from . import timeseries
-from . import ingestion
+# 发出弃用警告
+warnings.warn(
+    "platform_v2 模块已弃用，请使用 platform_core 代替。"
+    "所有功能已迁移到 platform_core 模块。",
+    DeprecationWarning,
+    stacklevel=2
+)
 
-# realtime 模块位于 platform_core，创建别名
-try:
-    from platform_core import realtime
-except ImportError:
-    realtime = None
+# 为向后兼容，从 platform_core 导入所有子模块
+from platform_core import metadata
+from platform_core import timeseries
+from platform_core import ingestion
+from platform_core import realtime
 
 __all__ = [
     "metadata",

@@ -32,10 +32,10 @@
               "
               size="large"
               type="tertiary"
-              @click="handleCardClick('/device')"
+              @click="handleCardClick('/assets')"
             >
               <Icon icon="ant-design:setting-outlined" class="mr-2" />
-              系统设置
+              资产管理
             </n-button>
           </div>
         </div>
@@ -150,27 +150,6 @@
               </div>
               <div class="module-footer">
                 <span class="module-action">设备列表</span>
-              </div>
-            </n-card>
-          </n-gi>
-          <n-gi v-if="hasWorkbenchModulePermission('/device-monitoring')">
-            <n-card
-              class="module-card monitoring"
-              hoverable
-              @click="handleCardClick('/device-monitoring')"
-            >
-              <div class="module-header">
-                <div class="module-icon">
-                  <Icon icon="ant-design:monitor-outlined" />
-                </div>
-                <div class="module-badge">监测</div>
-              </div>
-              <div class="module-content">
-                <h3 class="module-title">设备监测</h3>
-                <p class="module-description">实时监测设备运行状态和参数</p>
-              </div>
-              <div class="module-footer">
-                <span class="module-action">开始监测</span>
               </div>
             </n-card>
           </n-gi>

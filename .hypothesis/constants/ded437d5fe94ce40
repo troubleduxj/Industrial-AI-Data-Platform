@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\services\ai\model_registry.py
+# hypothesis_version: 6.148.8
+
+[1000, 100000, '-created_at', '[^a-zA-Z0-9]', '^\\d+\\.\\d+\\.\\d+$', 'algorithm', 'archived', 'arima', 'category', 'category_code', 'category_id', 'code', 'created_at', 'deployed', 'deployed_at', 'description', 'draft', 'error', 'feature_config', 'file_path', 'file_size', 'hash', 'hyperparameters', 'id', 'is_active', 'isolation_forest', 'linear_regression', 'lstm', 'metrics', 'name', 'prod', 'random_forest', 'rb', 'size', 'staging', 'status', 'storage_path', 'target_signal', 'trained', 'training', 'training_config', 'updated_at', 'version', 'xgboost', '已归档', '已训练', '已部署', '文件路径为空', '无法删除生产版本，请先停用', '无法归档生产版本，请先停用', '模型存储模块未安装，跳过存储后端清理', '生产', '草稿', '训练中', '路径不是文件', '预发布']

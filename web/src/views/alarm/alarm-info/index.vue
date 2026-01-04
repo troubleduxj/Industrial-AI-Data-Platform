@@ -131,11 +131,14 @@ const deviceTypes = ref([])
 // 加载设备类型数据
 const loadDeviceTypes = async () => {
   try {
-    // ✅ Shared API 迁移
-    const response = await deviceTypeApi.list()
+    const response = await categoryApi.getList()
     if (response && response.data) {
-      deviceTypes.value = response.data
-      console.log('✅ Shared API - 设备类型数据加载成功:', deviceTypes.value)
+      const items = Array.isArray(response.data) ? response.data : (response.data.items || [])
+      deviceTypes.value = items.map((type) => ({
+        type_name: type.name,
+        type_code: type.code,
+      }))
+      console.log('✅ Asset API - 设备类型数据加载成功:', deviceTypes.value)
     }
   } catch (error) {
     console.warn('获取设备类型失败，使用默认选项:', error)

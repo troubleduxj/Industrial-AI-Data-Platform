@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_core\signal\repository.py
+# hypothesis_version: 6.148.8
+
+['SignalDefinition', 'category', 'field_group', 'id', 'sort_order']

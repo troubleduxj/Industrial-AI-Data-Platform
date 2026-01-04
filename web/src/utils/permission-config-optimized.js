@@ -268,7 +268,6 @@ export const PAGE_PERMISSION_MAP = {
   '/device/type': 'device-types',
   '/device-maintenance/repair-records': 'device-maintenance',
   '/process/process-card': 'device-processes',
-  '/device-monitor': 'devices',
   '/alarm/alarm-info': 'alarms',
   '/ai-monitor/trend-prediction': 'ai-predictions',
   '/ai-monitor/model-management': 'ai-models',

@@ -189,7 +189,8 @@ import {
 } from 'naive-ui'
 import { SearchOutline, AddOutline, PlayCircleOutline, StopCircleOutline, BarChartOutline } from '@vicons/ionicons5'
 import { modelManagementApi } from '@/api/v2/ai-module'
-import { deviceTypeApi, deviceApi, compatibilityApi } from '@/api/device-v2'
+import { assetApi } from '@/api/v4/assets'
+import { categoryApi } from '@/api/v4/categories'
 import AIChart from '@/components/ai-monitor/charts/AIChart.vue'
 
 const message = useMessage()
@@ -380,13 +381,13 @@ const frameworkOptions = [
 // 获取设备类型
 const fetchDeviceTypes = async () => {
   try {
-    const res = await deviceTypeApi.list()
+    const res = await categoryApi.getList()
     if (res?.data) {
       // 适配不同的响应结构
       const list = Array.isArray(res.data) ? res.data : (res.data.items || [])
       deviceTypeOptions.value = list.map((item: any) => ({
-        label: item.type_name,
-        value: item.type_code
+        label: `${item.name} (${item.code})`,
+        value: item.code
       }))
     }
   } catch (error) {
@@ -398,12 +399,17 @@ const fetchDeviceTypes = async () => {
 // 根据类型获取设备列表
 const fetchDevices = async (typeCode: string) => {
   try {
-    const res = await deviceApi.list({ device_type: typeCode })
+    const params = {
+      category_code: typeCode,
+      page: 1,
+      page_size: 100
+    }
+    const res = await assetApi.getList(params)
     if (res?.data) {
       const list = Array.isArray(res.data) ? res.data : (res.data.items || [])
       deviceOptions.value = list.map((item: any) => ({
-        label: `${item.device_name} (${item.device_code})`,
-        value: item.id
+        label: `${item.name} (${item.code})`,
+        value: item.id // Use ID for V4
       }))
     } else {
       deviceOptions.value = []

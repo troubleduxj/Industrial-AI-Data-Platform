@@ -10,6 +10,7 @@ import { apiV2 } from '@/api/v2'
 import { authApi } from '@/api/system-v2'
 import { useUserStore } from '@/store/modules/user'
 import type { RouteRecordRaw } from 'vue-router'
+import { adaptToV5 } from './menu-adapter'
 
 // 使用动态导入Layout组件
 const Layout = () => import('@/layout/index.vue')
@@ -147,6 +148,9 @@ function buildRoutes(routes: BackendMenu[] = []): RouteRecordRaw[] {
           childPath = childPath.substring(1)
         }
         
+        // Merge meta from backend and adapter
+        const childMeta = e_child.meta || {}
+        
         const routeInfo: RouteRecordRaw = {
           name: e_child.name,
           path: childPath,
@@ -157,6 +161,7 @@ function buildRoutes(routes: BackendMenu[] = []): RouteRecordRaw[] {
             order: e_child.order,
             keepAlive: e_child.keepalive,
             isHidden: e_child.is_hidden,
+            ...childMeta // Allow overriding properties (like title)
           },
         }
 
@@ -238,6 +243,10 @@ export const usePermissionStore = defineStore('permission', {
       const res = await apiV2.getUserMenu() // 调用v2版本接口获取后端传来的菜单路由
       console.log('permissionStore.generateRoutes: Received response from apiV2.getUserMenu()', res)
       
+      // 适配 V5 菜单结构
+      // const adaptedMenus = adaptToV5(res.data)
+      // console.log('permissionStore.generateRoutes: Adapted menus to V5', adaptedMenus)
+
       this.accessRoutes = buildRoutes(res.data) // 处理成前端路由格式
       return this.accessRoutes
     },

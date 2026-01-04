@@ -6,7 +6,7 @@
       :clickable="item.path !== null && index < breadcrumbItems.length - 1"
       @click="handleClick(item, index)"
     >
-      <template v-if="item.icon" #default>
+      <template v-if="item.icon">
         <div class="breadcrumb-item-content">
           <n-icon :component="item.icon" :size="16" />
           <span>{{ item.title }}</span>

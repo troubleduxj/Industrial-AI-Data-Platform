@@ -299,7 +299,7 @@ import dayjs from 'dayjs'
 
 import AnomalyDetail from './components/AnomalyDetail.vue'
 import DetectionConfig from './components/DetectionConfig.vue'
-import { deviceTypeApi } from '@/api/device-v2.js'
+import { deviceTypeApi } from '@/api'
 import { anomalyDetectionApi } from '@/api/v2/ai-module'
 
 const message = useMessage()

@@ -52,7 +52,7 @@
 import { ref, reactive, onMounted, h, computed } from 'vue'
 import { NButton, NSpace, NTag, useMessage, useDialog } from 'naive-ui'
 import { AddOutline, SearchOutline } from '@vicons/ionicons5'
-import { platformApi } from '@/api/v3/platform'
+import { assetApi, categoryApi } from '@/api/v4'
 
 const message = useMessage()
 const dialog = useDialog()
@@ -146,7 +146,7 @@ const loadAssets = async () => {
       category_id: selectedCategory.value,
       keyword: searchKeyword.value
     }
-    const res = await platformApi.getAssets(params)
+    const res = await assetApi.getList(params)
     assets.value = res.data?.items || []
     pagination.itemCount = res.data?.total || 0
   } catch (error) {
@@ -185,10 +185,10 @@ const handleSubmit = async () => {
   submitting.value = true
   try {
     if (formData.id) {
-      await platformApi.updateAsset(formData.id, formData)
+      await assetApi.update(formData.id, formData)
       message.success('更新成功')
     } else {
-      await platformApi.createAsset(formData)
+      await assetApi.create(formData)
       message.success('创建成功')
     }
     showModal.value = false
@@ -208,7 +208,7 @@ const handleDelete = (row) => {
     negativeText: '取消',
     onPositiveClick: async () => {
       try {
-        await platformApi.deleteAsset(row.id)
+        await assetApi.delete(row.id)
         message.success('删除成功')
         loadAssets()
       } catch (error) {

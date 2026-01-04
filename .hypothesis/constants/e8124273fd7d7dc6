@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_core\timeseries\query_builder.py
+# hypothesis_version: 6.148.8
+
+[' AND ', ' GROUP BY ', ' ORDER BY ', ' WHERE ', '*', ', ', 'ASC', 'AVG', 'COUNT', 'DESC', 'FIRST', 'LAST', 'MAX', 'MIN', 'NULL', 'PERCENTILE', 'QueryBuilder', 'SPREAD', 'STDDEV', 'SUM', 'd', 'h', 'm', 'n', 's', 'ts', 'w', 'y']

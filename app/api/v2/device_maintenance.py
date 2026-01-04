@@ -118,12 +118,12 @@ async def get_maintenance_records(
         # 转换为响应格式
         data = []
         for record in records:
-            device_info = await record.device
+            asset = await record.device
             record_data = {
                 "id": record.id,
                 "device_id": record.device_id,
-                "device_code": device_info.device_code,
-                "device_name": device_info.device_name,
+                "device_code": asset.device_code,
+                "device_name": asset.device_name,
                 "maintenance_type": record.maintenance_type,
                 "maintenance_title": record.maintenance_title,
                 "maintenance_description": record.maintenance_description,
@@ -202,14 +202,14 @@ async def get_maintenance_record(
         except DoesNotExist:
             return formatter.not_found("维护记录不存在", "maintenance_record")
         
-        device_info = await record.device
+        asset = await record.device
         
         record_data = {
             "id": record.id,
             "device_id": record.device_id,
-            "device_code": device_info.device_code,
-            "device_name": device_info.device_name,
-            "device_type": device_info.device_type,
+            "device_code": asset.device_code,
+            "device_name": asset.device_name,
+            "device_type": asset.device_type,
             "maintenance_type": record.maintenance_type,
             "maintenance_title": record.maintenance_title,
             "maintenance_description": record.maintenance_description,
@@ -412,12 +412,12 @@ async def get_maintenance_plans(
         # 转换为响应格式
         data = []
         for plan in plans:
-            device_info = await plan.device
+            asset = await plan.device
             plan_data = {
                 "id": plan.id,
                 "device_id": plan.device_id,
-                "device_code": device_info.device_code,
-                "device_name": device_info.device_name,
+                "device_code": asset.device_code,
+                "device_name": asset.device_name,
                 "plan_name": plan.plan_name,
                 "plan_description": plan.plan_description,
                 "maintenance_type": plan.maintenance_type,
@@ -573,14 +573,14 @@ async def get_maintenance_reminders(
         # 转换为响应格式
         data = []
         for reminder in reminders:
-            device_info = await reminder.device
+            asset = await reminder.device
             plan_info = await reminder.maintenance_plan if reminder.maintenance_plan_id else None
             
             reminder_data = {
                 "id": reminder.id,
                 "device_id": reminder.device_id,
-                "device_code": device_info.device_code,
-                "device_name": device_info.device_name,
+                "device_code": asset.device_code,
+                "device_name": asset.device_name,
                 "maintenance_plan_id": reminder.maintenance_plan_id,
                 "plan_name": plan_info.plan_name if plan_info else None,
                 "reminder_type": reminder.reminder_type,

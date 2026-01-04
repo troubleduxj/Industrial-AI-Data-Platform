@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v3\model_storage.py
+# hypothesis_version: 6.148.8
+
+[400, 404, 500, 1024, '.h5', '.joblib', '.onnx', '.pkl', '/', '/checksum', '/delete', '/download', '/info', '/list', '/model-storage', '/stats', '/supported-formats', '/upload', '/verify', 'Content-Disposition', 'Content-Length', 'HDF5/Keras模型格式', 'Joblib序列化文件', 'ONNX模型格式', 'Python Pickle序列化文件', 'count', 'description', 'files', 'formats', 'models/', 'prefix', 'size_bytes', 'success', '上传模型文件', '下载模型文件', '从存储后端下载模型文件。', '从存储后端删除模型文件。', '列出存储后端中的所有模型文件。', '列出模型文件', '删除模型文件', '文件不存在', '文件删除失败', '文件删除成功', '文件名不能为空', '文件存储路径', '无法计算校验和', '期望的校验和', '模型ID（可选）', '模型存储', '模型存储模块未安装', '模型文件', '模型版本（可选）', '获取存储后端支持的模型文件格式列表。', '获取存储统计', '获取支持的文件格式', '获取文件信息', '获取文件校验和', '获取模型存储的统计信息。', '获取模型文件的SHA256校验和。', '获取模型文件的详细信息。', '路径前缀', '验证文件校验和', '验证模型文件的校验和是否匹配。']

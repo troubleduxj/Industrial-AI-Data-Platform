@@ -11,7 +11,7 @@
       @close.stop="tagsStore.removeTag(tag.path)"
       @contextmenu.prevent="handleContextMenu($event, tag)"
     >
-      {{ tag.title }}
+      {{ getTitle(tag) }}
     </n-tag>
     <ContextMenu
       v-if="contextMenuOption.show"
@@ -27,7 +27,11 @@
 import ContextMenu from './ContextMenu.vue'
 import { useTagsStore } from '@/store'
 import ScrollX from '@/components/common/ScrollX.vue'
+import { useI18n } from 'vue-i18n'
+import { ref, reactive, watch, nextTick } from 'vue' // Ensure ref is imported
+import { useRoute, useRouter } from 'vue-router'
 
+const { t, te } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const tagsStore = useTagsStore()

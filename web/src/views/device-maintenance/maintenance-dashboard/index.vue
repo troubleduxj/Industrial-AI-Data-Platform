@@ -272,7 +272,7 @@ import {
   CloseCircle as CloseCircleIcon,
 } from '@vicons/ionicons5'
 import deviceMaintenanceApi from '@/api/device-maintenance'
-import deviceV2Api from '@/api/device-v2'
+import { deviceApi as deviceV2Api } from '@/api'
 
 // 使用正确的 API 导出
 const deviceApi = deviceV2Api
@@ -419,9 +419,9 @@ const loadPendingTasks = async () => {
 // 加载设备健康度数据
 const loadDeviceHealth = async () => {
   try {
-    const response = await deviceApi.list({ page: 1, page_size: 50 })
-    if (response && response.data) {
-      const devices = response.data.records || response.data.data || []
+    const response = await assetApi.getList({ page: 1, page_size: 50 })
+    if (response && (response.data || response.items)) {
+      const devices = Array.isArray(response.data) ? response.data : (response.data?.items || response.data?.records || [])
       
       // 计算设备健康度（基于设备状态）
       const devicesWithHealth = devices.map(device => ({

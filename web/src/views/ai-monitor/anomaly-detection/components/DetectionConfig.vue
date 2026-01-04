@@ -450,9 +450,9 @@ import {
   ServerOutline
 } from '@vicons/ionicons5'
 import ModelSelector from '@/components/ai-monitor/common/ModelSelector.vue'
-import DeviceSelector from '@/components/ai-monitor/common/DeviceSelector.vue'
+import DeviceSelector from '@/components/platform/form/AssetSelector.vue'
 import AnomalyList from './AnomalyList.vue'
-import { deviceFieldApi } from '@/api/device-field'
+import { assetApi, categoryApi } from '@/api/v4'
 import { anomalyDetectionApi } from '@/api/v2/ai-module'
 
 // ==================== 类型定义 ====================
@@ -777,11 +777,12 @@ const resetThresholds = () => {
 // 设备相关
 const handleDeviceChange = (deviceId: number, option: any) => {
   selectedDeviceId.value = deviceId
-  if (deviceId && option && option.device) {
-    const deviceCode = option.device.device_code || option.device.code
+  if (deviceId && option) {
+    const deviceCode = option.code
+    const categoryId = option.category_id
     currentDeviceCode.value = deviceCode
     if (deviceCode) {
-      fetchDeviceConfigAndData(deviceCode)
+      fetchDeviceConfigAndData(deviceCode, categoryId, deviceId)
       startPolling(deviceId, deviceCode)
       refreshAnomalyList()
     }
@@ -794,58 +795,80 @@ const handleDeviceChange = (deviceId: number, option: any) => {
   }
 }
 
-const fetchDeviceConfigAndData = async (deviceCode: string) => {
+const fetchDeviceConfigAndData = async (deviceCode: string, categoryId?: number, deviceId?: number) => {
   try {
-    const res = await deviceFieldApi.getRealtimeWithConfig(deviceCode)
-    if (res.data) {
-      // 设置设备名称（编辑模式显示用）
-      currentDeviceName.value = res.data.device_name || deviceCode
+    // 1. 获取资产信息（如果缺少 categoryId 或 deviceId）
+    if (!categoryId || !deviceId) {
+      const assetRes = await assetApi.getByCode(deviceCode)
+      const asset = assetRes.data || assetRes
+      categoryId = asset.category_id || asset.category?.id
+      deviceId = asset.id
+      currentDeviceName.value = asset.name || deviceCode
+    } else {
+       // 如果已知 deviceId，尝试获取名称
+       // 这里我们可能已经从 option 中获取了名称，但如果需要完整对象可以调用 API
+       // 暂时假设 option.name 已设置 currentDeviceName? 
+       // 其实 handleDeviceChange 没有设置 currentDeviceName，所以这里应该设置
+       // 但 option 在 handleDeviceChange 中可用
+    }
+
+    if (!categoryId) return
+
+    // 2. 获取信号定义
+    const signalRes = await categoryApi.getSignals(categoryId)
+    const fields = signalRes.data || signalRes || []
+
+    // 3. 获取实时数据
+    let realtimeData = {}
+    if (deviceId) {
+      const realtimeRes = await assetApi.getRealtimeData(deviceId)
+      realtimeData = realtimeRes.data || realtimeRes || {}
+    }
+
+    const newConfig: Record<string, any> = {}
+    const newValues: Record<string, number> = {}
+    
+    fields.forEach((field: any) => {
+      // 映射 signal 到 field config
+      const key = field.signal_code || field.field_code // 兼容 v3/v4
+      let minLimit = -9999, maxLimit = 9999, defaultMin = 0, defaultMax = 100
       
-      const fields = res.data.monitoring_fields || []
-      const newConfig: Record<string, any> = {}
-      const newValues: Record<string, number> = {}
+      // 解析阈值配置 (v4 signal 可能有不同的结构，这里做适配)
+      const config = field.threshold_config || {}
+      if (config.min !== undefined) {
+        minLimit = config.min
+        defaultMin = config.min
+      }
+      if (config.max !== undefined) {
+        maxLimit = config.max
+        defaultMax = config.max
+      }
       
-      fields.forEach((field: any) => {
-        const key = field.field_code
-        let minLimit = -9999, maxLimit = 9999, defaultMin = 0, defaultMax = 100
+      newConfig[key] = {
+        label: field.signal_name || field.field_name,
+        unit: field.unit || '',
+        precision: (field.data_type === 'float' || field.field_type === 'float') ? 2 : 0,
+        step: (field.data_type === 'float' || field.field_type === 'float') ? 0.1 : 1,
+        minLimit, maxLimit, defaultMin, defaultMax,
+      }
+      
+      newValues[key] = realtimeData[key] !== undefined && realtimeData[key] !== null ? realtimeData[key] : 0
+    })
+    
+    deviceConfig.value = newConfig
+    currentValues.value = newValues
+    
+    // 获取用户保存的配置
+    try {
+      const configRes = await anomalyDetectionApi.getConfig(deviceCode)
+      if (configRes.data && configRes.data.config_data && Object.keys(configRes.data.config_data).length > 0) {
+        const savedConfig = configRes.data.config_data
+        if (savedConfig.mode) configData.value.mode = savedConfig.mode
+        if (savedConfig.modelId) configData.value.modelId = savedConfig.modelId
+        if (savedConfig.hybridLogic) configData.value.hybridLogic = savedConfig.hybridLogic
         
-        if (field.data_range) {
-          if (field.data_range.min !== undefined) {
-            minLimit = field.data_range.min
-            defaultMin = field.data_range.min
-          }
-          if (field.data_range.max !== undefined) {
-            maxLimit = field.data_range.max
-            defaultMax = field.data_range.max
-          }
-        }
-        
-        newConfig[key] = {
-          label: field.field_name,
-          unit: field.unit || '',
-          precision: field.field_type === 'float' ? 2 : 0,
-          step: field.field_type === 'float' ? 0.1 : 1,
-          minLimit, maxLimit, defaultMin, defaultMax,
-        }
-        
-        const realtimeData = res.data.realtime_data || {}
-        newValues[key] = realtimeData[key] !== undefined && realtimeData[key] !== null ? realtimeData[key] : 0
-      })
-      
-      deviceConfig.value = newConfig
-      currentValues.value = newValues
-      
-      // 获取用户保存的配置
-      try {
-        const configRes = await anomalyDetectionApi.getConfig(deviceCode)
-        if (configRes.data && configRes.data.config_data && Object.keys(configRes.data.config_data).length > 0) {
-          const savedConfig = configRes.data.config_data
-          if (savedConfig.mode) configData.value.mode = savedConfig.mode
-          if (savedConfig.modelId) configData.value.modelId = savedConfig.modelId
-          if (savedConfig.hybridLogic) configData.value.hybridLogic = savedConfig.hybridLogic
-          
-          // 加载检测启用状态
-          isDetecting.value = configRes.data.is_active !== false
+        // 加载检测启用状态
+        isDetecting.value = configRes.data.is_active !== false
           
           if (savedConfig.thresholds) {
             for (const key in savedConfig.thresholds) {
@@ -875,7 +898,6 @@ const fetchDeviceConfigAndData = async (deviceCode: string) => {
           }
         }
       }
-    }
   } catch (error) {
     console.error('获取设备配置及数据失败:', error)
     message.error('获取设备配置失败')
@@ -885,11 +907,11 @@ const fetchDeviceConfigAndData = async (deviceCode: string) => {
 const startPolling = (deviceId: number, deviceCode: string) => {
   stopPolling()
   pollingTimer = setInterval(() => {
-    fetchDeviceRealtimeDataOnly(deviceCode)
+    fetchDeviceRealtimeDataOnly(deviceId)
   }, 5000)
 }
 
-const fetchDeviceRealtimeDataOnly = async (deviceCode: string) => {
+const fetchDeviceRealtimeDataOnly = async (deviceId: number) => {
   try {
     if (isSimulationEnabled.value) {
       const newValues: Record<string, number> = {}
@@ -907,9 +929,10 @@ const fetchDeviceRealtimeDataOnly = async (deviceCode: string) => {
       return
     }
 
-    const res = await deviceFieldApi.getRealtimeWithConfig(deviceCode)
-    if (res.data && res.data.realtime_data) {
-      const realtimeData = res.data.realtime_data
+    const res = await assetApi.getRealtimeData(deviceId)
+    const realtimeData = res.data || res
+    
+    if (realtimeData) {
       for (const key in currentValues.value) {
         if (realtimeData[key] !== undefined && realtimeData[key] !== null) {
           currentValues.value[key] = realtimeData[key]

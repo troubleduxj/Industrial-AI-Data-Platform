@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v2\tdengine_fields.py
+# hypothesis_version: 6.148.8
+
+['\x00', "'", '.', '0%', "B'", 'BIGINT', 'BINARY', 'BOOL', 'DOUBLE', 'FLOAT', 'INT', 'NCHAR', 'SMALLINT', 'TAG', 'TAGS', 'TIMESTAMP', 'TINYINT', 'VARCHAR', 'boolean', 'category_code', 'category_name', 'created', 'data', 'data_collection', 'errors', 'extra_count', 'extra_fields', 'field_code', 'field_name', 'field_type', 'fields', 'float', 'id', 'ignore', 'int', 'invalid', 'is_monitoring_key', 'is_tag', 'length', 'match_rate', 'matched_count', 'matched_fields', 'missing_count', 'missing_fields', 'note', 'stable_name', 'statistics', 'string', 'suggested', 'tdengine_type', 'total', 'ts', 'type', 'unit', 'updated', 'utf-8', '同步TDengine字段到配置', '无法获取TDengine表结构', '获取TDengine超级表字段列表', '获取字段配置建议', '获取字段配置建议成功', '请选择要同步的字段', '\ufeff']

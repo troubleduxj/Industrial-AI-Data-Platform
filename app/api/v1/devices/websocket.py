@@ -91,10 +91,10 @@ class ConnectionManager:
             "query": query,
         }
 
-        device_info = (
+        asset_info = (
             device_code or f"{len(device_codes) if device_codes else 0}个指定设备" if device_codes else "全部设备"
         )
-        logger.info(f"WebSocket连接已建立，设备类型: {type_code or 'welding'}，设备编号: {device_info}")
+        logger.info(f"WebSocket连接已建立，设备类型: {type_code or 'welding'}，设备编号: {asset_info}")
 
     def disconnect(self, websocket: WebSocket):
         """断开WebSocket连接"""
@@ -106,10 +106,10 @@ class ConnectionManager:
             device_codes = subscription.get("device_codes")
             type_code = subscription.get("type_code")
             del self.device_subscriptions[websocket]
-            device_info = (
+            asset_info = (
                 device_code or f"{len(device_codes) if device_codes else 0}个指定设备" if device_codes else "全部设备"
             )
-            logger.info(f"WebSocket连接已断开，设备类型: {type_code or 'welding'}，设备编号: {device_info}")
+            logger.info(f"WebSocket连接已断开，设备类型: {type_code or 'welding'}，设备编号: {asset_info}")
 
     async def send_personal_message(self, message: str, websocket: WebSocket):
         """发送个人消息"""

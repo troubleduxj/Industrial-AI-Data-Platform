@@ -588,7 +588,7 @@ class InferenceService:
             if storage_path:
                 # 从存储后端加载
                 try:
-                    from ai_engine.model_storage.model_storage_service import get_model_storage_service
+                    from ai_engine.model import get_model_storage_service
                     
                     storage_service = get_model_storage_service()
                     

@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_core\asset\repository.py
+# hypothesis_version: 6.148.8
+
+['Asset', 'AssetCategory', 'category', 'count', 'id', 'industry', 'status']

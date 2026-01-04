@@ -2,17 +2,19 @@
 AI Engine Module - 工业AI数据平台AI引擎层
 
 包含以下子模块:
-- decision_engine: 决策引擎，将AI预测结果转化为告警和动作
-- model_storage: 模型文件存储服务
-- feature_hub: 特征工厂，特征存储和血缘追踪
-- model_registry: 模型注册和版本管理
+- model: 模型管理（整合model_registry和model_storage）
 - inference: 推理服务和预测存储
+- feature: 特征工程（原feature_hub）
+- decision: 决策引擎（原decision_engine）
+
+注意: 为保持向后兼容，旧模块名（feature_hub、decision_engine、
+model_registry、model_storage）仍可使用，但建议迁移到新模块名。
 """
 
-__version__ = "2.0.0"
+__version__ = "3.0.0"
 
-# 导出feature_hub模块
-from .feature_hub import (
+# 导出feature模块（新名称）
+from .feature import (
     FeatureStore,
     FeatureTableNaming,
     FeatureRecord,
@@ -21,10 +23,12 @@ from .feature_hub import (
     LineageTracker,
     FeatureLineage,
     LineageGraph,
+    feature_store,
+    lineage_tracker,
 )
 
-# 导出decision_engine模块
-from .decision_engine import (
+# 导出decision模块（新名称）
+from .decision import (
     RuleParser,
     Rule,
     Condition,
@@ -40,23 +44,24 @@ from .decision_engine import (
     audit_logger,
 )
 
-# 导出model_storage模块
-from .model_storage import (
-    StorageBackend,
-    StorageResult,
-    LocalStorage,
-    MinIOStorage,
-    ModelStorageService,
-    get_model_storage_service,
-)
-
-# 导出model_registry模块
-from .model_registry import (
+# 导出model模块（整合后的新模块）
+from .model import (
+    # Model Registry
     ModelRegistry,
     ModelVersionManager,
     ModelInfo,
     VersionInfo,
     ModelRegistryError,
+    # Model Storage
+    ModelStorage,
+    ModelStorageService,
+    get_model_storage_service,
+    set_model_storage_service,
+    # Storage Backends
+    StorageBackend,
+    StorageResult,
+    LocalStorage,
+    MinIOStorage,
 )
 
 # 导出inference模块
@@ -67,17 +72,18 @@ from .inference import (
 )
 
 __all__ = [
-    # Feature Store
+    # Feature (原feature_hub)
     "FeatureStore",
     "FeatureTableNaming",
     "FeatureRecord",
     "FeatureTableConfig",
     "TableNameError",
-    # Lineage Tracker
     "LineageTracker",
     "FeatureLineage",
     "LineageGraph",
-    # Decision Engine
+    "feature_store",
+    "lineage_tracker",
+    # Decision (原decision_engine)
     "RuleParser",
     "Rule",
     "Condition",
@@ -91,19 +97,20 @@ __all__ = [
     "rule_runtime",
     "action_executor",
     "audit_logger",
-    # Model Storage
-    "StorageBackend",
-    "StorageResult",
-    "LocalStorage",
-    "MinIOStorage",
-    "ModelStorageService",
-    "get_model_storage_service",
-    # Model Registry
+    # Model (整合model_registry和model_storage)
     "ModelRegistry",
     "ModelVersionManager",
     "ModelInfo",
     "VersionInfo",
     "ModelRegistryError",
+    "ModelStorage",
+    "ModelStorageService",
+    "get_model_storage_service",
+    "set_model_storage_service",
+    "StorageBackend",
+    "StorageResult",
+    "LocalStorage",
+    "MinIOStorage",
     # Inference
     "PredictionStore",
     "PredictionStoreError",

@@ -40,6 +40,7 @@ class AssetCategoryResponse(BaseModel):
     description: Optional[str] = None
     industry: Optional[str] = None
     icon: Optional[str] = None
+    color: Optional[str] = None
     tdengine_database: str
     tdengine_stable_prefix: str
     is_active: bool

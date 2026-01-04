@@ -118,7 +118,7 @@ import {
   BarChartOutline,
 } from '@vicons/ionicons5'
 import TheIcon from '@/components/icon/TheIcon.vue'
-import BaseCard from '@/components/base/BaseCard.vue'
+import BaseCard from '@/components/card/BaseCard.vue'
 import { formatDistanceToNow } from 'date-fns'
 import { zhCN } from 'date-fns/locale'
 

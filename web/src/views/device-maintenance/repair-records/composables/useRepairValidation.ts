@@ -141,32 +141,27 @@ export function useRepairValidation() {
      */
     checkDeviceNumberExists: async (deviceNumber: string): Promise<boolean> => {
       try {
-        // 动态导入设备API
-        const { default: deviceV2Api } = await import('@/api/device-v2')
+        // 动态导入设备API (使用V4)
+        const { assetApi } = await import('@/api/v4')
 
-        // 使用设备编号查询设备列表
-        const response = await deviceV2Api.list({
-          device_code: deviceNumber,
-          page: 1,
-          page_size: 1,
-        })
-
+        // 使用设备编号查询设备
+        // V4 API getByCode 返回单个设备对象
+        const response = await assetApi.getByCode(deviceNumber)
+        
         console.log('设备编号验证API响应:', response)
 
-        if (response && response.success && response.data && response.data.success) {
-          const data = response.data.data
-          const devices = Array.isArray(data) ? data : (data && data.items) || []
-          console.log('找到的设备:', devices)
-          return devices.length > 0
+        // V4 API 响应结构通常是 { success: true, data: { ... } } 或直接返回 data
+        // 如果 response.data 存在且有 id，说明设备存在
+        if (response && (response.data || response.id)) {
+          console.log('找到的设备:', response.data || response)
+          return true
         }
 
-        // 如果API调用失败，暂时跳过验证以免阻塞用户操作
-        console.warn('设备编号验证API调用失败，跳过验证')
-        return true
+        return false
       } catch (error) {
-        console.error('设备编号验证失败:', error)
-        // API调用失败时，暂时跳过验证
-        return true
+        // 如果是 404 错误，说明设备不存在
+        console.warn('设备编号验证API调用失败或设备不存在:', error)
+        return false
       }
     },
 
@@ -179,7 +174,7 @@ export function useRepairValidation() {
     checkDuplicateRepair: async (deviceNumber: string, repairDate: string | number | Date): Promise<boolean> => {
       try {
         // 动态导入维修记录API
-        const { repairRecordsApi } = await import('@/api/device-v2')
+        const { default: deviceMaintenanceApi } = await import('@/api/device-maintenance')
 
         // 格式化日期为YYYY-MM-DD格式
         const dateStr =
@@ -188,18 +183,19 @@ export function useRepairValidation() {
             : new Date(repairDate).toISOString().split('T')[0]
 
         // 查询同一设备在同一天的维修记录
-        const response = await repairRecordsApi.list({
-          device_number: deviceNumber,
-          repair_date: dateStr,
+        const response = await deviceMaintenanceApi.getRepairRecords({
+          device_code: deviceNumber,
+          start_time: dateStr + ' 00:00:00',
+          end_time: dateStr + ' 23:59:59',
           page: 1,
           page_size: 1,
         })
 
         console.log('重复报修检查API响应:', response)
 
-        if (response && response.success && response.data && response.data.success) {
-          const data = response.data.data
-          const records = Array.isArray(data) ? data : (data && data.records) || []
+        if (response && response.success && response.data) {
+          const data = response.data
+          const records = Array.isArray(data) ? data : (data.records || data.items || [])
           console.log('找到的维修记录:', records)
           return records.length > 0
         }

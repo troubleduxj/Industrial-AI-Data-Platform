@@ -565,7 +565,7 @@ class ModelRegistry:
             storage_path = getattr(version_record, 'storage_path', None)
             if storage_path:
                 try:
-                    from ai_engine.model_storage.model_storage_service import get_model_storage_service
+                    from ai_engine.model import get_model_storage_service
                     
                     storage_service = get_model_storage_service()
                     if await storage_service.model_exists(storage_path):

@@ -358,7 +358,7 @@ import {
 import * as echarts from 'echarts'
 import dayjs from 'dayjs'
 import { anomalyDetectionApi } from '@/api/v2/ai-module'
-import { deviceFieldApi } from '@/api/device-field'
+import { assetApi, categoryApi } from '@/api/v4'
 
 const props = defineProps<{ deviceCode: string }>()
 const emit = defineEmits<{
@@ -560,23 +560,40 @@ function getParamColor(field: any) {
 // API方法
 async function fetchDeviceInfo() {
   try {
-    const res = await deviceFieldApi.getRealtimeWithConfig(props.deviceCode)
-    if (res.data) {
-      deviceInfo.value.name = res.data.device_name || props.deviceCode
-      deviceInfo.value.type = res.data.device_type || '通用设备'
-      deviceInfo.value.location = (res.data as any).install_location || ''
+    // 1. Get asset info
+    const assetRes = await assetApi.getByCode(props.deviceCode)
+    const asset = assetRes.data || assetRes
+    
+    if (asset) {
+      const assetId = asset.id
+      deviceInfo.value.name = asset.name || props.deviceCode
+      deviceInfo.value.type = asset.category?.name || '通用设备'
+      deviceInfo.value.location = asset.location || ''
       
-      if (res.data.monitoring_fields?.length) {
-        deviceFields.value = res.data.monitoring_fields.map((f: any) => ({
-          key: f.field_code,
-          label: f.field_name,
-          unit: f.unit || '',
-          min: f.data_range?.min ?? 0,
-          max: f.data_range?.max ?? 100,
-          precision: f.field_type === 'float' ? 2 : 0,
-          enabled: true,
-          currentValue: res.data.realtime_data?.[f.field_code] ?? null
-        }))
+      const categoryId = asset.category_id || asset.category?.id
+      if (categoryId) {
+        // 2. Get signal definitions
+        const signalRes = await categoryApi.getSignals(categoryId)
+        const fields = signalRes.data || signalRes || []
+        
+        // 3. Get initial values
+        const realtimeRes = await assetApi.getRealtimeData(assetId)
+        const realtimeData = realtimeRes.data || realtimeRes || {}
+        
+        deviceFields.value = fields.map((f: any) => {
+          const key = f.code
+          const config = f.alarm_threshold || {}
+          return {
+            key,
+            label: f.name,
+            unit: f.unit || '',
+            min: config.min ?? 0,
+            max: config.max ?? 100,
+            precision: f.data_type === 'float' ? 2 : 0,
+            enabled: true,
+            currentValue: realtimeData[key] ?? null
+          }
+        })
       }
       lastUpdateTime.value = dayjs().format('HH:mm:ss')
     }
@@ -715,12 +732,16 @@ function stopPolling() {
 }
 
 async function fetchRealtimeData() {
+  if (!assetId.value) return
+  
   try {
-    const res = await deviceFieldApi.getRealtimeWithConfig(props.deviceCode)
-    if (res.data?.realtime_data) {
+    const res = await assetApi.getRealtimeData(assetId.value)
+    const realtimeData = res.data || res
+    
+    if (realtimeData) {
       // 创建新数组以触发响应式更新
       const updatedFields = deviceFields.value.map(field => {
-        const newValue = res.data.realtime_data[field.key]
+        const newValue = realtimeData[field.key]
         return {
           ...field,
           currentValue: newValue !== undefined ? newValue : field.currentValue

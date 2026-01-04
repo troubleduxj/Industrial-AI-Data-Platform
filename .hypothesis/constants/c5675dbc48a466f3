@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\app\api\v1\devices\universal_data.py
+# hypothesis_version: 6.148.8
+
+[500, ' AND ', '*', ', ', '/universal/realtime', '1=1', 'available_types', 'column_meta', 'data', 'data_fields', 'description', 'device_code', 'device_statistics', 'field_statistics', 'items', 'locked_devices', 'message', 'name', 'offline_devices', 'online_count', 'online_devices', 'page', 'page_size', 'query_time', 'rn', 'sort_order', 'tag_fields', 'tdengine_stable_name', 'total', 'total_devices', 'total_fields', 'ts', 'type_code', 'type_info', 'type_name', 'unknown', 'unlocked_devices', '获取指定类型设备的最新数据', '获取设备类型统计信息', '设备编号，不指定则获取该类型所有设备', '请指定设备类型代码', '通用实时数据查询']

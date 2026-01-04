@@ -1,0 +1,4 @@
+# file: D:\Cursor_Project\Industrial-AI-Data-Platform\platform_core\metadata\metadata_registry.py
+# hypothesis_version: 6.148.8
+
+[300, 'alarm_threshold', 'code', 'config', 'data_type', 'id', 'industry', 'is_feature', 'is_realtime', 'is_stored', 'name', 'tdengine_database', 'unit', 'value_range', '元数据缓存已失效']

@@ -3,7 +3,7 @@
  * 提供信号定义的获取、缓存和转换功能
  */
 import { ref, computed, watch } from 'vue'
-import { assetCategoryApi, signalApi } from '@/api/v3/platform'
+import { categoryApi, signalApi } from '@/api/v4'
 
 // 信号定义缓存
 const signalCache = new Map()
@@ -95,7 +95,7 @@ export function useSignalDefinitions(categoryId) {
     error.value = null
 
     try {
-      const response = await assetCategoryApi.getSignals(categoryId)
+      const response = await categoryApi.getSignals(categoryId)
       const data = response.data || response
       
       signals.value = Array.isArray(data) ? data : (data.items || data.signals || [])

@@ -90,13 +90,13 @@ async def get_audit_log_model():
 
 async def get_rule_parser():
     """延迟导入规则解析器"""
-    from ai_engine.decision_engine import RuleParser
+    from ai_engine.decision import RuleParser
     return RuleParser
 
 
 async def get_rule_runtime():
     """延迟导入规则运行时"""
-    from ai_engine.decision_engine import rule_runtime
+    from ai_engine.decision import rule_runtime
     return rule_runtime
 
 
@@ -782,7 +782,7 @@ async def get_audit_statistics(
     需求：1.5
     """
     try:
-        from ai_engine.decision_engine import audit_logger
+        from ai_engine.decision import audit_logger
         
         stats = await audit_logger.get_statistics(
             rule_id=rule_id,
@@ -926,7 +926,7 @@ async def test_rule(
     try:
         DecisionRule = await get_decision_rule_model()
         RuleParser = await get_rule_parser()
-        from ai_engine.decision_engine import RuleRuntime
+        from ai_engine.decision import RuleRuntime
         
         # 获取规则
         rule = await DecisionRule.get_or_none(rule_id=rule_id)
